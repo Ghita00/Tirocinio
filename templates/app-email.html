@@ -22,12 +22,12 @@
 
 
     <!-- Common -->
-    <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
-    <link href="assets/css/lib/menubar/sidebar.css" rel="stylesheet">
-    <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/lib/helper.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/themify-icons.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/menubar/sidebar.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/helper.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/style.css')}}" rel="stylesheet">
 </head>
 
 <body>
@@ -166,7 +166,7 @@
                                         <ul>
                                             <li>
                                                 <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
+                                                    <img class="pull-left m-r-10 avatar-img" src="{{url_for('static', filename='img/avatar/3.jpg')}}" alt="" />
                                                     <div class="notification-content">
                                                         <small class="notification-timestamp pull-right">02:34 PM</small>
                                                         <div class="notification-heading">Mr. John</div>
@@ -176,7 +176,7 @@
                                             </li>
                                             <li>
                                                 <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
+                                                    <img class="pull-left m-r-10 avatar-img" src="{{url_for('static', filename='img/avatar/3.jpg')}}" alt="" />
                                                     <div class="notification-content">
                                                         <small class="notification-timestamp pull-right">02:34 PM</small>
                                                         <div class="notification-heading">Mariam</div>
@@ -186,7 +186,7 @@
                                             </li>
                                             <li>
                                                 <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
+                                                    <img class="pull-left m-r-10 avatar-img" src="{{url_for('static', filename='img/avatar/3.jpg')}}" alt="" />
                                                     <div class="notification-content">
                                                         <small class="notification-timestamp pull-right">02:34 PM</small>
                                                         <div class="notification-heading">Tasnim</div>
@@ -196,7 +196,7 @@
                                             </li>
                                             <li>
                                                 <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
+                                                    <img class="pull-left m-r-10 avatar-img" src="{{url_for('static', filename='img/avatar/3.jpg')}}" alt="" />
                                                     <div class="notification-content">
                                                         <small class="notification-timestamp pull-right">02:34 PM</small>
                                                         <div class="notification-heading">Mr. John</div>
@@ -226,7 +226,7 @@
                                         <ul>
                                             <li class="notification-unread">
                                                 <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/1.jpg" alt="" />
+                                                    <img class="pull-left m-r-10 avatar-img" src="{{url_for('static', filename='img/avatar/1.jpg')}}" alt="" />
                                                     <div class="notification-content">
                                                         <small class="notification-timestamp pull-right">02:34 PM</small>
                                                         <div class="notification-heading">Michael Qin</div>
@@ -236,7 +236,7 @@
                                             </li>
                                             <li class="notification-unread">
                                                 <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/2.jpg" alt="" />
+                                                    <img class="pull-left m-r-10 avatar-img" src="{{url_for('static', filename='img/avatar/2.jpg')}}" alt="" />
                                                     <div class="notification-content">
                                                         <small class="notification-timestamp pull-right">02:34 PM</small>
                                                         <div class="notification-heading">Mr. John</div>
@@ -246,7 +246,7 @@
                                             </li>
                                             <li>
                                                 <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
+                                                    <img class="pull-left m-r-10 avatar-img" src="{{url_for('static', filename='img/avatar/3.jpg')}}" alt="" />
                                                     <div class="notification-content">
                                                         <small class="notification-timestamp pull-right">02:34 PM</small>
                                                         <div class="notification-heading">Michael Qin</div>
@@ -256,7 +256,7 @@
                                             </li>
                                             <li>
                                                 <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/2.jpg" alt="" />
+                                                    <img class="pull-left m-r-10 avatar-img" src="{{url_for('static', filename='img/avatar/2.jpg')}}" alt="" />
                                                     <div class="notification-content">
                                                         <small class="notification-timestamp pull-right">02:34 PM</small>
                                                         <div class="notification-heading">Mr. John</div>
@@ -364,7 +364,7 @@
                         <aside class="sm-side">
                           <div class="user-head">
                             <a class="inbox-avatar" href="javascript:;">
-                                                        <img src="assets/images/user.jpg" alt="">
+                                                        <img src="{{url_for('static', filename='img/user.jpg')}}" alt="">
                                                     </a>
                             <div class="user-name">
                               <h5><a href="#">john doe</a></h5>
@@ -756,19 +756,14 @@
       </div>
     </div>
 
-
-
-    
-
-
-
     <!-- Common -->
-    <script src="assets/js/lib/jquery.min.js"></script>
-    <script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
-    <script src="assets/js/lib/menubar/sidebar.js"></script>
-    <script src="assets/js/lib/preloader/pace.min.js"></script>
-    <script src="assets/js/lib/bootstrap.min.js"></script>
-    <script src="assets/js/scripts.js"></script>
+    <script src="{{url_for('static', filename='js/lib/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/lib/jquery.nanoscroller.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/lib/menubar/sidebar.js')}}"></script>
+    <script src="{{url_for('static', filename='js/lib/jquery.nanoscroller.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+
+
 
 </body>
 

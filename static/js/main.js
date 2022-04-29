@@ -6,9 +6,7 @@
     Version: 1.0
     Created: Colorib
 ---------------------------------------------------------  */
-
-'use strict';
-
+//TODO CI SONO DEGLI ERRORI CON LA FUNZIONE $(...).slicknav
 (function ($) {
 
     /*------------------
