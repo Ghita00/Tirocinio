@@ -3,10 +3,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return redirect("/prova")
-
-@app.route("/prova")
-def prova():
     return render_template("sito/about.html")
 
 if __name__ == "__main__":
