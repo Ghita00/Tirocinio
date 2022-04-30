@@ -7,7 +7,7 @@ def hello_world():
 
 @app.route("/prova")
 def prova():
-    return render_template("app-event-calender.html")
+    return render_template("sito/about.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
