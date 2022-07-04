@@ -1,5 +1,10 @@
 from flask import Flask, render_template, redirect
+from GenDB import db
+
 app = Flask(__name__)
+
+db.create_all()
+
 
 @app.route('/')
 def hello_world():
