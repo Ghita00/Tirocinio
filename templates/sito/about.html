@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/sito/nice-select.css')}}" type="text/css">
     <link rel="stylesheet" href="{{url_for('static', filename='css/sito/owl.carousel.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{url_for('static', filename='css/sito/slicknav.min.css')}}" type="text/css">
-    <!--<link rel="stylesheet" href="{{url_for('static', filename='css/sito/style.css')}}" type="text/css">-->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/sito/style.css')}}" type="text/css">
 </head>
 
 <body>
@@ -39,16 +39,16 @@
     <div class="offcanvas-menu-wrapper">
         <div class="offcanvas__cart">
             <div class="offcanvas__cart__links">
-                <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                <a href="#"><img src="img/icon/heart.png" alt=""></a>
+                <a href="#" class="search-switch"><img src="{{url_for('static', filename='img/sito/icon/search.png')}}" alt=""></a>
+                <a href="#"><img src="{{url_for('static', filename='img/sito/icon/heart.png')}}" alt=""></a>
             </div>
             <div class="offcanvas__cart__item">
-                <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                <a href="#"><img src="{{url_for('static', filename='img/sito/icon/cart.png')}}" alt=""> <span>0</span></a>
                 <div class="cart__price">Cart: <span>$0.00</span></div>
             </div>
         </div>
         <div class="offcanvas__logo">
-            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+            <a href="./index.html"><img src="{{url_for('static', filename='img/sito/logo.png')}}" alt=""></a>
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__option">
@@ -96,15 +96,15 @@
                                 </ul>
                             </div>
                             <div class="header__logo">
-                                <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                                <a href="./index.html"><img src="{{url_for('static', filename='img/sito/logo.png')}}" alt=""></a>
                             </div>
                             <div class="header__top__right">
                                 <div class="header__top__right__links">
-                                    <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-                                    <a href="#"><img src="img/icon/heart.png" alt=""></a>
+                                    <a href="#" class="search-switch"><img src="{{url_for('static', filename='img/sito/icon/search.png')}}" alt=""></a>
+                                    <a href="#"><img src="{{url_for('static', filename='img/sito/icon/heart.png')}}" alt=""></a>
                                 </div>
                                 <div class="header__top__right__cart">
-                                    <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                                    <a href="#"><img src="{{url_for('static', filename='img/sito/icon/cart.png')}}" alt=""> <span>0</span></a>
                                     <div class="cart__price">Cart: <span>$0.00</span></div>
                                 </div>
                             </div>
@@ -167,7 +167,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="about__video set-bg" data-setbg="img/about-video.jpg">
+                    <div class="about__video set-bg" data-setbg="{{url_for('static', filename='img/sito/about-video.jpg')}}">
                         <a href="https://www.youtube.com/watch?v=8PJ3_p7VqHw&list=RD8PJ3_p7VqHw&start_radio=1"
                         class="play-btn video-popup"><i class="fa fa-play"></i></a>
                     </div>
@@ -231,7 +231,7 @@
                         <div class="testimonial__item">
                             <div class="testimonial__author">
                                 <div class="testimonial__author__pic">
-                                    <img src="img/testimonial/ta-1.jpg" alt="">
+                                    <img src="{{url_for('static', filename='img/sito/testimonial/ta-1.jpg')}}" alt="">
                                 </div>
                                 <div class="testimonial__author__text">
                                     <h5>Kerry D.Silva</h5>
@@ -253,7 +253,7 @@
                         <div class="testimonial__item">
                             <div class="testimonial__author">
                                 <div class="testimonial__author__pic">
-                                    <img src="img/testimonial/ta-2.jpg" alt="">
+                                    <img src="{{url_for('static', filename='img/sito/testimonial/ta-2.jpg')}}" alt="">
                                 </div>
                                 <div class="testimonial__author__text">
                                     <h5>Kerry D.Silva</h5>
@@ -275,7 +275,7 @@
                         <div class="testimonial__item">
                             <div class="testimonial__author">
                                 <div class="testimonial__author__pic">
-                                    <img src="img/testimonial/ta-1.jpg" alt="">
+                                    <img src="{{url_for('static', filename='img/sito/testimonial/ta-1.jpg')}}" alt="">
                                 </div>
                                 <div class="testimonial__author__text">
                                     <h5>Ophelia Nunez</h5>
@@ -297,7 +297,7 @@
                         <div class="testimonial__item">
                             <div class="testimonial__author">
                                 <div class="testimonial__author__pic">
-                                    <img src="img/testimonial/ta-2.jpg" alt="">
+                                    <img src="{{url_for('static', filename='img/sito/testimonial/ta-2.jpg')}}" alt="">
                                 </div>
                                 <div class="testimonial__author__text">
                                     <h5>Kerry D.Silva</h5>
@@ -319,7 +319,7 @@
                         <div class="testimonial__item">
                             <div class="testimonial__author">
                                 <div class="testimonial__author__pic">
-                                    <img src="img/testimonial/ta-1.jpg" alt="">
+                                    <img src="{{url_for('static', filename='img/sito/testimonial/ta-1.jpg')}}" alt="">
                                 </div>
                                 <div class="testimonial__author__text">
                                     <h5>Ophelia Nunez</h5>
@@ -341,7 +341,7 @@
                         <div class="testimonial__item">
                             <div class="testimonial__author">
                                 <div class="testimonial__author__pic">
-                                    <img src="img/testimonial/ta-2.jpg" alt="">
+                                    <img src="{{url_for('static', filename='img/sito/testimonial/ta-2.jpg')}}" alt="">
                                 </div>
                                 <div class="testimonial__author__text">
                                     <h5>Kerry D.Silva</h5>
@@ -383,7 +383,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-3  col-md-6 col-sm-6">
-                    <div class="team__item set-bg" data-setbg="img/team/team-1.jpg">
+                    <div class="team__item set-bg" data-setbg="{{url_for('static', filename='img/sito/team/team-1.jpg')}}">
                         <div class="team__item__text">
                             <h6>Randy Butler</h6>
                             <span>Decorater</span>
@@ -397,7 +397,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3  col-md-6 col-sm-6">
-                    <div class="team__item set-bg" data-setbg="img/team/team-2.jpg">
+                    <div class="team__item set-bg" data-setbg="{{url_for('static', filename='img/sito/team/team-2.jpg')}}">
                         <div class="team__item__text">
                             <h6>Randy Butler</h6>
                             <span>Decorater</span>
@@ -411,7 +411,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3  col-md-6 col-sm-6">
-                    <div class="team__item set-bg" data-setbg="img/team/team-3.jpg">
+                    <div class="team__item set-bg" data-setbg="{{url_for('static', filename='img/sito/team/team-3.jpg')}}">
                         <div class="team__item__text">
                             <h6>Randy Butler</h6>
                             <span>Decorater</span>
@@ -425,7 +425,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3  col-md-6 col-sm-6">
-                    <div class="team__item set-bg" data-setbg="img/team/team-4.jpg">
+                    <div class="team__item set-bg" data-setbg="{{url_for('static', filename='img/sito/team/team-4.jpg')}}">
                         <div class="team__item__text">
                             <h6>Randy Butler</h6>
                             <span>Decorater</span>
@@ -444,7 +444,7 @@
     <!-- Team Section End -->
 
     <!-- Footer Section Begin -->
-    <footer class="footer set-bg" data-setbg="img/footer-bg.jpg">
+    <footer class="footer set-bg" data-setbg="{{url_for('static', filename='img/sito/footer-bg.jpg')}}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6">
@@ -460,7 +460,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                            <a href="#"><img src="{{url_for('static', filename='img/sito/footer-logo.png')}}" alt=""></a>
                         </div>
                         <p>Lorem ipsum dolor amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore dolore magna aliqua.</p>
@@ -520,15 +520,15 @@
 <!-- Search End -->
 
 <!-- Js Plugins -->
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
-<script src="js/jquery.barfiller.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/jquery.slicknav.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/jquery.nicescroll.min.js"></script>
-<script src="js/main.js"></script>
+<script src="{{url_for('static', filename='js/sito/jquery-3.3.1.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/sito/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/sito/jquery.nice-select.min.js')}}/"></script>
+<script src="{{url_for('static', filename='js/sito/jquery.barfiller.js')}}/"></script>
+<script src="{{url_for('static', filename='js/sito/jquery.magnific-popup.min.js')}}/"></script>
+<script src="{{url_for('static', filename='js/sito/jquery.slicknav.js')}}"></script>
+<script src="{{url_for('static', filename='js/sito/owl.carousel.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/sito/jquery.nicescroll.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/sito/main.js')}}"></script>
 </body>
 
 </html>
