@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return render_template("sito/blog.html")
+    return render_template("sito/blog-details.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
