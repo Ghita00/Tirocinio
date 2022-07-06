@@ -35,7 +35,7 @@
     <link href="{{url_for('static', filename='css/gestionale/lib/jsgrid/jsgrid-theme.min.css')}}" rel="stylesheet" />
     <link href="{{url_for('static', filename='css/gestionale/lib/jsgrid/jsgrid.min.css')}}" type="text/css" rel="stylesheet" />
     <!-- Datatable -->
-    <link href="{{url_for('static', filename='css/gestionale/lib/datatable/dataTables.bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="{{url_for('static', filename='css/gestionale/lib/data-table/dataTables.bootstrap.min.css')}}" rel="stylesheet" />
     <link href="{{url_for('static', filename='css/gestionale/lib/data-table/buttons.bootstrap.min.css')}}" rel="stylesheet" />
     <!-- Calender 2 -->
     <link href="{{url_for('static', filename='css/gestionale/lib/calendar2/pignose.calendar.min.css')}}" rel="stylesheet">
@@ -562,7 +562,7 @@
     <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}"></script>
 
     <!-- Calender -->
-    <script src="{{url_for('static', filename='js/gestionale/jquery-ui/jquery-ui.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jquery-ui/jquery-ui.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/gestionale/lib/moment/moment.js')}}"></script>
     <script src="{{url_for('static', filename='js/gestionale/lib/calendar/fullcalendar.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/gestionale/lib/calendar/fullcalendar-init.js')}}"></script>
@@ -644,70 +644,70 @@
 
     <!--  Calender 2 -->
     <script src="{{url_for('static', filename='js/gestionale/lib/calendar-2/moment.latest.min.js')}}"></script><!--TODO DA QUI CONTINUARE-->
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/calendar-2/pignose.calendar.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/calendar-2/pignose.init.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/calendar-2/pignose.calendar.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/calendar-2/pignose.init.js')}}"></script>
 
     <!-- Datatable -->
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/data-table/datatables.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/data-table/buttons.dataTables.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/data-table/buttons.flash.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/data-table/jszip.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/data-table/pdfmake.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/data-table/vfs_fonts.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/data-table/buttons.html5.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/data-table/buttons.print.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/data-table/datatables-init.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/datatables.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/buttons.dataTables.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/dataTables.buttons.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/buttons.flash.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/jszip.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/pdfmake.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/vfs_fonts.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/buttons.html5.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/buttons.print.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/datatables-init.js')}}"></script>
 
     <!-- JS Grid -->
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/db.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/jsgrid.core.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/jsgrid.load-indicator.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/jsgrid.load-strategies.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/jsgrid.sort-strategies.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/jsgrid.field.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/fields/jsgrid.field.text.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/fields/jsgrid.field.number.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/fields/jsgrid.field.select.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/fields/jsgrid.field.checkbox.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/fields/jsgrid.field.control.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/jsgrid/jsgrid-init.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/db.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/jsgrid.core.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/jsgrid.load-indicator.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/jsgrid.load-strategies.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/jsgrid.sort-strategies.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/jsgrid.field.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/fields/jsgrid.field.text.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/fields/jsgrid.field.number.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/fields/jsgrid.field.select.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/fields/jsgrid.field.checkbox.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/fields/jsgrid.field.control.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jsgrid/jsgrid-init.js')}}"></script>
 
     <!--  Datamap -->
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/datamap/d3.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/datamap/topojson.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/datamap/datamaps.world.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/datamap/datamap-init.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/datamap/d3.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/datamap/topojson.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/datamap/datamaps.world.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/datamap/datamap-init.js')}}"></script>
 
     <!--  Nestable -->
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/nestable/jquery.nestable.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/nestable/nestable.init.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/nestable/jquery.nestable.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/nestable/nestable.init.js')}}"></script>
 
     <!--ION Range Slider JS-->
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/rangeSlider/ion.rangeSlider.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/rangeSlider/moment.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/rangeSlider/moment-with-locales.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/rangeSlider/rangeslider.init.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/rangeSlider/ion.rangeSlider.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/rangeSlider/moment.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/rangeSlider/moment-with-locales.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/rangeSlider/rangeslider.init.js')}}"></script>
 
     <!-- Bar Rating-->
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/barRating/jquery.barrating.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/barRating/barRating.init.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/barRating/jquery.barrating.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/barRating/barRating.init.js')}}"></script>
 
     <!-- jRate -->
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/rating1/jRate.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/rating1/jRate.init.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/rating1/jRate.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/rating1/jRate.init.js')}}"></script>
 
     <!-- Sweet Alert -->
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/sweetalert/sweetalert.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/sweetalert/sweetalert.init.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/sweetalert/sweetalert.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/sweetalert/sweetalert.init.js')}}"></script>
 
     <!-- Toastr -->
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/toastr/toastr.min.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/lib/toastr/toastr.init.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/toastr/toastr.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/toastr/toastr.init.js')}}"></script>
 
     <!--  Dashboard 1 -->
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/dashboard1.js"></script>
-    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}assets/js/dashboard2.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/dashboard1.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/dashboard2.js')}}"></script>
 
 </body>
 
