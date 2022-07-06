@@ -5,7 +5,7 @@ from flask_fontawesome import FontAwesome
 app = Flask(__name__)
 fa = FontAwesome(app) #serve per i font
 
-#db.create_all()
+db.create_all()
 
 @app.route('/')
 def hello_world():
