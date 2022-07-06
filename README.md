@@ -48,7 +48,7 @@ Qui troviamo le diverse componenti che vanno a formare la vetrina che la pasticc
   - Catering, possibilità di ingaggiare l’attività per servizio di catering ad eventi speciali
 - Blog, aggiornamenti costanti relativi all’attività
 
-![uml_webapp](Image_ReadMe\UML_App.jpg "uml_webapp")
+![uml_webapp](https://github.com/Ghita00/Tirocinio/blob/master/Image_ReadMe/UML_WebApp.jpg "uml_webapp")
 
 ### Applicazione
 ##### Descrizione applicazione
@@ -57,7 +57,7 @@ Quest’applicazione è interamente dedicata ai dipendenti per:
 - Consultazione orari e turni di lavoro
 - Sistema Qr Code per la gestione delle presenze 
 
-![uml_app](Image_ReadMe\UML_WebApp.jpg "uml_app")
+![uml_app](https://github.com/Ghita00/Tirocinio/blob/master/Image_ReadMe/UML_App.jpg "uml_app")
 
 #### Architettura e tecnologie del sistema
 L'architettura finale del sistema presenta un DataBase centrale con il quale andranno ad interagire (in lettura e in scrittura) sia la WebApp (sito + gestionale) che l’applicazione.
@@ -69,7 +69,7 @@ Le tecnologie da noi pensate sono:
 - Python con la libreria SQLAlchemy per le interrogazioni al DataBase
 - Kotlin per l’applicazione
 
-![Architettura](Image_ReadMe\architettura.png "Architettura")
+![Architettura](https://github.com/Ghita00/Tirocinio/blob/master/Image_ReadMe/architettura.png "Architettura")
 
 <!--
   TODO
