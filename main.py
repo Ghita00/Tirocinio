@@ -9,7 +9,7 @@ fa = FontAwesome(app) #serve per i font
 
 @app.route('/')
 def hello_world():
-    return render_template("gestionale/app-event-calender.html")
+    return render_template("gestionale/blank.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
