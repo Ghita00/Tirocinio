@@ -9,6 +9,25 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgresql@localh
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+class Immagini(db.Model):
+    __tablename__ = 'immagini'
+
+    Id = db.Column(db.Integer(), primary_key=True)
+    img = db.Column(db.LargeBinary())
+
+    Persona = relationship("Persone")
+    Articolo = relationship("ImmaginiArticolo", back_populates='immagini', cascade="all, delete-orphan")
+    Semilavorato = relationship("ImmaginiSemilavorati", back_populates='immagini', cascade="all, delete-orphan")
+    Merce = relationship("ImmaginiMerce", back_populates='immagini', cascade="all, delete-orphan")
+
+
+    def __init__(self, Id, img):
+        self.Id = Id
+        self.img = img
+
+    def __repr__(self):
+        return f"<Immagine {self.Id}>"
+
 class Persone(db.Model):
     __tablename__ = 'persone'
 
@@ -18,6 +37,8 @@ class Persone(db.Model):
     DataNascita = db.Column(db.Date(), nullable=False)
     Telefono = db.Column(db.String(15), nullable=False)
     Rating = db.Column(db.Integer)
+
+    Img = db.Column(ForeignKey('immagini.Id', ondelete='CASCADE'))
 
     Dipedenti = relationship("Dipendenti")
     Clienti = relationship("Clienti")
@@ -144,6 +165,7 @@ class Articoli(db.Model):
     DataPubblicazione = db.Column(db.Date())
 
     Dipendente = relationship("Blog", back_populates='articoli', cascade="all, delete-orphan")
+    Img = relationship("ImmaginiArticoli", back_populates='articoli', cascade="all, delete-orphan")
 
     def __init__(self, Id, Titolo, Contenuto, DataPubblicazione):
         self.Id = Id
@@ -191,6 +213,7 @@ class Semilavorati(db.Model):
     Cliente_Carrello = relationship("Carrello", back_populates='semilavorati',  cascade="all, delete-orphan")
     ProduzioneGiornaliera = relationship("Produzione", back_populates='semilavorati',  cascade="all, delete-orphan")
     FatturaVendita = relationship("ContenutoVenditaSemilavorati", back_populates='semilavorati', cascade="all, delete-orphan")
+    Img = relationship("ImmaginiSemilavorati", back_populates='semilavorati', cascade="all, delete-orphan")
 
     def __init__(self, Id, Nome, Quantità, PrezzoUnitario, IVA, Preparazione):
         self.Id = Id
@@ -249,6 +272,7 @@ class Merce(db.Model):
     Scontrini = relationship("ScontriniMerce", back_populates='merce', cascade="all, delete-orphan")
     FatturaAcquisto = relationship("ContenutoAcquisto", back_populates='merce',  cascade="all, delete-orphan")
     FatturaVendita = relationship("ContenutoVenditaMerce", back_populates='merce',  cascade="all, delete-orphan")
+    Img = relationship("ImmaginiMerce", back_populates='merce', cascade="all, delete-orphan")
 
     def __init__(self, Id, Nome, Quantità, PrezzoUnitario, IVA, MateriaPrima):
         self.Id = Id
@@ -361,6 +385,8 @@ class NoteVariazioneEmesse(db.Model):
     def __repr__(self):
         return f"<NotediVariazioneEmesse {self.Id}>"
 
+
+
 #assciazione diendeti articoli
 class Blog(db.Model):
     __tablename__ = 'blog'
@@ -448,4 +474,25 @@ class ContenutoVenditaSemilavorati(db.Model):
     Id_FatturaVendità = db.Column(ForeignKey('fattureVendita.Id', ondelete='CASCADE'), primary_key=True)
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
     Quantità = db.Column(db.Integer())
+
+# assciazione immagini articoli
+class ImmaginiArticoli(db.Model):
+    __tablename__ = 'immaginiArticoli'
+
+    Id_Articolo = db.Column(ForeignKey('articoli.Id', ondelete='CASCADE'), primary_key=True)
+    Id_Img = db.Column(ForeignKey('immagini.Id', ondelete='CASCADE'), primary_key=True)
+
+# assciazione immagini semilarorati
+class ImmaginiSemilavorati(db.Model):
+    __tablename__ = 'immaginiSemilavorati'
+
+    Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
+    Id_Img = db.Column(ForeignKey('immagini.Id', ondelete='CASCADE'), primary_key=True)
+
+# assciazione immagini merce
+class ImmaginiMerce(db.Model):
+    __tablename__ = 'immaginiMerce'
+
+    Id_Merce = db.Column(ForeignKey('merce.Id', ondelete='CASCADE'), primary_key=True)
+    Id_Img = db.Column(ForeignKey('immagini.Id', ondelete='CASCADE'), primary_key=True)
 
