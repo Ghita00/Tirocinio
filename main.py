@@ -9,8 +9,7 @@ db.create_all()
 
 @app.route('/')
 def hello_world():
-    return render_template("gestionale/ui-images.html")
-
+    return render_template("gestionale/vector-map.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
