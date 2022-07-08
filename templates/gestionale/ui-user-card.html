@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    {{ fontawesome_html() }}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,12 +22,11 @@
     <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
 	
 	<!-- Styles -->
-    <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
-    <link href="assets/css/lib/menubar/sidebar.css" rel="stylesheet">
-    <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/lib/helper.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/gestionale/lib/themify-icons.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/gestionale/lib/menubar/sidebar.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/gestionale/lib/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/gestionale/lib/helper.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/gestionale/style.css')}}" rel="stylesheet">
 </head>
 
 <body>
@@ -784,15 +784,13 @@
         </div>
     </div>
 
+    <script src="{{url_for('static', filename='js/gestionale/lib/jquery.min.js')}}"></script><!-- jquery vendor -->
+    <script src="{{url_for('static', filename='js/gestionale/lib/jquery.nanoscroller.min.js')}}"></script><!-- nano scroller -->
+    <script src="{{url_for('static', filename='js/gestionale/lib/menubar/sidebar.js')}}"></script><!-- sidebar -->
 
-
-    <script src="assets/js/lib/jquery.min.js"></script><!-- jquery vendor -->
-    <script src="assets/js/lib/jquery.nanoscroller.min.js"></script><!-- nano scroller -->
-    <script src="assets/js/lib/menubar/sidebar.js"></script><!-- sidebar -->
     <!-- bootstrap -->
-    
-    
-    <script src="assets/js/lib/bootstrap.min.js"></script><script src="assets/js/scripts.js"></script><!-- scripit init-->
+    <script src="{{url_for('static', filename='js/gestionale/lib/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}"></script><!-- scripit init-->
 </body>
 
 </html>
