@@ -23,7 +23,7 @@
     <!-- Styles -->
     <link href="{{url_for('static', filename='css/gestionale/lib/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='css/gestionale/lib/themify-icons.css')}}" rel="stylesheet">
-    <link href="assets/css/lib/data-table/buttons.bootstrap.min.css" rel="stylesheet" />
+    <link href="{{url_for('static', filename='css/gestionale/lib/data-table/buttons.bootstrap.min.css')}}" rel="stylesheet" />
     <link href="{{url_for('static', filename='css/gestionale/lib/menubar/sidebar.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='css/gestionale/lib/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='css/gestionale/lib/helper.css')}}" rel="stylesheet">
@@ -744,26 +744,28 @@
 
     
     <!-- jquery vendor -->
-    <script src="assets/js/lib/jquery.min.js"></script>
-    <script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/jquery.nanoscroller.min.js')}}"></script>
     <!-- nano scroller -->
-    <script src="assets/js/lib/menubar/sidebar.js"></script>
-    <script src="assets/js/lib/preloader/pace.min.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/menubar/sidebar.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/preloader/pace.min.js')}}"></script>
     <!-- sidebar -->
     
     <!-- bootstrap -->
 
-    <script src="assets/js/lib/bootstrap.min.js"></script><script src="assets/js/scripts.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/scripts.js')}}"></script>
+
     <!-- scripit init-->
-    <script src="assets/js/lib/data-table/datatables.min.js"></script>
-    <script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.flash.min.js"></script>
-    <script src="assets/js/lib/data-table/jszip.min.js"></script>
-    <script src="assets/js/lib/data-table/pdfmake.min.js"></script>
-    <script src="assets/js/lib/data-table/vfs_fonts.js"></script>
-    <script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
-    <script src="assets/js/lib/data-table/datatables-init.js"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/datatables.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/dataTables.buttons.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/buttons.flash.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/jszip.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/pdfmake.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/vfs_fonts.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/buttons.html5.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/buttons.print.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/lib/data-table/datatables-init.js')}}"></script>
 
 
 
