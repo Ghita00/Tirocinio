@@ -18,7 +18,7 @@ app.register_blueprint(blog, url_prefix = "")
 
 @app.route('/')
 def hello_world():
-    return render_template("gestionale/page-login.html")
+    return render_template("sito/index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
