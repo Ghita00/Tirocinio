@@ -1,12 +1,23 @@
-<!DOCTYPE html>
 {% extends 'sito/base.html' %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
 
-
-</body>
-</html>
+{% block login %}
+    <section class="class spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="class__form">
+                        <div class="section-title">
+                            <h2>Benvenuto o ben tornato</h2>
+                        </div>
+                        <form action="#">
+                            <input type="text" placeholder="Name">
+                            <input type="password" placeholder="Password">
+                            <button type="submit" class="site-btn">registration</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
