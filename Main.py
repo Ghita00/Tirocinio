@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template
 from GenDB import db
 from flask_fontawesome import FontAwesome
 
@@ -18,7 +18,7 @@ app.register_blueprint(blog, url_prefix = "")
 
 @app.route('/')
 def hello_world():
-    return render_template("gestionale/page-login.html")
+    return render_template("sito/index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
