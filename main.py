@@ -20,5 +20,6 @@ app.register_blueprint(blog, url_prefix = "")
 def hello_world():
     return render_template("sito/about.html")
 
+
 if __name__ == "__main__":
     app.run(debug=True)
