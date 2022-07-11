@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect
-from GenDB import db
+from GenDB import *
 from flask_fontawesome import FontAwesome
 
 app = Flask(__name__)

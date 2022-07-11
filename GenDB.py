@@ -80,9 +80,9 @@ class Dipendenti(db.Model):
     Articolo = relationship("Blog", back_populates='Dipendente',  cascade="all, delete-orphan")
     Turno = relationship("PersonaleTurni", back_populates='Dipendente',  cascade="all, delete-orphan")
 
-    def __init__(self, Mail, User, Password, DataAssunzione):
+    def __init__(self, Mail, Username, Password, DataAssunzione):
         self.Mail = Mail
-        self.Username = User
+        self.Username = Username
         self.Password = Password
         self.DataAssunzione = DataAssunzione
 
