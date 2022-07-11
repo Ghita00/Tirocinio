@@ -3,11 +3,19 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgresql@localhost:5432/pasticceria"
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+engine = create_engine("postgresql://postgres:postgresql@localhost:5432/pasticceria")
+
+Session = sessionmaker(bind=engine)
+
+session = Session()
 
 class Immagini(db.Model):
     __tablename__ = 'immagini'
@@ -15,10 +23,11 @@ class Immagini(db.Model):
     Id = db.Column(db.Integer(), primary_key=True)
     img = db.Column(db.LargeBinary())
 
-    Persona = relationship("Persone")
-    Articolo = relationship("ImmaginiArticolo", back_populates='immagini', cascade="all, delete-orphan")
-    Semilavorato = relationship("ImmaginiSemilavorati", back_populates='immagini', cascade="all, delete-orphan")
-    Merce = relationship("ImmaginiMerce", back_populates='immagini', cascade="all, delete-orphan")
+    Persona = relationship("Persone", back_populates = "Immagine")
+
+    Articolo = relationship("ImmaginiArticoli", back_populates='Immagine', cascade="all, delete-orphan")
+    Semilavorato = relationship("ImmaginiSemilavorati", back_populates='Immagine', cascade="all, delete-orphan")
+    Merce = relationship("ImmaginiMerce", back_populates='Immagine', cascade="all, delete-orphan")
 
 
     def __init__(self, Id, img):
@@ -26,7 +35,7 @@ class Immagini(db.Model):
         self.img = img
 
     def __repr__(self):
-        return f"<Immagine {self.Id}>"
+        return f"<Immagini {self.Id}>"
 
 class Persone(db.Model):
     __tablename__ = 'persone'
@@ -39,10 +48,11 @@ class Persone(db.Model):
     Rating = db.Column(db.Integer)
 
     Img = db.Column(ForeignKey('immagini.Id', ondelete='CASCADE'))
+    Immagine = relationship("Immagini", back_populates = 'Persona')
 
-    Dipedenti = relationship("Dipendenti")
-    Clienti = relationship("Clienti")
-    Fornitori = relationship("Fornitori")
+    Dipendente = relationship("Dipendenti", back_populates = "Persona")
+    Cliente = relationship("Clienti", back_populates = "Persona")
+    Fornitore = relationship("Fornitori", back_populates = "Persona")
 
     def __init__(self, Mail, Nome, Cognome, DataNascita, Telefono, Rating):
         self.Mail = Mail
@@ -63,10 +73,12 @@ class Dipendenti(db.Model):
     Password = db.Column(db.String(60), nullable=False)
     DataAssunzione = db.Column(db.Date(), nullable=False)
 
-    Id_Stipendio = relationship("Stipendi") #da fare relazione
+    Persona = relationship("Persone", back_populates = 'Dipendente')
 
-    Articoli = relationship("Blog", back_populates='dipendenti',  cascade="all, delete-orphan")
-    Turni = relationship("PersonaleTurni", back_populates='dipendenti',  cascade="all, delete-orphan")
+    Stipendio = relationship("Stipendi", back_populates = "Dipendente") #da fare relazione
+
+    Articolo = relationship("Blog", back_populates='Dipendente',  cascade="all, delete-orphan")
+    Turno = relationship("PersonaleTurni", back_populates='Dipendente',  cascade="all, delete-orphan")
 
     def __init__(self, Mail, User, Password, DataAssunzione):
         self.Mail = Mail
@@ -85,8 +97,10 @@ class Clienti(db.Model):
     Password = db.Column(db.String(60), nullable=False)
     DataRegistrazione = db.Column(db.Date(), nullable=False)
 
-    Semilavorato_WishList = relationship("WishList", back_populates='clienti',  cascade="all, delete-orphan")
-    Semilavorato_Carrello = relationship("Carrello", back_populates='clienti',  cascade="all, delete-orphan")
+    Persona = relationship("Persone", back_populates="Cliente")
+
+    Semilavorato_WishList = relationship("WishList", back_populates='Cliente_WishList',  cascade="all, delete-orphan")
+    Semilavorato_Carrello = relationship("Carrello", back_populates='Cliente_Carrello',  cascade="all, delete-orphan")
 
     def __init__(self, Mail, Username, Password, DataRegistrazione):
         self.Mail = Mail
@@ -104,8 +118,10 @@ class Fornitori(db.Model):
     Ditta = db.Column(db.String(60), nullable=False)
     PartitaIVA = db.Column(db.String(11), nullable=False)
 
-    Id_DDT = relationship("DDT")
-    Id_FatturaAcquisto = relationship("FattureAcquisto")
+    Persona = relationship("Persone", back_populates="Fornitore")
+
+    DDT = relationship("DDT", back_populates = "Fornitore")
+    FatturaAcquisto = relationship("FattureAcquisto", back_populates = "Fornitore")
 
     def __init__(self, Mail, Ditta, PartitaIVA):
         self.Mail = Mail
@@ -127,6 +143,8 @@ class DDT(db.Model):
     Peso = db.Column(db.Float())
     Colli = db.Column(db.Integer())
 
+    Fornitore = relationship("Fornitori", back_populates="DDT")
+
     def __init__(self, Id, Mail_Fornitore, DataEmissione, Note, Importo, Peso, Colli):
         self.Id = Id
         self.Mail_Fornitore = Mail_Fornitore
@@ -147,6 +165,8 @@ class Stipendi(db.Model):
     DataEmissione = db.Column(db.Date(), nullable=False)
     ImportoNetto = db.Column(db.Float(), nullable=False)
 
+    Dipendente = relationship("Dipendenti", back_populates="Stipendio")
+
     def __init__(self, Id, Mail_Dipedendente, DataEmissione, ImportoNetto):
         self.Id = Id
         self.Mail_Dipendenti = Mail_Dipedendente
@@ -164,8 +184,8 @@ class Articoli(db.Model):
     Contenuto = db.Column(db.String(500))
     DataPubblicazione = db.Column(db.Date())
 
-    Dipendente = relationship("Blog", back_populates='articoli', cascade="all, delete-orphan")
-    Img = relationship("ImmaginiArticoli", back_populates='articoli', cascade="all, delete-orphan")
+    Dipendente = relationship("Blog", back_populates='Articolo', cascade="all, delete-orphan")
+    Immagine = relationship("ImmaginiArticoli", back_populates='Articolo', cascade="all, delete-orphan")
 
     def __init__(self, Id, Titolo, Contenuto, DataPubblicazione):
         self.Id = Id
@@ -185,7 +205,7 @@ class Turni(db.Model):
     OraFine = db.Column(db.Time(), nullable=False)
     CompensoOrario = db.Column(db.Float(), nullable=False)
 
-    Dipendente = relationship("PersonaleTurni", back_populates='turni', cascade="all, delete-orphan")
+    Dipendente = relationship("PersonaleTurni", back_populates='Turno', cascade="all, delete-orphan")
 
     def __init__(self, Id, Nome, OraInizio, OraFine, CompensoOrario):
         self.Id = Id
@@ -207,13 +227,13 @@ class Semilavorati(db.Model):
     IVA = db.Column(db.Float())
     Preparazione = db.Column(db.String(1000))
 
-    Scontrini = relationship("ScontriniSemilavorati", back_populates='semilavorati',  cascade="all, delete-orphan")
-    MateriePrime = relationship("Ricette", back_populates='semilavorati', cascade="all, delete-orphan")
-    Cliente_WishList = relationship("WishList", back_populates='semilavorati',  cascade="all, delete-orphan")
-    Cliente_Carrello = relationship("Carrello", back_populates='semilavorati',  cascade="all, delete-orphan")
-    ProduzioneGiornaliera = relationship("Produzione", back_populates='semilavorati',  cascade="all, delete-orphan")
-    FatturaVendita = relationship("ContenutoVenditaSemilavorati", back_populates='semilavorati', cascade="all, delete-orphan")
-    Img = relationship("ImmaginiSemilavorati", back_populates='semilavorati', cascade="all, delete-orphan")
+    Scontrino = relationship("ScontriniSemilavorati", back_populates='Semilavorato',  cascade="all, delete-orphan")
+    Merce = relationship("Ricette", back_populates='Semilavorato', cascade="all, delete-orphan")
+    Cliente_WishList = relationship("WishList", back_populates='Semilavorato_WishList',  cascade="all, delete-orphan")
+    Cliente_Carrello = relationship("Carrello", back_populates='Semilavorato_Carrello',  cascade="all, delete-orphan")
+    Produzione = relationship("Produzione", back_populates='Semilavorato',  cascade="all, delete-orphan")
+    FatturaVendita = relationship("ContenutoVenditaSemilavorati", back_populates='Semilavorato', cascade="all, delete-orphan")
+    Immagine = relationship("ImmaginiSemilavorati", back_populates='Semilavorato', cascade="all, delete-orphan")
 
     def __init__(self, Id, Nome, Quantità, PrezzoUnitario, IVA, Preparazione):
         self.Id = Id
@@ -232,8 +252,8 @@ class Scontrini(db.Model):
     Id = db.Column(db.Integer(), primary_key=True)
     Data = db.Column(db.Date(), nullable=False)
 
-    Semilavorato = relationship("ScontriniSemilavorati", back_populates='scontrini', cascade="all, delete-orphan")
-    Merce = relationship("ScontriniMerce", back_populates='scontrini',  cascade="all, delete-orphan")
+    Semilavorato = relationship("ScontriniSemilavorati", back_populates='Scontrino', cascade="all, delete-orphan")
+    Merce = relationship("ScontriniMerce", back_populates='Scontrino',  cascade="all, delete-orphan")
 
     def __init__(self, Id, Data):
         self.Id = Id
@@ -248,7 +268,7 @@ class Allergeni(db.Model):
     Id = db.Column(db.Integer(), primary_key=True)
     Nome = db.Column(db.String(60), nullable=False)
 
-    Merce = relationship("Merce")
+    Merce = relationship("Merce", back_populates = "Allergene")
 
     def __init__(self, Id, Nome):
         self.Id = Id
@@ -268,11 +288,13 @@ class Merce(db.Model):
     MateriaPrima = db.Column(db.Boolean())  #ATTENZIONE, solo se True può far parte di una ricetta
     Id_Allergene = db.Column(ForeignKey('allergeni.Id', ondelete='CASCADE')) #vedi se è da mettere nel costruttore
 
-    Semilavorati = relationship("Ricette", back_populates='merce', cascade="all, delete-orphan")
-    Scontrini = relationship("ScontriniMerce", back_populates='merce', cascade="all, delete-orphan")
-    FatturaAcquisto = relationship("ContenutoAcquisto", back_populates='merce',  cascade="all, delete-orphan")
-    FatturaVendita = relationship("ContenutoVenditaMerce", back_populates='merce',  cascade="all, delete-orphan")
-    Img = relationship("ImmaginiMerce", back_populates='merce', cascade="all, delete-orphan")
+    Allergene = relationship("Allergeni", back_populates = "Merce")
+
+    Semilavorato = relationship("Ricette", back_populates='Merce', cascade="all, delete-orphan")
+    Scontrino = relationship("ScontriniMerce", back_populates='Merce', cascade="all, delete-orphan")
+    FatturaAcquisto = relationship("ContenutoAcquisto", back_populates='Merce',  cascade="all, delete-orphan")
+    FatturaVendita = relationship("ContenutoVenditaMerce", back_populates='Merce',  cascade="all, delete-orphan")
+    Immagine = relationship("ImmaginiMerce", back_populates='Merce', cascade="all, delete-orphan")
 
     def __init__(self, Id, Nome, Quantità, PrezzoUnitario, IVA, MateriaPrima):
         self.Id = Id
@@ -291,7 +313,7 @@ class ProduzioneGiornaliera(db.Model):
     Data = db.Column(db.Date(), primary_key=True)
     Note = db.Column(db.String(500))
 
-    Semilavorato = relationship("produzione", back_populates='produzioneGiornaliera', cascade="all, delete-orphan")
+    Semilavorato = relationship("Produzione", back_populates='Produzione', cascade="all, delete-orphan")
 
     def __init__(self, Data, Note):
         self.Data = Data
@@ -308,9 +330,11 @@ class FattureAcquisto(db.Model):
     NumDocumento = db.Column(db.Integer(), nullable=False)
     Data = db.Column(db.Date(), nullable=False)
 
-    NoteVariazioneRicevute = relationship("NoteVariazioneRicevute")
+    Fornitore = relationship("Fornitori", back_populates="FatturaAcquisto")
 
-    Merce = relationship("ContenutoAcquisto", back_populates='fattureAcquisto',  cascade="all, delete-orphan")
+    NotaVariazioneRicevute = relationship("NoteVariazioneRicevute", back_populates = "FatturaAcquisto")
+
+    Merce = relationship("ContenutoAcquisto", back_populates='FatturaAcquisto',  cascade="all, delete-orphan")
 
     def __init__(self, Id, Mail_Fornitore, NumDocumento, Data):
         self.Id = Id
@@ -329,10 +353,10 @@ class FattureVendita(db.Model):
     NumDocumento = db.Column(db.Integer(), nullable=False)
     Data = db.Column(db.Date(), nullable=False)
 
-    NoteVariazioneEmesse = relationship("NotevariazioneEmesse")
+    NotaVariazioneEmesse = relationship("NoteVariazioneEmesse", back_populates = "FatturaVendita")
 
-    Merce = relationship("ContenutoVenditaMerce", back_populates='fattureVendita', cascade="all, delete-orphan")
-    Semilavorati = relationship("ContenutoVenditaSemilavorato", back_populates='fattureVendita',  cascade="all, delete-orphan")
+    Merce = relationship("ContenutoVenditaMerce", back_populates='FatturaVendita', cascade="all, delete-orphan")
+    Semilavorato = relationship("ContenutoVenditaSemilavorati", back_populates='FatturaVendita',  cascade="all, delete-orphan")
 
     def __init__(self, Id, Mail_Fornitore, NumDocumento, Data):
         self.Id = Id
@@ -352,6 +376,8 @@ class NoteVariazioneRicevute(db.Model):
     Data = db.Column(db.Date(), nullable=False)
     Note = db.Column(db.String(500))
     Variazione = db.Column(db.Float())
+
+    FatturaAcquisto = relationship("FattureAcquisto", back_populates = "NotaVariazioneRicevute")
 
     def __init__(self, Id, Id_fatturaAcquisto, NumDocumento, Data, Note, Variazione):
         self.Id = Id
@@ -374,6 +400,8 @@ class NoteVariazioneEmesse(db.Model):
     Note = db.Column(db.String(500))
     Variazione = db.Column(db.Float())
 
+    FatturaVendita = relationship("FattureVendita", back_populates = "NotaVariazioneEmesse")
+
     def __init__(self, Id, Id_fatturaVendita, NumDocumento, Data, Note, Variazione):
         self.Id = Id
         self.Id_fatturaVendita = Id_fatturaVendita
@@ -394,6 +422,9 @@ class Blog(db.Model):
     Mail_Dipendente = db.Column(ForeignKey('dipendenti.Mail', ondelete='CASCADE'), primary_key = True)
     Id_Articolo = db.Column(ForeignKey('articoli.Id', ondelete='CASCADE'), primary_key = True)
 
+    Dipendente = relationship('Dipendenti', back_populates='Articolo')
+    Articolo = relationship('Articoli', back_populates='Dipendente')
+
 #assciazione personale turni
 class PersonaleTurni(db.Model):
     __tablename__ = 'personaleTurni'
@@ -404,12 +435,18 @@ class PersonaleTurni(db.Model):
     OraInizio = db.Column(db.Time())
     OraFine = db.Column(db.Time())
 
+    Dipendente = relationship('Dipendenti', back_populates='Turno')
+    Turno = relationship('Turni', back_populates='Dipendente')
+
 # associazione tra materie prime e semilavorati
 class Ricette(db.Model):
     __tablename__ = 'ricette'
 
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
     Id_MateriaPrima = db.Column(ForeignKey('merce.Id', ondelete='CASCADE'), primary_key=True)   #in quanto specificato che solo le merci che sono materie prime possono comporre ricette
+
+    Semilavorato = relationship('Semilavorati', back_populates='Merce')
+    Merce = relationship('Merce', back_populates='Semilavorato')
 
 #assciazione clienti semilavorati
 class WishList(db.Model):
@@ -419,6 +456,9 @@ class WishList(db.Model):
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
     Quantità = db.Column(db.Integer())
 
+    Cliente_WishList = relationship('Clienti', back_populates='Semilavorato_WishList')
+    Semilavorato_WishList = relationship('Semilavorati', back_populates='Cliente_WishList')
+
 #assciazione clienti semilavorati
 class Carrello(db.Model):
     __tablename__ = 'carrello'
@@ -426,6 +466,9 @@ class Carrello(db.Model):
     Mail_Cliente = db.Column(ForeignKey('clienti.Mail', ondelete='CASCADE'), primary_key=True)
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
     Quantità = db.Column(db.Integer())
+
+    Cliente_Carrello = relationship('Clienti', back_populates='Semilavorato_Carrello')
+    Semilavorato_Carrello = relationship('Semilavorati', back_populates='Cliente_Carrello')
 
 #assciazione produzioneGiornaliera semilavorati
 class Produzione(db.Model):
@@ -435,6 +478,9 @@ class Produzione(db.Model):
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
     Quantità = db.Column(db.Integer())
 
+    Produzione = relationship('ProduzioneGiornaliera', back_populates='Semilavorato')
+    Semilavorato = relationship('Semilavorati', back_populates='Produzione')
+
 #assciazione scontrini semilavorati
 class ScontriniSemilavorati(db.Model):
     __tablename__ = 'scontriniSemilavorati'
@@ -442,6 +488,9 @@ class ScontriniSemilavorati(db.Model):
     Id_Scontrino = db.Column(ForeignKey('scontrini.Id', ondelete='CASCADE'), primary_key=True)
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
     Quantità = db.Column(db.Integer())
+
+    Scontrino = relationship('Scontrini', back_populates='Semilavorato')
+    Semilavorato = relationship('Semilavorati', back_populates='Scontrino')
 
 #assciazione scontrini merce
 class ScontriniMerce(db.Model):
@@ -451,6 +500,9 @@ class ScontriniMerce(db.Model):
     Id_Merce = db.Column(ForeignKey('merce.Id', ondelete='CASCADE'), primary_key=True)
     Quantità = db.Column(db.Integer())
 
+    Scontrino = relationship('Scontrini', back_populates='Merce')
+    Merce = relationship('Merce', back_populates='Scontrino')
+
 #assciazione fatture acquisto merce
 class ContenutoAcquisto(db.Model):
     __tablename__ = 'contenutoAcquisto'
@@ -458,6 +510,9 @@ class ContenutoAcquisto(db.Model):
     Id_FatturaAcquisto = db.Column(ForeignKey('fattureAcquisto.Id', ondelete='CASCADE'), primary_key=True)
     Id_Merce = db.Column(ForeignKey('merce.Id', ondelete='CASCADE'), primary_key=True)
     Quantità = db.Column(db.Integer())
+
+    FatturaAcquisto = relationship('FattureAcquisto', back_populates='Merce')
+    Merce = relationship('Merce', back_populates='FatturaAcquisto')
 
 #assciazione fatture vendita merce
 class ContenutoVenditaMerce(db.Model):
@@ -467,6 +522,9 @@ class ContenutoVenditaMerce(db.Model):
     Id_Merce = db.Column(ForeignKey('merce.Id', ondelete='CASCADE'), primary_key=True)
     Quantità = db.Column(db.Integer())
 
+    FatturaVendita = relationship('FattureVendita', back_populates='Merce')
+    Merce = relationship('Merce', back_populates='FatturaVendita')
+
 # assciazione fatture vendita semilavorati
 class ContenutoVenditaSemilavorati(db.Model):
     __tablename__ = 'contenutoVenditaSemilavorati'
@@ -475,12 +533,18 @@ class ContenutoVenditaSemilavorati(db.Model):
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
     Quantità = db.Column(db.Integer())
 
+    FatturaVendita = relationship('FattureVendita', back_populates='Semilavorato')
+    Semilavorato = relationship('Semilavorati', back_populates='FatturaVendita')
+
 # assciazione immagini articoli
 class ImmaginiArticoli(db.Model):
     __tablename__ = 'immaginiArticoli'
 
     Id_Articolo = db.Column(ForeignKey('articoli.Id', ondelete='CASCADE'), primary_key=True)
     Id_Img = db.Column(ForeignKey('immagini.Id', ondelete='CASCADE'), primary_key=True)
+
+    Articolo = relationship('Articoli', back_populates = 'Immagine')
+    Immagine = relationship('Immagini', back_populates = 'Articolo')
 
 # assciazione immagini semilarorati
 class ImmaginiSemilavorati(db.Model):
@@ -489,10 +553,16 @@ class ImmaginiSemilavorati(db.Model):
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
     Id_Img = db.Column(ForeignKey('immagini.Id', ondelete='CASCADE'), primary_key=True)
 
+    Semilavorato = relationship('Semilavorati', back_populates='Immagine')
+    Immagine = relationship('Immagini', back_populates='Semilavorato')
+
 # assciazione immagini merce
 class ImmaginiMerce(db.Model):
     __tablename__ = 'immaginiMerce'
 
     Id_Merce = db.Column(ForeignKey('merce.Id', ondelete='CASCADE'), primary_key=True)
     Id_Img = db.Column(ForeignKey('immagini.Id', ondelete='CASCADE'), primary_key=True)
+
+    Merce = relationship('Merce', back_populates='Immagine')
+    Immagine = relationship('Immagini', back_populates='Merce')
 
