@@ -10,10 +10,11 @@
                         <div class="section-title">
                             <h2>Benvenuto o ben tornato</h2>
                         </div>
-                        <form action="#">
-                            <input type="text" placeholder="Name">
-                            <input type="password" placeholder="Password">
-                            <button type="submit" class="site-btn">registration</button>
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+                            {{ form.username }}
+                            {{ form.password }}
+                            {{ form.submit }}
                         </form>
                     </div>
                 </div>

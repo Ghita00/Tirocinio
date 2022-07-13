@@ -5,10 +5,16 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from flask_bcrypt import Bcrypt
+from flask_login import UserMixin
+
+#TODO Fornitori --> DittaFornitrice, metti username e password su persone
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgresql@localhost:5432/pasticceria"
+
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 migrate = Migrate(app, db)
 
 engine = create_engine("postgresql://postgres:postgresql@localhost:5432/pasticceria")
@@ -29,7 +35,6 @@ class Immagini(db.Model):
     Semilavorato = relationship("ImmaginiSemilavorati", back_populates='Immagine', cascade="all, delete-orphan")
     Merce = relationship("ImmaginiMerce", back_populates='Immagine', cascade="all, delete-orphan")
 
-
     def __init__(self, Id, img):
         self.Id = Id
         self.img = img
@@ -37,12 +42,14 @@ class Immagini(db.Model):
     def __repr__(self):
         return f"<Immagini {self.Id}>"
 
-class Persone(db.Model):
+class Persone(db.Model, UserMixin):
     __tablename__ = 'persone'
 
     Mail = db.Column(db.String(60), primary_key=True)
     Nome = db.Column(db.String(60), nullable=False)
     Cognome = db.Column(db.String(60), nullable=False)
+    Username = db.Column(db.String(60), nullable=False, unique=True)
+    Password = db.Column(db.String(500), nullable=False)
     DataNascita = db.Column(db.Date(), nullable=False)
     Telefono = db.Column(db.String(15), nullable=False)
     Rating = db.Column(db.Integer)
@@ -52,15 +59,19 @@ class Persone(db.Model):
 
     Dipendente = relationship("Dipendenti", back_populates = "Persona")
     Cliente = relationship("Clienti", back_populates = "Persona")
-    Fornitore = relationship("Fornitori", back_populates = "Persona")
 
-    def __init__(self, Mail, Nome, Cognome, DataNascita, Telefono, Rating):
+    def __init__(self, Mail, Nome, Cognome, Username, Password, DataNascita, Telefono, Rating):
         self.Mail = Mail
         self.Nome = Nome
         self.Cognome = Cognome
+        self.Username = Username
+        self.Password = bcrypt.generate_password_hash(Password).decode('utf-8')
         self.DataNascita = DataNascita
         self.Telefono = Telefono
         self.Rating = Rating
+
+    def get_id(self):
+        return (self.Mail)
 
     def __repr__(self):
         return f"<Persona {self.Mail}>"
@@ -69,8 +80,6 @@ class Dipendenti(db.Model):
     __tablename__ = 'dipendenti'
 
     Mail = db.Column(ForeignKey('persone.Mail', ondelete='CASCADE'), primary_key = True)
-    Username = db.Column(db.String(60), nullable=False)
-    Password = db.Column(db.String(60), nullable=False)
     DataAssunzione = db.Column(db.Date(), nullable=False)
 
     Persona = relationship("Persone", back_populates = 'Dipendente')
@@ -80,10 +89,8 @@ class Dipendenti(db.Model):
     Articolo = relationship("Blog", back_populates='Dipendente',  cascade="all, delete-orphan")
     Turno = relationship("PersonaleTurni", back_populates='Dipendente',  cascade="all, delete-orphan")
 
-    def __init__(self, Mail, Username, Password, DataAssunzione):
+    def __init__(self, Mail, DataAssunzione):
         self.Mail = Mail
-        self.Username = Username
-        self.Password = Password
         self.DataAssunzione = DataAssunzione
 
     def __repr__(self):
@@ -93,8 +100,6 @@ class Clienti(db.Model):
     __tablename__ = 'clienti'
 
     Mail = db.Column(ForeignKey('persone.Mail', ondelete='CASCADE'), primary_key = True)
-    Username = db.Column(db.String(60), nullable=False)
-    Password = db.Column(db.String(60), nullable=False)
     DataRegistrazione = db.Column(db.Date(), nullable=False)
 
     Persona = relationship("Persone", back_populates="Cliente")
@@ -102,40 +107,47 @@ class Clienti(db.Model):
     Semilavorato_WishList = relationship("WishList", back_populates='Cliente_WishList',  cascade="all, delete-orphan")
     Semilavorato_Carrello = relationship("Carrello", back_populates='Cliente_Carrello',  cascade="all, delete-orphan")
 
-    def __init__(self, Mail, Username, Password, DataRegistrazione):
+    def __init__(self, Mail, DataRegistrazione):
         self.Mail = Mail
-        self.Username = Username
-        self.Password = Password
         self.DataRegistrazione = DataRegistrazione
+
+    def get_id(self):
+        return (self.user_id)
 
     def __repr__(self):
         return f"<Cliente {self.Mail}>"
 
-class Fornitori(db.Model):
-    __tablename__ = 'fornitori'
+class DittaFornitrice(db.Model):
+    __tablename__ = 'dittaFornitrice'
 
-    Mail = db.Column(ForeignKey('persone.Mail', ondelete='CASCADE'), primary_key = True)
-    Ditta = db.Column(db.String(60), nullable=False)
-    PartitaIVA = db.Column(db.String(11), nullable=False)
-
-    Persona = relationship("Persone", back_populates="Fornitore")
+    PartitaIVA = db.Column(db.String(11), primary_key=True)
+    Nome = db.Column(db.String(60), nullable=False)
+    Mail = db.Column(db.String(20), nullable=False)
+    Telefono = db.Column(db.String(15), nullable=False)
+    Via = db.Column(db.String(20))
+    Città = db.Column(db.String(20))
+    Stato = db.Column(db.String(20))
 
     DDT = relationship("DDT", back_populates = "Fornitore")
     FatturaAcquisto = relationship("FattureAcquisto", back_populates = "Fornitore")
 
-    def __init__(self, Mail, Ditta, PartitaIVA):
-        self.Mail = Mail
-        self.Ditta = Ditta
+    def __init__(self, PartitaIVA, Nome, Mail, Telefono, Via, Città, Stato):
         self.PartitaIVA = PartitaIVA
+        self.Nome = Nome
+        self.Mail = Mail
+        self.Telefono = Telefono
+        self.Via = Via
+        self.Città = Città
+        self.Stato = Stato
 
     def __repr__(self):
-        return f"<Fornitore {self.Mail}>"
+        return f"<Fornitore {self.PartitaIVA}>"
 
 class DDT(db.Model):
     __tablename__ = 'ddt'
 
     Id = db.Column(db.Integer(), primary_key=True)
-    Mail_Fornitore = db.Column(db.String(60), ForeignKey("fornitori.Mail", ondelete='CASCADE'))
+    Id_Fornitore = db.Column(db.String(11), ForeignKey("dittaFornitrice.PartitaIVA", ondelete='CASCADE'))
     NumDocumento = db.Column(db.Integer(), nullable=False)
     DataEmissione = db.Column(db.Date(), nullable=False)
     Note = db.Column(db.String(500))    #q.tà dei beni trasportati per voce, aspetto esteriore, descrizione
@@ -143,7 +155,7 @@ class DDT(db.Model):
     Peso = db.Column(db.Float())
     Colli = db.Column(db.Integer())
 
-    Fornitore = relationship("Fornitori", back_populates="DDT")
+    Fornitore = relationship("DittaFornitrice", back_populates="DDT")
 
     def __init__(self, Id, Mail_Fornitore, DataEmissione, Note, Importo, Peso, Colli):
         self.Id = Id
@@ -326,11 +338,11 @@ class FattureAcquisto(db.Model):
     __tablename__ = 'fattureAcquisto'
 
     Id = db.Column(db.Integer(), primary_key=True)
-    Mail_Fornitore = db.Column(db.String(60), ForeignKey('fornitori.Mail', ondelete='CASCADE'))
+    Id_Fornitore = db.Column(db.String(11), ForeignKey('dittaFornitrice.PartitaIVA', ondelete='CASCADE'))
     NumDocumento = db.Column(db.Integer(), nullable=False)
     Data = db.Column(db.Date(), nullable=False)
 
-    Fornitore = relationship("Fornitori", back_populates="FatturaAcquisto")
+    Fornitore = relationship("DittaFornitrice", back_populates="FatturaAcquisto")
 
     NotaVariazioneRicevute = relationship("NoteVariazioneRicevute", back_populates = "FatturaAcquisto")
 
