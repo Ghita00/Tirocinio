@@ -1,0 +1,25 @@
+{% extends 'sito/base.html' %}
+
+{% block register %}
+ <section class="class spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="class__form">
+                        <div class="section-title">
+                            <h2>Benvenuto o ben tornato</h2>
+                        </div>
+                        <form method="POST" action="">
+                            {{ form.hidden_tag() }}
+                            {{ form.username }}
+                            {{ form.password }}
+                            {{ form.submit }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+ </section>
+
+{% endblock %}

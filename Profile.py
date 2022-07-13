@@ -5,7 +5,6 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from GenDB import *
 
-
 profile = Blueprint('profile', __name__)
 
 class LoginForm(FlaskForm):
@@ -39,6 +38,14 @@ def signup():
 @profile.route('/logout')
 def logout():
     return render_template('sito/index.html')
+
+@profile.route('/user')
+def user():
+    return render_template('sito/user.html')
+
+@profile.route('/register')
+def register():
+    return render_template('sito/register.html')
 
 
 

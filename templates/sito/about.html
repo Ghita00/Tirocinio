@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="breadcrumb__links">
-                        <a href="./index.html">Home</a>
+                        <a href="{{url_for('home')}}">Home</a>
                         <span>About</span>
                     </div>
                 </div>
@@ -27,8 +27,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="about__video set-bg" data-setbg="{{url_for('static', filename='img/sito/about-video.jpg')}}">
-                        <a href="https://www.youtube.com/watch?v=8PJ3_p7VqHw&list=RD8PJ3_p7VqHw&start_radio=1"
-                        class="play-btn video-popup"><i class="fa fa-play"></i></a>
+                        <a href="https://www.youtube.com/watch?v=8PJ3_p7VqHw&list=RD8PJ3_p7VqHw&start_radio=1" class="play-btn video-popup"><i class="fa fa-play"></i></a>
                     </div>
                 </div>
             </div>
@@ -71,7 +70,9 @@
             </div>
         </div>
     </section>
+
     <!-- About Section End -->
+
     <!-- Testimonial Section Begin -->
     <section class="testimonial spad">
         <div class="container">

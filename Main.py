@@ -28,7 +28,15 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    return render_template("sito/user.html")
+    return render_template("sito/index.html")
+
+@app.route('/about')
+def about():
+    return render_template("sito/about.html")
+
+@app.route('/contact')
+def contact():
+    return render_template("sito/contact.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
