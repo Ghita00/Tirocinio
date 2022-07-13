@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/sito/flaticon.css')}}" type="text/css">
     <link rel="stylesheet" href="{{url_for('static', filename='css/sito/barfiller.css')}}" type="text/css">
     <link rel="stylesheet" href="{{url_for('static', filename='css/sito/magnific-popup.css')}}" type="text/css">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/sito/elegant-icons.css')}}" type="text/css">
+    <!--<link rel="stylesheet" href="{{url_for('static', filename='css/sito/elegant-icons.css')}}" type="text/css">-->
     <link rel="stylesheet" href="{{url_for('static', filename='css/sito/nice-select.css')}}" type="text/css">
     <link rel="stylesheet" href="{{url_for('static', filename='css/sito/owl.carousel.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{url_for('static', filename='css/sito/slicknav.min.css')}}" type="text/css">
@@ -126,15 +126,66 @@
     {% endblock %}
 
     <!-- block about -->
-    {% block breadcrumb %}
+    {% block breadcrumbAbout %}
     {% endblock %}
     {% block team2 %}
     {% endblock %}
 
     <!-- block login -->
-    {% block login%}
+    {% block login %}
     {% endblock %}
 
+    <!-- block blog -->
+    {% block breadcrumbBlog %}
+    {% endblock %}
+    {% block blog %}
+    {% endblock %}
+
+    <!-- block blog details -->
+    {% block hero2 %}
+    {% endblock %}
+    {% block details %}
+    {% endblock %}
+
+    <!-- block checkout -->
+    {% block breadcrumbCheckout %}
+    {% endblock %}
+    {% block checkout %}
+    {% endblock %}
+
+    <!-- block contact -->
+    {% block contact %}
+    {% endblock %}
+
+    <!-- block shop -->
+    {% block breadcrumbShop %}
+    {% endblock %}
+    {% block product %}
+    {% endblock %}
+
+    <!-- block shop details -->
+    {% block breadcrumbDetails %}
+    {% endblock %}
+    {% block detailsProduct %}
+    {% endblock %}
+    {% block similar %}
+    {% endblock %}
+
+    <!-- block shopping-cart -->
+    {% block breadcrumbCart %}
+    {% endblock %}
+    {% block cart %}
+    {% endblock %}
+
+    <!-- block wisslist -->
+    {% block breadcrumbWishlist %}
+    {% endblock %}
+    {% block wish %}
+    {% endblock %}
+
+    <!-- block user -->
+    {% block user %}
+    {% endblock %}
 
     <!-- Footer Section Begin -->
     <footer class="footer set-bg" data-setbg="{{url_for('static', filename='img/sito/footer-bg.jpg')}}">

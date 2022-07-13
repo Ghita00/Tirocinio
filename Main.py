@@ -17,8 +17,8 @@ app.register_blueprint(ecommerce, url_prefix = "")
 app.register_blueprint(blog, url_prefix = "")
 
 @app.route('/')
-def hello_world():
-    return render_template("sito/index.html")
+def home():
+    return render_template("sito/user.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
