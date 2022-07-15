@@ -1,4 +1,30 @@
 {% extends 'sito/base.html' %}
 
 {% block user %}
+<div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-8">
+                    <div class="blog__details__recipe__details">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="blog__details__ingredients">
+                                    <h6>Ciao {{nome}}, ecco i tuoi dati personali</h6>
+                                    <ul>
+                                        <li><span>.</span> Nome: {{nome}}</li>
+                                        <li><span>.</span> Cognome: {{cognome}}</li>
+                                        <li><span>.</span> Data di nascita: {{datanascita}}</li>
+                                        <li><span>.</span> Mail: {{mail}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="blog__details__ingredients__pic">
+                                    <img src="{{url_for('static', filename='img/sito/blog/details/blog-details.jpg')}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
 {% endblock %}

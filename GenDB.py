@@ -8,7 +8,6 @@ from sqlalchemy.orm import sessionmaker
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 
-#TODO Fornitori --> DittaFornitrice, metti username e password su persone
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgresql@localhost:5432/pasticceria"

@@ -8,12 +8,17 @@
                 <div class="col-lg-6">
                     <div class="class__form">
                         <div class="section-title">
-                            <h2>Benvenuto o ben tornato</h2>
+                            <h2>Benvenuto</h2>
                         </div>
                         <form method="POST" action="">
                             {{ form.hidden_tag() }}
+                            {{ form.nome }}
+                            {{ form.cognome }}
+                            {{ form.datanascita }}
+                            {{ form.mail }}
                             {{ form.username }}
                             {{ form.password }}
+                            {{ form.telefono }}
                             {{ form.submit }}
                         </form>
                     </div>

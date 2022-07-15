@@ -8,6 +8,8 @@ from Profile import profile
 from Ecommerce import ecommerce
 from Blog import blog
 
+#TODO, ATTENZIONE il campo rating va modificato o settato dal manager
+
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 fa = FontAwesome(app) #serve per i font
 db.create_all() #serve per il db
