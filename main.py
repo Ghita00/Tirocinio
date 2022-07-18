@@ -10,6 +10,8 @@ from Blog import blog
 from Documenti import documenti
 from Magazzino import magazzino
 
+#TODO, ATTENZIONE il campo rating va modificato o settato dal manager
+
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 fa = FontAwesome(app) #serve per i font
 db.create_all() #serve per il db
@@ -31,6 +33,16 @@ def load_user(user_id):
 @app.route('/')
 def home():
     return render_template("gestionale/index.html")
+
+
+@app.route('/about')
+def about():
+    return render_template("sito/about.html")
+
+@app.route('/contact')
+def contact():
+    return render_template("sito/contact.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
