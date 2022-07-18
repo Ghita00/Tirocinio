@@ -7,6 +7,8 @@ from flask_fontawesome import FontAwesome
 from Profile import profile
 from Ecommerce import ecommerce
 from Blog import blog
+from Documenti import documenti
+from Magazzino import magazzino
 
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 fa = FontAwesome(app) #serve per i font
@@ -28,7 +30,7 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    return render_template("sito/user.html")
+    return render_template("gestionale/index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
