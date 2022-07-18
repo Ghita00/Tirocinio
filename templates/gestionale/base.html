@@ -41,9 +41,9 @@
     <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
       <div class="nano">
         <div class="nano-content">
-          <div class="logo"><a href="url_for{{'TODO DA FARE'}}"><span>Dashboard</span></a></div>
+          <div class="logo"><a href="{{ url_for('Ghome') }}"><span>Dashboard</span></a></div>
           <ul>
-              <li><a class="sidebar-sub-toggle" href="TODO DA FARE">Ordini<span class="sidebar-collapse-icon"></span></a></li>
+              <li><a class="sidebar-sub-toggle">Ordini<span class="sidebar-collapse-icon"></span></a></li>
               <li><a class="sidebar-sub-toggle"> Produzione giornaliera<span class="sidebar-collapse-icon "></span></a></li>
               <li><a class="sidebar-sub-toggle"> Organizzazione Staff<span class="sidebar-collapse-icon "></span></a></li>
               <li><a class="sidebar-sub-toggle"> Ricettario<span class="sidebar-collapse-icon "></span></a></li>
@@ -68,7 +68,7 @@
                     <li><a href="chart-morris.html">Chiusura Cassa</a></li>
                   </ul>
               </li>
-              <li><a class="sidebar-sub-toggle">Blog<span class="sidebar-collapse-icon"></span></a></li>
+              <li><a class="sidebar-sub-toggle" href="{{ url_for('blog.Gblog') }}">Blog<span class="sidebar-collapse-icon"></span></a></li>
           </ul>
         </div>
       </div>

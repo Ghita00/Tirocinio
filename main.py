@@ -26,14 +26,14 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+#sito
 @login_manager.user_loader
 def load_user(user_id):
     return Persone.query.get(user_id)
 
 @app.route('/')
 def home():
-    return render_template("gestionale/index.html")
-
+    return render_template("sito/index.html")
 
 @app.route('/about')
 def about():
@@ -43,6 +43,10 @@ def about():
 def contact():
     return render_template("sito/contact.html")
 
+#gestionale
+@app.route('/gestionale/home')
+def Ghome():
+    return render_template("gestionale/index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
