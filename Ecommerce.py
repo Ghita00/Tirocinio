@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for
 
 ecommerce = Blueprint('ecommerce', __name__)
 
@@ -21,4 +21,9 @@ def checkout():
 @ecommerce.route('/wisslist')
 def wisslist():
     return render_template("sito/wisslist.html")
+
+@ecommerce.route('/modifyWishlist')
+def modifyWishlist():
+    #fare la query che modifica
+    return redirect(url_for('ecommerce.shop'))
 

@@ -35,8 +35,7 @@
                                     <th>Product</th>
                                     <th>Unit Price</th>
                                     <th>Stock</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th>ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,8 +50,8 @@
                                     </td>
                                     <td class="cart__price">$ 15.00</td>
                                     <td class="cart__stock">In stock</td>
-                                    <td class="cart__btn"><a href="#" class="primary-btn">Add to cart</a></td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
+                                    <!-- query che aggiunge al carrello e rimuove dalla whislist-->
+                                    <td class="cart__btn"><a href="{{url_for('ecommerce.modifyWishlist')}}" class="primary-btn">Aggiungi al carrelo</a></td>
                                 </tr>
                             </tbody>
                         </table>
