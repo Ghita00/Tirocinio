@@ -22,6 +22,7 @@ class RegisterForm(FlaskForm):
 class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password"})
+
     submit = SubmitField('Login')
 
 @profile.route('/login', methods=['GET', 'POST'])
@@ -56,9 +57,10 @@ def register():
     if form.validate_on_submit():
         new_user = Persone(Mail=form.mail.data, Nome=form.nome.data, Cognome=form.cognome.data, Username=form.username.data, Password=form.password.data, DataNascita=form.datanascita.data, Telefono=form.telefono.data, Rating=0)
         new_client = Clienti(Mail=form.mail.data, DataRegistrazione=date.today())
-        db.session.add(new_user, new_client)
+        db.session.add(new_user)
+        db.session.add(new_client)
         db.session.commit()
-        return redirect(url_for('profile.user'))
+        return redirect(url_for('profile.login'))
 
     return render_template('sito/register.html', form=form)
 
