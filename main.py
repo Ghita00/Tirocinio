@@ -7,6 +7,8 @@ from flask_fontawesome import FontAwesome
 from Profile import profile
 from Ecommerce import ecommerce
 from Blog import blog
+from Documenti import documenti
+from Magazzino import magazzino
 
 #TODO, ATTENZIONE il campo rating va modificato o settato dal manager
 
@@ -24,6 +26,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+#sito
 @login_manager.user_loader
 def load_user(user_id):
     return Persone.query.get(user_id)
@@ -39,6 +42,11 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template("sito/contact.html")
+
+#gestionale
+@app.route('/gestionale/home')
+def Ghome():
+    return render_template("gestionale/index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
