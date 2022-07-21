@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, DateField
+from wtforms import StringField, PasswordField, SubmitField, DateField, FileField
 from wtforms.validators import InputRequired, Length, ValidationError
+from datetime import date
 from GenDB import *
 
 profile = Blueprint('profile', __name__)
@@ -52,10 +53,10 @@ def logout():
 @profile.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
-
     if form.validate_on_submit():
         new_user = Persone(Mail=form.mail.data, Nome=form.nome.data, Cognome=form.cognome.data, Username=form.username.data, Password=form.password.data, DataNascita=form.datanascita.data, Telefono=form.telefono.data, Rating=0)
-        db.session.add(new_user)
+        new_client = Clienti(Mail=form.mail.data, DataRegistrazione=date.today())
+        db.session.add(new_user, new_client)
         db.session.commit()
         return redirect(url_for('profile.user'))
 

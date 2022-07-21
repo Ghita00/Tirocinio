@@ -59,23 +59,27 @@
     <section class="shop">
         <div class="container">
             <div class="row">
+                {% for i in range(0, lenProd) %}
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="{{url_for('static', filename='img/sito/shop/product-1.jpg')}}">
                             <div class="product__label">
-                                <span>Cupcake</span>
+                                <span>{{Prod[i].Categoria}}</span>
                             </div>
                         </div>
                     </div>
                         <div class="product__item__text">
-                            <h6><a href="#">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
+                            <h6><a href="#">{{Prod[i].Nome}}</a></h6>
+                            <div class="product__item__price">
+                                ${{Prod[i].PrezzoUnitario}}
+                            </div>
                             <div class="cart_add">
                                 <a href="#">Add to cart</a>
                             </div>
                         </div>
-                    </div>
                 </div>
+                {% endfor %}
+            </div>
                 <div class="shop__last__option">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">

@@ -1,10 +1,15 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, url_for
+from werkzeug.utils import redirect
+
+from GenDB import *
+
 
 ecommerce = Blueprint('ecommerce', __name__)
 
 @ecommerce.route('/shop')
 def shop():
-    return render_template("sito/shop.html")
+    Prodotti = Semilavorati.query.all()
+    return render_template("sito/shop.html",Prod = list(Prodotti), lenProd = len(list(Prodotti)))
 
 @ecommerce.route('/shop-details')
 def shop_details():
@@ -18,9 +23,9 @@ def shoping_cart():
 def checkout():
     return render_template("sito/checkout.html")
 
-@ecommerce.route('/wisslist')
-def wisslist():
-    return render_template("sito/wisslist.html")
+@ecommerce.route('/wishlist')
+def wishlist():
+    return render_template("sito/wishlist.html")
 
 @ecommerce.route('/modifyWishlist')
 def modifyWishlist():
