@@ -34,8 +34,7 @@ class Immagini(db.Model):
     Semilavorato = relationship("ImmaginiSemilavorati", back_populates='Immagine', cascade="all, delete-orphan")
     Merce = relationship("ImmaginiMerce", back_populates='Immagine', cascade="all, delete-orphan")
 
-    def __init__(self, Id, img):
-        self.Id = Id
+    def __init__(self, img):
         self.img = img
 
     def __repr__(self):
@@ -121,11 +120,11 @@ class DittaFornitrice(db.Model):
 
     PartitaIVA = db.Column(db.String(11), primary_key=True)
     Nome = db.Column(db.String(60), nullable=False)
-    Mail = db.Column(db.String(20), nullable=False)
+    Mail = db.Column(db.String(50), nullable=False)
     Telefono = db.Column(db.String(15), nullable=False)
-    Via = db.Column(db.String(20))
-    Città = db.Column(db.String(20))
-    Stato = db.Column(db.String(20))
+    Via = db.Column(db.String(50))
+    Città = db.Column(db.String(50))
+    Stato = db.Column(db.String(50))
 
     DDT = relationship("DDT", back_populates = "Fornitore")
     FatturaAcquisto = relationship("FattureAcquisto", back_populates = "Fornitore")
@@ -156,8 +155,7 @@ class DDT(db.Model):
 
     Fornitore = relationship("DittaFornitrice", back_populates="DDT")
 
-    def __init__(self, Id, Mail_Fornitore, DataEmissione, Note, Importo, Peso, Colli):
-        self.Id = Id
+    def __init__(self, Mail_Fornitore, DataEmissione, Note, Importo, Peso, Colli):
         self.Mail_Fornitore = Mail_Fornitore
         self.DataEmissione = DataEmissione
         self.Note = Note
@@ -178,8 +176,7 @@ class Stipendi(db.Model):
 
     Dipendente = relationship("Dipendenti", back_populates="Stipendio")
 
-    def __init__(self, Id, Mail_Dipedendente, DataEmissione, ImportoNetto):
-        self.Id = Id
+    def __init__(self, Mail_Dipedendente, DataEmissione, ImportoNetto):
         self.Mail_Dipendenti = Mail_Dipedendente
         self.DataEmissione = DataEmissione
         self.ImportoNetto = ImportoNetto
@@ -198,8 +195,7 @@ class Articoli(db.Model):
     Dipendente = relationship("Blog", back_populates='Articolo', cascade="all, delete-orphan")
     Immagine = relationship("ImmaginiArticoli", back_populates='Articolo', cascade="all, delete-orphan")
 
-    def __init__(self, Id, Titolo, Contenuto, DataPubblicazione):
-        self.Id = Id
+    def __init__(self, Titolo, Contenuto, DataPubblicazione):
         self.Titolo = Titolo
         self.Contenuto = Contenuto
         self.DataPubblicazione = DataPubblicazione
@@ -218,8 +214,7 @@ class Turni(db.Model):
 
     Dipendente = relationship("PersonaleTurni", back_populates='Turno', cascade="all, delete-orphan")
 
-    def __init__(self, Id, Nome, OraInizio, OraFine, CompensoOrario):
-        self.Id = Id
+    def __init__(self, Nome, OraInizio, OraFine, CompensoOrario):
         self.Nome = Nome
         self.OraInizio = OraInizio
         self.OraFine = OraFine
@@ -232,11 +227,12 @@ class Semilavorati(db.Model):
     __tablename__ = 'semilavorati'
 
     Id = db.Column(db.Integer(), primary_key=True)
-    Nome = db.Column(db.String(60), nullable=False)
+    Nome = db.Column(db.String(60), nullable=False, unique=True)
     Quantità = db.Column(db.Integer(), nullable=False)
     PrezzoUnitario = db.Column(db.Float(), nullable=False)
     IVA = db.Column(db.Float())
     Preparazione = db.Column(db.String(1000))
+    Categoria = db.Column(db.String(60))
 
     Scontrino = relationship("ScontriniSemilavorati", back_populates='Semilavorato',  cascade="all, delete-orphan")
     Merce = relationship("Ricette", back_populates='Semilavorato', cascade="all, delete-orphan")
@@ -246,13 +242,13 @@ class Semilavorati(db.Model):
     FatturaVendita = relationship("ContenutoVenditaSemilavorati", back_populates='Semilavorato', cascade="all, delete-orphan")
     Immagine = relationship("ImmaginiSemilavorati", back_populates='Semilavorato', cascade="all, delete-orphan")
 
-    def __init__(self, Id, Nome, Quantità, PrezzoUnitario, IVA, Preparazione):
-        self.Id = Id
+    def __init__(self, Nome, Quantità, PrezzoUnitario, IVA, Preparazione, Categoria):
         self.Nome = Nome
         self.Quantità = Quantità
         self.PrezzoUnitario = PrezzoUnitario
         self.IVA = IVA
         self.Preparazione = Preparazione
+        self.Categoria = Categoria
 
     def __repr__(self):
         return f"<Semilavorati {self.Id}>"
@@ -266,8 +262,7 @@ class Scontrini(db.Model):
     Semilavorato = relationship("ScontriniSemilavorati", back_populates='Scontrino', cascade="all, delete-orphan")
     Merce = relationship("ScontriniMerce", back_populates='Scontrino',  cascade="all, delete-orphan")
 
-    def __init__(self, Id, Data):
-        self.Id = Id
+    def __init__(self, Data):
         self.Data = Data
 
     def __repr__(self):
@@ -277,12 +272,11 @@ class Allergeni(db.Model):
     __tablename__ = 'allergeni'
 
     Id = db.Column(db.Integer(), primary_key=True)
-    Nome = db.Column(db.String(60), nullable=False)
+    Nome = db.Column(db.String(60), nullable=False, unique=True)
 
     Merce = relationship("Merce", back_populates = "Allergene")
 
-    def __init__(self, Id, Nome):
-        self.Id = Id
+    def __init__(self, Nome):
         self.Nome = Nome
 
     def __repr__(self):
@@ -307,8 +301,7 @@ class Merce(db.Model):
     FatturaVendita = relationship("ContenutoVenditaMerce", back_populates='Merce',  cascade="all, delete-orphan")
     Immagine = relationship("ImmaginiMerce", back_populates='Merce', cascade="all, delete-orphan")
 
-    def __init__(self, Id, Nome, Quantità, PrezzoUnitario, IVA, MateriaPrima):
-        self.Id = Id
+    def __init__(self, Nome, Quantità, PrezzoUnitario, IVA, MateriaPrima):
         self.Nome = Nome
         self.Quantità = Quantità
         self.PrezzoUnitario = PrezzoUnitario
@@ -347,8 +340,7 @@ class FattureAcquisto(db.Model):
 
     Merce = relationship("ContenutoAcquisto", back_populates='FatturaAcquisto',  cascade="all, delete-orphan")
 
-    def __init__(self, Id, Mail_Fornitore, NumDocumento, Data):
-        self.Id = Id
+    def __init__(self, Mail_Fornitore, NumDocumento, Data):
         self.Mail_Fornitore = Mail_Fornitore
         self.NumDocumento = NumDocumento
         self.Data = Data
@@ -369,8 +361,7 @@ class FattureVendita(db.Model):
     Merce = relationship("ContenutoVenditaMerce", back_populates='FatturaVendita', cascade="all, delete-orphan")
     Semilavorato = relationship("ContenutoVenditaSemilavorati", back_populates='FatturaVendita',  cascade="all, delete-orphan")
 
-    def __init__(self, Id, Mail_Fornitore, NumDocumento, Data):
-        self.Id = Id
+    def __init__(self, Mail_Fornitore, NumDocumento, Data):
         self.Mail_Fornitore = Mail_Fornitore
         self.NumDocumento = NumDocumento
         self.Data = Data
@@ -390,8 +381,7 @@ class NoteVariazioneRicevute(db.Model):
 
     FatturaAcquisto = relationship("FattureAcquisto", back_populates = "NotaVariazioneRicevute")
 
-    def __init__(self, Id, Id_fatturaAcquisto, NumDocumento, Data, Note, Variazione):
-        self.Id = Id
+    def __init__(self, Id_fatturaAcquisto, NumDocumento, Data, Note, Variazione):
         self.Id_fatturaAcquisto = Id_fatturaAcquisto
         self.NumDocumento = NumDocumento
         self.Data = Data
@@ -413,8 +403,7 @@ class NoteVariazioneEmesse(db.Model):
 
     FatturaVendita = relationship("FattureVendita", back_populates = "NotaVariazioneEmesse")
 
-    def __init__(self, Id, Id_fatturaVendita, NumDocumento, Data, Note, Variazione):
-        self.Id = Id
+    def __init__(self, Id_fatturaVendita, NumDocumento, Data, Note, Variazione):
         self.Id_fatturaVendita = Id_fatturaVendita
         self.NumDocumento = NumDocumento
         self.Data = Data

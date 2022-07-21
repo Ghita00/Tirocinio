@@ -65,7 +65,7 @@
                             <div class="header__top__right">
                                 <div class="header__top__right__links">
                                     <a href="#" class="search-switch"><img src="{{url_for('static', filename='img/sito/icon/search.png')}}" alt=""></a>
-                                    <a href="{{url_for('ecommerce.wisslist')}}"><img src="{{url_for('static', filename='img/sito/icon/heart.png')}}" alt=""></a>
+                                    <a href="{{url_for('ecommerce.wishlist')}}"><img src="{{url_for('static', filename='img/sito/icon/heart.png')}}" alt=""></a>
                                 </div>
                                 <div class="header__top__right__cart">
                                     <a href="{{url_for('ecommerce.shoping_cart')}}"><img src="{{url_for('static', filename='img/sito/icon/cart.png')}}" alt=""> <span>0</span></a>
@@ -91,7 +91,7 @@
                                     <li><a href="{{url_for('ecommerce.shop_details')}}">Shop Details</a></li>
                                     <li><a href="{{url_for('ecommerce.shoping_cart')}}">Shoping Cart</a></li>
                                     <li><a href="{{url_for('ecommerce.checkout')}}">Check Out</a></li>
-                                    <li><a href="{{url_for('ecommerce.wisslist')}}">Wisslist</a></li>
+                                    <li><a href="{{url_for('ecommerce.wishlist')}}">Wishlist</a></li>
                                     <li><a href="{{url_for('blog.blog_details')}}">Blog Details</a></li>
                                 </ul>
                             </li>
@@ -175,7 +175,7 @@
     {% block cart %}
     {% endblock %}
 
-    <!-- block wisslist -->
+    <!-- block wishlist -->
     {% block breadcrumbWishlist %}
     {% endblock %}
     {% block wish %}
