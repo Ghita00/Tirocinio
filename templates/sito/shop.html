@@ -43,7 +43,6 @@
                             <select>
                                 <option value="">Default sorting</option>
                                 <option value="">A to Z</option>
-                                <option value="">1 - 8</option>
                                 <option value="">Name</option>
                             </select>
                             <a href="#"><i class="fa fa-list"></i></a>
@@ -57,7 +56,7 @@
 {% endblock %}
 
 {% block product %}
-    <section class="shop span">
+    <section class="shop">
         <div class="container">
             <div class="row">
                 {% for i in range(0, lenProd) %}
@@ -88,7 +87,6 @@
                                 <a href="#">1</a>
                                 <a href="#">2</a>
                                 <a href="#">3</a>
-                                <a href="#"><span class="arrow_carrot-right"></span></a>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -98,6 +96,7 @@
                         </div>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
     </section>

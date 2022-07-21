@@ -3,6 +3,7 @@ from werkzeug.utils import redirect
 
 from GenDB import *
 
+
 ecommerce = Blueprint('ecommerce', __name__)
 
 @ecommerce.route('/shop')
@@ -25,4 +26,9 @@ def checkout():
 @ecommerce.route('/wishlist')
 def wishlist():
     return render_template("sito/wishlist.html")
+
+@ecommerce.route('/modifyWishlist')
+def modifyWishlist():
+    #fare la query che modifica
+    return redirect(url_for('ecommerce.shop'))
 
