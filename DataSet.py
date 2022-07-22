@@ -59,7 +59,11 @@ Blog = [Blog(Mail_Dipendente='larissadanci@gmail.com', Id_Articolo=1),
         Blog(Mail_Dipendente='larissadanci@gmail.com', Id_Articolo=2),
         Blog(Mail_Dipendente='larissadanci@gmail.com', Id_Articolo=3)]
 
-Data = [Blog]
+WishList = [WishList(Mail_Cliente='rominadanci@gmail.com', Id_Semilavorato=1),
+            WishList(Mail_Cliente='rominadanci@gmail.com', Id_Semilavorato=3),
+            WishList(Mail_Cliente='rominadanci@gmail.com', Id_Semilavorato=5)]
+
+Data = [WishList]
 
 for i in Data:
     session.add_all(i)

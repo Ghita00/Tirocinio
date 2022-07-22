@@ -12,6 +12,8 @@ from Magazzino import magazzino
 
 #TODO, ATTENZIONE il campo rating va modificato o settato dal manager
 
+#TODO per gio, bisogna aggiungere un cuoricino dove ci stanno i semilavorati (shop) che andrà collegato alla query di insert nella wishlist
+
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 fa = FontAwesome(app) #serve per i font
 db.create_all() #serve per il db

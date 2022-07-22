@@ -10,17 +10,20 @@
                         <div class="section-title text-center">
                             <h2>Benvenuto</h2>
                         </div>
+                        {% from "sito/_formhelpers.html" import render_field %}
                         <form method="POST" action="">
-                            {{ form.hidden_tag() }}
-                            {{ form.nome }}
-                            {{ form.cognome }}
-                            {{ form.datanascita }}
-                            {{ form.mail }}
-                            {{ form.username }}
-                            {{ form.password }}
-                            {{ form.telefono }}
-                            {{ form.img }}
-                            {{ form.submit }}
+                          <dl>
+                              {{ form.hidden_tag() }}
+                              {{ render_field(form.nome) }}
+                              {{ render_field(form.cognome) }}
+                              {{ render_field(form.datanascita) }}
+                              {{ render_field(form.mail) }}
+                              {{ render_field(form.username) }}
+                              {{ render_field(form.password) }}
+                              {{ render_field(form.password_confirm) }}
+                              {{ render_field(form.telefono) }}
+                          </dl>
+                          <p>{{ form.submit }}
                         </form>
                     </div>
                 </div>

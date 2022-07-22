@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, DateField, FileField
-from wtforms.validators import InputRequired, Length, ValidationError
+from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
 from datetime import date
 from GenDB import *
 
@@ -15,6 +15,7 @@ class RegisterForm(FlaskForm):
     mail = StringField(validators=[InputRequired()], render_kw={"placeholder": "Mail"})
     username = StringField(validators=[InputRequired()], render_kw={"placeholder": "Username"})
     password = PasswordField(validators=[InputRequired()], render_kw={"placeholder": "Password"})
+    password_confirm = PasswordField(validators=[InputRequired(), EqualTo('password', message='Passwords must match')], render_kw={"placeholder": "Repeat Password"})
     telefono = StringField(validators=[InputRequired()], render_kw={"placeholder": "Telefono"})
 
     submit = SubmitField('Register')

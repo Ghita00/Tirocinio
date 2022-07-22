@@ -10,10 +10,11 @@
                         <div class="section-title">
                             <h2>Benvenuto o ben tornato</h2>
                         </div>
+                        {% from "sito/_formhelpers.html" import render_field %}
                         <form method="POST" action="">
                             {{ form.hidden_tag() }}
-                            {{ form.username }}
-                            {{ form.password }}
+                            {{ render_field(form.username) }}
+                            {{ render_field(form.password) }}
                             {{ form.submit }}
                         </form>
                         <a href="{{url_for('profile.register')}}">Non hai ancora un account? Registrati</a>

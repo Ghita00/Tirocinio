@@ -8,6 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 
+#TODO 1. Sistema questione immagini, 2. Aggiungi campo preferito allo shop, 3. Aggiungi in stock su semilavorato
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgresql@localhost:5432/pasticceria"
@@ -454,7 +455,6 @@ class WishList(db.Model):
 
     Mail_Cliente = db.Column(ForeignKey('clienti.Mail', ondelete='CASCADE'), primary_key=True)
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
-    Quantità = db.Column(db.Integer())
 
     Cliente_WishList = relationship('Clienti', back_populates='Semilavorato_WishList')
     Semilavorato_WishList = relationship('Semilavorati', back_populates='Cliente_WishList')

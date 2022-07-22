@@ -38,22 +38,28 @@
                                     <th>ACTION</th>
                                 </tr>
                             </thead>
+                            {% for i in range(0, len_product) %}
                             <tbody>
+
                                 <tr>
                                     <td class="product__cart__item">
                                         <div class="product__cart__item__pic">
                                             <img src="{{url_for('static', filename='img/sito/shop/cart/cart-1.jpg')}}" alt="">
                                         </div>
                                         <div class="product__cart__item__text">
-                                            <h6>Vanilla Salted Caramel</h6>
+                                            <h6>{{ product[i].Nome }}</h6>
+                                            <!--<h6>Vanilla Salted Caramel</h6>-->
                                         </div>
                                     </td>
-                                    <td class="cart__price">$ 15.00</td>
-                                    <td class="cart__stock">In stock</td>
-                                    <!-- query che aggiunge al carrello e rimuove dalla whislist-->
+                                    <td class="cart__price">${{ product[i].PrezzoUnitario }}</td>
+                                    <!--<td class="cart__price">$ 15.00</td>-->
+                                    <!--<td class="cart__stock">In stock</td>-->
+                                    <!-- TODO query che aggiunge al carrello e rimuove dalla whislist + aggiunta campo in stock-->
                                     <td class="cart__btn"><a href="{{url_for('ecommerce.modifyWishlist')}}" class="primary-btn">Aggiungi al carrelo</a></td>
                                 </tr>
+
                             </tbody>
+                            {% endfor %}
                         </table>
                     </div>
                 </div>
