@@ -8,6 +8,7 @@ ecommerce = Blueprint('ecommerce', __name__)
 
 @ecommerce.route('/shop')
 def shop():
+    #TODO AGGIUNGERE UN PARAMETRO ALLA ROUTE CHE INDICA IL SORT DA FARE
     Prodotti = Semilavorati.query.all()
     return render_template("sito/shop.html",Prod = list(Prodotti), lenProd = len(list(Prodotti)))
 

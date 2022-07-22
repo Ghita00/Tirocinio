@@ -10,7 +10,7 @@
                         <div class="col-lg-8">
                             <div class="hero__text">
                                 <h2>Making your life sweeter one bite at a time!</h2>
-                                <a href="#" class="primary-btn">Our cakes</a>
+                                <a href="{{url_for('ecommerce.shop')}}" class="primary-btn">Our cakes</a>
                             </div>
                         </div>
                     </div>
@@ -21,8 +21,8 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-8">
                             <div class="hero__text">
-                                <h2>Making your life sweeter one bite at a time!</h2>
-                                <a href="#" class="primary-btn">Our cakes</a>
+                                <h2>Vienici a trovare in negozio</h2>
+                                <a href="{{url_for('contact')}}" class="primary-btn">Our cakes</a>
                             </div>
                         </div>
                     </div>
@@ -105,13 +105,20 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-lg-5"></div>
+                <div class="col-lg-3">
+                    <a href="{{url_for('ecommerce.shop')}}" class="primary-btn">visita lo shop</a>
+                </div>
+            </div>
+
         </div>
     </section>
     <!-- Team Section Begin -->
 {% endblock %}
 
 {% block team %}
-<section class="team span">
+<section class="team spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-7 col-md-7 col-sm-7">
@@ -346,44 +353,45 @@
                     <div class="instagram__text">
                         <div class="section-title">
                             <span>Follow us on instagram</span>
-                            <h2>Sweet moments are saved as memories.</h2>
+                            <h2>Sweet moments are saved as memories</h2>
                         </div>
-                        <h5><i class="fa fa-instagram"></i> seguici pure su instagram @sweetcake</h5>
                     </div>
                 </div>
                 <div class="col-lg-8">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
-                            <div class="instagram__pic">
-                                <img src="{{url_for('static', filename='img/sito/instagram/instagram-1.jpg')}}" alt="">
+                    <a href="">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                                <div class="instagram__pic">
+                                    <img src="{{url_for('static', filename='img/sito/instagram/instagram-1.jpg')}}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                                <div class="instagram__pic middle__pic">
+                                    <img src="{{url_for('static', filename='img/sito/instagram/instagram-2.jpg')}}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                                <div class="instagram__pic">
+                                    <img src="{{url_for('static', filename='img/sito/instagram/instagram-3.jpg')}}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                                <div class="instagram__pic">
+                                    <img src="{{url_for('static', filename='img/sito/instagram/instagram-4.jpg')}}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                                <div class="instagram__pic middle__pic">
+                                    <img src="{{url_for('static', filename='img/sito/instagram/instagram-5.jpg')}}" alt="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-6">
+                                <div class="instagram__pic">
+                                    <img src="{{url_for('static', filename='img/sito/instagram/instagram-4.jpg')}}" alt="">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
-                            <div class="instagram__pic middle__pic">
-                                <img src="{{url_for('static', filename='img/sito/instagram/instagram-2.jpg')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
-                            <div class="instagram__pic">
-                                <img src="{{url_for('static', filename='img/sito/instagram/instagram-3.jpg')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
-                            <div class="instagram__pic">
-                                <img src="{{url_for('static', filename='img/sito/instagram/instagram-4.jpg')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
-                            <div class="instagram__pic middle__pic">
-                                <img src="{{url_for('static', filename='img/sito/instagram/instagram-5.jpg')}}" alt="">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-6">
-                            <div class="instagram__pic">
-                                <img src="{{url_for('static', filename='img/sito/instagram/instagram-3.jpg')}}" alt="">
-                            </div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -393,10 +401,10 @@
 
 {% block lastpost %}
 <!-- Team Section Begin -->
-    <section class="team spad">
+    <section class="team">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8 col-md-7 col-sm-7">
+                <div class="col-lg-10 col-md-7 col-sm-7">
                     <div class="section-title">
                         <span>Blog</span>
                         <h2>Leggi anche i nostri ultimi post </h2>
@@ -417,11 +425,11 @@
 
 {% block map %}
 <!-- Map Begin -->
-    <section class="contact spad">
+    <section class="contact">
         <div class="container">
             <div class="section-title">
                 <span>Dove siamo</span>
-                <h2>Vienici a trovare presso la nostra pasticceria</h2>
+                <h2>Vieni a trovarci presso la nostra pasticceria</h2>
             </div>
             <div class="map">
                 <div class="container">
