@@ -64,6 +64,9 @@ def register():
 
     return render_template('sito/register.html', form=form)
 
-
+@profile.route('/sendMex', methods=['GET', 'POST'])
+def sendMex():
+    #TODO vedere se il fra è loggato
+    return redirect(url_for('profile.login'))
 
 
