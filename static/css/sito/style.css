@@ -542,7 +542,6 @@ ol {
   position: relative;
 }
 .hero__text:after {
-  position: absolute;
   left: 15px;
   top: 15px;
   height: calc(100% - 30px);
@@ -969,7 +968,6 @@ ol {
 -----------------------*/
 .map {
   position: relative;
-  height: 300px;
 }
 .map .container {
   position: relative;
@@ -3047,7 +3045,6 @@ ol {
 -----------------------*/
 .contact .map {
   height: 400px;
-  margin-bottom: 70px;
 }
 
 .contact__address {
@@ -4025,3 +4022,10 @@ ol {
     display: none;
   }
 }
+
+.pic{
+    height:300px;
+    width:300px;
+}
+
+

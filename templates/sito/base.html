@@ -85,7 +85,6 @@
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li class="active"><a href="{{url_for('home')}}">Home</a></li>
-                            <li><a href="{{url_for('about')}}">About</a></li>
                             <li><a href="{{url_for('ecommerce.shop')}}">Shop</a>
                                 <ul class="dropdown">
                                     <li><a href="{{url_for('ecommerce.shoping_cart')}}">Shoping Cart</a></li>
@@ -93,7 +92,7 @@
                                 </ul>
                             </li>
                             <li><a href="{{url_for('blog.blogRoute')}}">Blog</a></li>
-                            <li><a href="{{url_for('ecommerce.shop')}}">Contact</a></li>
+                            <li><a href="{{url_for('contact')}}">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -117,13 +116,13 @@
     {% endblock %}
     {% block instagram %}
     {% endblock %}
+    {% block lastpost %}
+    {% endblock %}
     {% block map %}
     {% endblock %}
 
     <!-- block about -->
     {% block breadcrumbAbout %}
-    {% endblock %}
-    {% block lastpost %}
     {% endblock %}
     {% block team2 %}
     {% endblock %}
@@ -209,12 +208,6 @@
                         </div>
                         <p>Lorem ipsum dolor amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore dolore magna aliqua.</p>
-                        <div class="footer__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-youtube-play"></i></a>
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6">
