@@ -61,7 +61,10 @@ Blog = [Blog(Mail_Dipendente='larissadanci@gmail.com', Id_Articolo=1),
 
 WishList = [WishList(Mail_Cliente='rominadanci@gmail.com', Id_Semilavorato=1),
             WishList(Mail_Cliente='rominadanci@gmail.com', Id_Semilavorato=3),
-            WishList(Mail_Cliente='rominadanci@gmail.com', Id_Semilavorato=5)]
+            WishList(Mail_Cliente='rominadanci@gmail.com', Id_Semilavorato=5),
+            WishList(Mail_Cliente='prova@gmail.com', Id_Semilavorato=1),
+            WishList(Mail_Cliente='prova@gmail.com', Id_Semilavorato=3),
+            WishList(Mail_Cliente='prova@gmail.com', Id_Semilavorato=5)]
 
 Data = [WishList]
 
