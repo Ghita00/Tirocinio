@@ -38,14 +38,19 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-5 col-md-5">
+                    <div class="col-lg-3 col-md-5">
                         <div class="shop__option__right">
-                            <select>
-                                <option value="1">A to Z</option>
-                                <option value="2">Prezzo</option>
-                            </select>
-                            <a href="#"><i class="fa fa-list"></i></a>
-                            <a href="#"><i class="fa fa-reorder"></i></a>
+                            <!--TODO DA SISTEMARE CON 2 BOTTONI-->
+                            <div class="">
+                                <a href="{{url_for('ecommerce.shop', id=1)}}" class="primary-btn">A to Z</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-5">
+                        <div class="shop__option__right">
+                            <div class="">
+                                <a href="{{url_for('ecommerce.shop', id=2)}}" class="primary-btn">prezzo</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -60,9 +65,8 @@
             <div class="row">
                 {% for i in range(0, lenProd) %}
                 <div class="col-lg-3 col-md-6 col-sm-6">
-
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="{{url_for('static', filename='img/sito/shop/product-1.jpg')}}" style="background-image: url(&quot;img/shop/product-1.jpg&quot;);">
+                    <a class="product__item space" href="{{url_for('ecommerce.shop_details')}}">
+                        <div class="product__item__pic set-bg" data-setbg="{{url_for('static', filename='img/sito/shop/product-1.jpg')}}">
                             <div class="product__label">
                                 <span>{{Prod[i].Categoria}}</span>
                             </div>
@@ -71,33 +75,34 @@
                             <h6><a href="{{url_for('ecommerce.shop_details')}}">{{Prod[i].Nome}}</a></h6>
                             <div class="product__item__price">${{Prod[i].PrezzoUnitario}}</div>
                             <div class="cart_add">
-                                <a href="url_for{{'shop_details'}}">Add to cart</a>
+                                <a href="{{url_for('ecommerce.shop_details')}}">Add to cart</a>
                             </div>
                         </div>
+                    </a>
                     </div>
-                    </div>
+                <br>
                 {% endfor %}
-
             </div>
-                <div class="shop__last__option">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="shop__pagination">
-                                <a href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#">3</a>
-                            </div>
+            <br>
+            <div class="shop__last__option">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="shop__pagination">
+                            <a href="#">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="shop__last__text">
-                                <p>Showing 1-9 of 10 results</p>
-                            </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="shop__last__text">
+                            <p>Showing 1-9 of 10 results</p>
                         </div>
                     </div>
                 </div>
-                <br>
             </div>
+            <br>
         </div>
+        <br>
     </section>
     <!-- Shop Section End -->
 {% endblock %}

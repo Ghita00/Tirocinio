@@ -23,12 +23,14 @@
 {% endblock %}
 
 {% block blog %}
-    {% for i in range(0, len_artic) %}
+
     <!-- Blog Section Begin -->
     <section class="blog spad">
         <div class="container">
             <div class="row">
+
                 <div class="col-lg-8">
+                    {% for i in range(0, len_artic) %}
                     <div class="blog__item">
                         <div class="blog__item__pic set-bg" data-setbg="{{url_for('static', filename='img/sito/blog/blog-1.jpg')}}">
                             <div class="blog__pic__inner">
@@ -36,7 +38,7 @@
                                 <ul>
                                     <li>By <span>{{ aut[i].Mail_Dipendente}}</span></li>
                                     <li>{{artic[i].DataPubblicazione}}</li>
-                                    <li>112 Views</li> <!--TODO -->
+                                    <li>112 Views</li>
                                 </ul>
                             </div>
                         </div>
@@ -46,6 +48,7 @@
                             <a href="{{url_for('blog.blogDetailsRoute')}}">READ MORE</a>
                         </div>
                     </div>
+                    {% endfor %}
                     <div class="shop__pagination">
                         <a href="#">1</a>
                         <a href="#">2</a>
@@ -105,6 +108,6 @@
             </div>
         </div>
     </section>
-    {% endfor %}
+
     <!-- Blog Section End -->
 {% endblock %}
