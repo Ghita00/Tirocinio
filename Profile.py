@@ -1,10 +1,12 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
+from sqlalchemy import func
 from wtforms import StringField, PasswordField, SubmitField, DateField, FileField
 from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
 from datetime import date
 from GenDB import *
+from Ecommerce import Auxcarrello
 
 profile = Blueprint('profile', __name__)
 
@@ -36,21 +38,25 @@ def login():
                 login_user(user)
                 if (Persone.query.join(Dipendenti).filter(Persone.Mail == Dipendenti.Mail).filter(Persone.Username == user.Username).first() != None) :
                     print("Dipendente")
-                    return render_template('gestionale/index.html')
+                    return render_template('gestionale/index.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
                 else:
                     print("Cliente")
+                    #TODO DA METTERE LA QUERY
+                    Auxcarrello.totale = 0
+                    Auxcarrello.quantità = 0
+                    print(Auxcarrello.quantità)
                     return redirect(url_for('profile.user'))
-    return render_template('sito/login.html', form=form)
+    return render_template('sito/login.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form)
 
 @profile.route('/user')
 @login_required
 def user():
-    return render_template('sito/user.html', nome = current_user.Nome, cognome=current_user.Cognome, mail=current_user.Mail, datanascita=current_user.DataNascita)
+    return render_template('sito/user.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, nome = current_user.Nome, cognome=current_user.Cognome, mail=current_user.Mail, datanascita=current_user.DataNascita)
 
 @profile.route('/logout')
 @login_required
 def logout():
-    return render_template('sito/index.html')
+    return render_template('sito/index.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
 
 @profile.route('/register', methods=['GET', 'POST'])
 def register():
@@ -63,7 +69,7 @@ def register():
         db.session.commit()
         return redirect(url_for('profile.login'))
 
-    return render_template('sito/register.html', form=form)
+    return render_template('sito/register.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form)
 
 @profile.route('/sendMex', methods=['GET', 'POST'])
 def sendMex():

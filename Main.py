@@ -5,15 +5,12 @@ from flask_fontawesome import FontAwesome
 
 #blueprint
 from Profile import profile
-from Ecommerce import ecommerce
+from Ecommerce import ecommerce, Auxcarrello
 from Blog import blog
 from Documenti import documenti
 from Magazzino import magazzino
 
 #TODO, ATTENZIONE il campo rating va modificato o settato dal manager
-
-#TODO per gio, bisogna aggiungere un cuoricino dove ci stanno i semilavorati (shop) che andrà collegato alla query di insert nella wishlist
-
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 fa = FontAwesome(app) #serve per i font
 db.create_all() #serve per il db
@@ -35,20 +32,20 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    return render_template("sito/index.html")
+    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
 
 @app.route('/about')
 def about():
-    return render_template("sito/about.html")
+    return render_template("sito/about.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
 
 @app.route('/contact')
 def contact():
-    return render_template("sito/contact.html")
+    return render_template("sito/contact.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
 
 #gestionale
 @app.route('/gestionale/home')
 def Ghome():
-    return render_template("gestionale/index.html")
+    return render_template("gestionale/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
 
 if __name__ == "__main__":
     app.run(debug=True)
