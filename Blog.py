@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from GenDB import *
-from Ecommerce import Auxcarrello
+from Utility import Auxcarrello
 
 blog = Blueprint('blog', __name__)
 

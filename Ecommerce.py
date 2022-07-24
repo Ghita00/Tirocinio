@@ -2,12 +2,10 @@ from flask import Blueprint, render_template, url_for, request
 from flask_login import login_required, current_user
 from werkzeug.utils import redirect
 from GenDB import *
+from Profile import LoginForm
+from Utility import Auxcarrello
 
 ecommerce = Blueprint('ecommerce', __name__)
-
-class Auxcarrello():
-    quantità = 0
-    totale = 0
 
 @ecommerce.route('/shop', methods=['GET', 'POST'])
 def shop():
@@ -29,32 +27,38 @@ def shop_details(id):
         #TODO QUERY CHE AGGIUNGE IL PRODOTTO AL CARRELLO OPPURE AGGIORNA LA QUANTITA
         return redirect(url_for('ecommerce.shop'))
     else:
-        #Prodotto = Semilavorati.query
+        Prodotto = Semilavorati.query.filter(Semilavorati.Id == id).first()
         return render_template("sito/shop-details.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
-                                                    nome = "prodotto", prezzo = "prezzo", incipit = "incipit", categoria = 'categoria', tags = 'tag', descrizione="descrizione")
+                                                    nome = Prodotto.Nome, prezzo = Prodotto.PrezzoUnitario, incipit = "incipit", categoria = 'categoria', tags = 'tag', descrizione=Prodotto.Preparazione)
 
 @ecommerce.route('/shoping-cart')
 def shoping_cart():
-    # TODO VEDERE SE IL FRA E LOGGATTO
-    return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
+    if current_user.is_authenticated:
+        return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
+    else:
+        return render_template("sito/login.html", form=LoginForm())
 
 @ecommerce.route('/checkout')
+@login_required
 def checkout():
     return render_template("sito/checkout.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
 
 @ecommerce.route('/wishlist')
-@login_required
 def wishlist():
-    #TODO VEDERE SE IL FRA E LOGGATTO
-    list_wishlist = Semilavorati.query.join(WishList).filter(WishList.Mail_Cliente == current_user.Mail).filter(WishList.Id_Semilavorato == Semilavorati.Id).all()
-    return render_template("sito/wishlist.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, product = list(list_wishlist), len_product = len(list(list_wishlist)))
+    if current_user.is_authenticated:
+        list_wishlist = Semilavorati.query.join(WishList).filter(WishList.Mail_Cliente == current_user.Mail).filter(WishList.Id_Semilavorato == Semilavorati.Id).all()
+        return render_template("sito/wishlist.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, product = list(list_wishlist), len_product = len(list(list_wishlist)), nome = current_user.Nome)
+    else:
+        return render_template("sito/login.html", form = LoginForm())
 
 @ecommerce.route('/modifyWishlist')
+@login_required
 def modifyWishlist():
     #TODO query che aggiunge al carrello fe rimuove dalla whislist + aggiunta campo in stock
     return redirect(url_for('ecommerce.shop'))
 
 @ecommerce.route('/addWishlist')
+@login_required
 def addWishlist():
     #TODO QUERY CHE AGGIUNGE UN ELEMENTO ALLA WISHLIST
     return redirect(url_for('ecommerce.shop'))

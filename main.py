@@ -2,10 +2,11 @@ from flask import Flask, render_template
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from GenDB import *
 from flask_fontawesome import FontAwesome
+from Utility import Auxcarrello
 
 #blueprint
 from Profile import profile
-from Ecommerce import ecommerce, Auxcarrello
+from Ecommerce import ecommerce
 from Blog import blog
 from Documenti import documenti
 from Magazzino import magazzino

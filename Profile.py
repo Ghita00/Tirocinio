@@ -1,12 +1,11 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from sqlalchemy import func
 from wtforms import StringField, PasswordField, SubmitField, DateField, FileField
 from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
 from datetime import date
 from GenDB import *
-from Ecommerce import Auxcarrello
+from Utility import Auxcarrello
 
 profile = Blueprint('profile', __name__)
 
@@ -56,6 +55,7 @@ def user():
 @profile.route('/logout')
 @login_required
 def logout():
+    logout_user()
     return render_template('sito/index.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
 
 @profile.route('/register', methods=['GET', 'POST'])
