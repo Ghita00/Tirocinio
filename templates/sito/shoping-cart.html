@@ -29,6 +29,15 @@
             <div class="row">
                 <div class="col-lg-8">
                     <div class="shopping__cart__table">
+                     {% with messages = get_flashed_messages() %}
+                      {% if messages %}
+                        <ul class=flashes>
+                        {% for message in messages %}
+                          <li>{{ message }}</li>
+                        {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
                         <table>
                             <thead>
                                 <tr>
@@ -38,6 +47,8 @@
                                     <th></th>
                                 </tr>
                             </thead>
+                            {% if lenProd != Undefined %}
+                            {% for i in range(0, lenProd) %}
                             <tbody>
                                 <tr>
                                     <td class="product__cart__item">
@@ -45,20 +56,24 @@
                                             <img src="{{url_for('static', filename='img/sito/shop/cart/cart-1.jpg')}}" alt="">
                                         </div>
                                         <div class="product__cart__item__text">
-                                            <h6>T-shirt Contrast Pocket</h6>
-                                            <h5>$98.49</h5>
+                                            <h6>{{Prod[i].Nome}}</h6>
+                                            <h5>{{Prod[i].PrezzoUnitario}}</h5>
                                         </div>
                                     </td>
+                                    <form action="" method="post">
                                     <td class="quantity__item">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <input type="text" value="1">
+                                                <input type="text" value="{{Cart[i].QuantitàCarrello}}">
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="cart__price">$ 30.00</td>
+                                    </form>
+                                    <td class="cart__price">{{Prod[i].PrezzoUnitario * Cart[i].QuantitàCarrello}}</td>
                                 </tr>
                             </tbody>
+                            {% endfor %}
+                            {% endif %}
                         </table>
                     </div>
                     <div class="row">

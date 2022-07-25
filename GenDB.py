@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 
-#TODO 1. Sistema questione immagini, 2. Aggiungi campo preferito allo shop, 3. Aggiungi in stock su semilavorato
+#TODO 1. Sistema questione immagini
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgresql@localhost:5432/pasticceria"
@@ -27,7 +27,7 @@ class Immagini(db.Model):
     __tablename__ = 'immagini'
 
     Id = db.Column(db.Integer(), primary_key=True)
-    img = db.Column(db.LargeBinary())
+    img = db.Column(db.String())
 
     Persona = relationship("Persone", back_populates = "Immagine")
 
@@ -100,6 +100,7 @@ class Clienti(db.Model):
 
     Mail = db.Column(ForeignKey('persone.Mail', ondelete='CASCADE'), primary_key = True)
     DataRegistrazione = db.Column(db.Date(), nullable=False)
+    IndirizzoSpedizione = db.Column(db.String(100)) #da ricontrollare
 
     Persona = relationship("Persone", back_populates="Cliente")
 
@@ -192,6 +193,7 @@ class Articoli(db.Model):
     Titolo = db.Column(db.String(60))
     Contenuto = db.Column(db.String(500))
     DataPubblicazione = db.Column(db.Date())
+    Categoria = db.Column(db.String())
 
     Dipendente = relationship("Blog", back_populates='Articolo', cascade="all, delete-orphan")
     Immagine = relationship("ImmaginiArticoli", back_populates='Articolo', cascade="all, delete-orphan")
@@ -234,6 +236,9 @@ class Semilavorati(db.Model):
     IVA = db.Column(db.Float())
     Preparazione = db.Column(db.String(1000))
     Categoria = db.Column(db.String(60))
+    Descrizione = db.Column(db.String(500))
+    Preferito = db.Column(db.Boolean())
+    Incipit = db.Column(db.String(100))
 
     Scontrino = relationship("ScontriniSemilavorati", back_populates='Semilavorato',  cascade="all, delete-orphan")
     Merce = relationship("Ricette", back_populates='Semilavorato', cascade="all, delete-orphan")
@@ -415,7 +420,6 @@ class NoteVariazioneEmesse(db.Model):
         return f"<NotediVariazioneEmesse {self.Id}>"
 
 
-
 #assciazione diendeti articoli
 class Blog(db.Model):
     __tablename__ = 'blog'
@@ -465,7 +469,7 @@ class Carrello(db.Model):
 
     Mail_Cliente = db.Column(ForeignKey('clienti.Mail', ondelete='CASCADE'), primary_key=True)
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
-    Quantità = db.Column(db.Integer())
+    QuantitàCarrello = db.Column(db.Integer())
 
     Cliente_Carrello = relationship('Clienti', back_populates='Semilavorato_Carrello')
     Semilavorato_Carrello = relationship('Semilavorati', back_populates='Cliente_Carrello')

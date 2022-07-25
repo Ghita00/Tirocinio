@@ -1,10 +1,16 @@
 from GenDB import *
 
 Persone = [Persone(Mail='vioricadanci@gmail.com', Nome='Viorica', Cognome='Danci', Username='vioricadanci', Password='Viorica79', DataNascita='1979-07-12', Telefono='3283187029', Rating='0'),
-           Persone(Mail='larissadanci@gmail.com', Nome='Larissa', Cognome='Danci', Username='larissadanci', Password='Larissa03', DataNascita='2003-03-01', Telefono='3205608445', Rating='0')]
+           Persone(Mail='larissadanci@gmail.com', Nome='Larissa', Cognome='Danci', Username='larissadanci', Password='Larissa03', DataNascita='2003-03-01', Telefono='3205608445', Rating='0'),
+           Persone(Mail='rominadanci@gmail.com', Nome='Romina', Cognome='Danci', Username='rominadanci', Password='Romina00', DataNascita='2000-01-20', Telefono='3290301407', Rating='0'),
+           Persone(Mail='prova@gmail.com', Nome='Prova', Cognome='ProvaCognome', Username='prova', Password='Prova000', DataNascita='2003-03-01', Telefono='123456789', Rating='0')
+           ]
 
 Dipendenti = [Dipendenti(Mail='vioricadanci@gmail.com', DataAssunzione='11-07-2022'),
               Dipendenti(Mail='larissadanci@gmail.com', DataAssunzione='11-07-2022')]
+
+Clienti = [Clienti(Mail='prova@gmail.com', DataRegistrazione='11-07-2022'),
+           Clienti(Mail='rominadanci@gmail.com', DataRegistrazione='11-07-2022')]
 
 DittaFornitrice = [DittaFornitrice(PartitaIVA='86334519757', Nome='StoccoSRL', Mail='stoccosrl@gmail.com', Telefono='0423406067', Via='Rossini 5', Città='Treviso', Stato='Italia'),
                    DittaFornitrice(PartitaIVA='88924578120', Nome='ColorantiSRL', Mail='colorantisrl@gmail.com', Telefono='0423807699', Via='San Marco 3', Città='Salzano', Stato='Italia'),
@@ -66,7 +72,7 @@ WishList = [WishList(Mail_Cliente='rominadanci@gmail.com', Id_Semilavorato=1),
             WishList(Mail_Cliente='prova@gmail.com', Id_Semilavorato=3),
             WishList(Mail_Cliente='prova@gmail.com', Id_Semilavorato=5)]
 
-Data = [WishList]
+Data = [Persone, Dipendenti, Clienti, DittaFornitrice, Allergeni, Turni, Semilavorati, Merce, Articoli, Blog, WishList]
 
 for i in Data:
     session.add_all(i)
