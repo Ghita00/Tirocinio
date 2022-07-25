@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, url_for, request, flash
 from flask_login import login_required, current_user
 from werkzeug.utils import redirect
 from GenDB import *
-from Profile import LoginForm
 from Utility import Auxcarrello
 
 ecommerce = Blueprint('ecommerce', __name__)
@@ -17,7 +16,7 @@ def shop():
             Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
     else:
         Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
-    return render_template("sito/shop.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, Prod = list(Prodotti), lenProd = len(list(Prodotti)))
+    return render_template("sito/shop.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, Prod = list(Prodotti), lenProd = len(list(Prodotti)), user = current_user.Nome)
 
 @ecommerce.route('/shop-details/<id>', methods=['GET', 'POST'])
 def shop_details(id):
@@ -33,28 +32,39 @@ def shop_details(id):
     else:
         Prodotto = Semilavorati.query.filter(Semilavorati.Id == id).first()
         return render_template("sito/shop-details.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
-                               id = Prodotto.Id, nome = Prodotto.Nome, prezzo = Prodotto.PrezzoUnitario, incipit = "incipit", categoria = 'categoria', tags = 'tag', descrizione="Prodotto.Preparazione")
+                               id = Prodotto.Id, nome = Prodotto.Nome, prezzo = Prodotto.PrezzoUnitario, incipit = "incipit", categoria = 'categoria', tags = 'tag', descrizione="Prodotto.Preparazione", user = current_user.Nome)
 
-@ecommerce.route('/shoping-cart')
+@ecommerce.route('/shoping-cart', methods=['GET', 'POST'])
 def shoping_cart():
     if current_user.is_authenticated:
         prod = Semilavorati.query.join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == Semilavorati.Id)
         cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).all()
-        return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
-                               Prod = list(prod), lenProd = len(list(prod)), Cart = list(cart))
+        if Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).first() != None:
+            return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
+                                   Prod = list(prod), lenProd = len(list(prod)), Cart = list(cart), user = current_user.Nome)
+        else:
+            print('ciao broschi')
+            flash("Il tuo carrello è attualmente vuoto")
+            return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
+                                   Prod = list(prod), lenProd = len(list(prod)), Cart = list(cart), user = current_user.Nome)
     else:
-        return render_template("sito/login.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=LoginForm())
+        return redirect(url_for('profile.login'))
 
 @ecommerce.route('/checkout')
 @login_required
 def checkout():
-    return render_template("sito/checkout.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
+    return render_template("sito/checkout.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = current_user.Nome)
 
 @ecommerce.route('/wishlist', methods=['GET', 'POST'])
 def wishlist():
     if current_user.is_authenticated:
         list_wishlist = Semilavorati.query.join(WishList).filter(WishList.Mail_Cliente == current_user.Mail).filter(WishList.Id_Semilavorato == Semilavorati.Id).all()
-        return render_template("sito/wishlist.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, product = list(list_wishlist), len_product = len(list(list_wishlist)), nome = current_user.Nome)
+        if WishList.query.filter(WishList.Mail_Cliente == current_user.Mail).first() != None:
+            return render_template("sito/wishlist.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, product = list(list_wishlist), len_product = len(list(list_wishlist)), user = current_user.Nome)
+        else:
+            flash("La tua WishList è attualmente vuota")
+            return render_template("sito/wishlist.html", total=Auxcarrello.quantità, totalMoney=Auxcarrello.totale,
+                                   product=list(list_wishlist), len_product=len(list(list_wishlist)), user=current_user.Nome)
     else:
         return redirect(url_for('profile.login'))
 

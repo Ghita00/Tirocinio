@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template
+from flask_login import current_user
+
 from GenDB import *
 from Utility import Auxcarrello
 
@@ -8,13 +10,13 @@ blog = Blueprint('blog', __name__)
 def blogRoute():
     articoli = Articoli.query.all()
     autori = Blog.query.join(Articoli).filter(Articoli.Id == Blog.Id_Articolo).all()
-    return render_template("sito/blog.html",total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, artic = list(articoli), len_artic = len(list(articoli)), aut = list(autori), len_aut = len(list(autori)))
+    return render_template("sito/blog.html",total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, artic = list(articoli), len_artic = len(list(articoli)), aut = list(autori), len_aut = len(list(autori)), user = current_user.Nome)
 
 @blog.route('/blog-details')
 def blogDetailsRoute():
-    return render_template("sito/blog-details.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
+    return render_template("sito/blog-details.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = current_user.Nome)
 
 #gestionale
 @blog.route("/gestionale/blog")
 def Gblog():
-    return render_template("gestionale/", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
+    return render_template("gestionale/", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = current_user.Nome)
