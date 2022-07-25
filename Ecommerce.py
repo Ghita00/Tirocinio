@@ -3,12 +3,13 @@ from flask_login import login_required, current_user
 from werkzeug.utils import redirect
 from GenDB import *
 from Profile import LoginForm
-from Utility import Auxcarrello
+from Utility import Auxcarrello, pages
 
 ecommerce = Blueprint('ecommerce', __name__)
 
 @ecommerce.route('/shop', methods=['GET', 'POST'])
 def shop():
+    pages.disattiva(1)
     if request.method == "POST":
         id = request.form['scelta']
         if id == 2:
@@ -17,7 +18,7 @@ def shop():
             Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
     else:
         Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
-    return render_template("sito/shop.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, Prod = list(Prodotti), lenProd = len(list(Prodotti)))
+    return render_template("sito/shop.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, Prod = list(Prodotti), lenProd = len(list(Prodotti)), pages = list(pages.pagine))
 
 @ecommerce.route('/shop-details/<id>', methods=['GET', 'POST'])
 def shop_details(id):
