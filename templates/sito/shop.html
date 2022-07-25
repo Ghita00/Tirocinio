@@ -82,9 +82,10 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="shop__pagination">
-                            <a href="#">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
+                            {% for i in range(0, lenProd, 10) %}
+                                <!--TODO GESTIRE PAGINE-->
+                                <a href="#">1</a>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">

@@ -29,14 +29,14 @@ def shop_details(id):
     else:
         Prodotto = Semilavorati.query.filter(Semilavorati.Id == id).first()
         return render_template("sito/shop-details.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
-                                                    nome = Prodotto.Nome, prezzo = Prodotto.PrezzoUnitario, incipit = "incipit", categoria = 'categoria', tags = 'tag', descrizione=Prodotto.Preparazione)
+                                                    nome = Prodotto.Nome, prezzo = Prodotto.PrezzoUnitario, incipit = "incipit", categoria = 'categoria', tags = 'tag', descrizione="Prodotto.Preparazione")
 
 @ecommerce.route('/shoping-cart')
 def shoping_cart():
     if current_user.is_authenticated:
         return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
     else:
-        return render_template("sito/login.html", form=LoginForm())
+        return render_template("sito/login.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=LoginForm())
 
 @ecommerce.route('/checkout')
 @login_required
@@ -49,7 +49,7 @@ def wishlist():
         list_wishlist = Semilavorati.query.join(WishList).filter(WishList.Mail_Cliente == current_user.Mail).filter(WishList.Id_Semilavorato == Semilavorati.Id).all()
         return render_template("sito/wishlist.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, product = list(list_wishlist), len_product = len(list(list_wishlist)), nome = current_user.Nome)
     else:
-        return render_template("sito/login.html", form = LoginForm())
+        return render_template("sito/login.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form = LoginForm())
 
 @ecommerce.route('/modifyWishlist')
 @login_required

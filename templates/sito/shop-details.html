@@ -59,14 +59,22 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="product__details__text">
-                        <div class="product__label">Cupcake</div>
-                        <h4>{{nome}}</h4>
-                        <h5>{{prezzo}}</h5>
+                        <div class="product__label">{{tags}}</div>
+                        <div class="row">
+                            <div class="col-5">
+                                <h4 class="resize">{{nome}}</h4>
+                            </div>
+                            <div class="col-6">
+                                <a href="{{url_for('ecommerce.addWishlist')}}" class="secondary-btn border">
+                                    <div>Aggiungi alla wishlist</div>
+                                </a>
+                            </div>
+                        </div>
+                        <h5>{{prezzo}} €</h5>
                         <p>{{incipit}}</p>
                         <ul>
                             <li>SKU: <span>17</span></li>
                             <li>Category: <span>{{categoria}}</span></li>
-                            <li>Tags: <span>{{tags}}</span></li>
                         </ul>
                         <form action="" method="post">
                             <div class="product__details__option">
@@ -77,7 +85,6 @@
                                 </div>
                                 <input type="submit" class="primary-btn"/>
                             </div>
-                            <a href="{{url_for('ecommerce.addWishlist')}}"><img src="{{url_for('static', filename='img/sito/icon/heart.png')}}" alt=""></a>
                         </form>
                     </div>
                 </div>

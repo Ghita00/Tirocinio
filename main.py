@@ -33,7 +33,10 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
+    #ATTENZIONE PER NELLA VARIABILE IMG VA MESSO "{{url_for('static', filename='X')}}" DOVE X E IL RISULTATO QUERY
+    #TODO QUERY ARTICOLI IN EVIDENZA
+    #TODO QUERY ULTIMO POST BLOG
+    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, img="immagine", testo = "testo articolo")
 
 @app.route('/about')
 def about():

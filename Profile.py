@@ -68,12 +68,14 @@ def register():
         db.session.add(new_client)
         db.session.commit()
         return redirect(url_for('profile.login'))
-
     return render_template('sito/register.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form)
 
 @profile.route('/sendMex', methods=['GET', 'POST'])
 def sendMex():
-    #TODO vedere se il fra è loggato
-    return redirect(url_for('profile.login'))
+    if current_user.is_authenticated:
+        #TODO QUERY DI METTERE IL MESSAGGIO DENTRO
+        return redirect(url_for('profile.user'))
+    else:
+        return redirect(url_for('profile.login', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale))
 
 

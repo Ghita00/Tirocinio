@@ -4044,3 +4044,18 @@ ol {
     padding-bottom:10px;
 }
 
+.border{
+    border:solid;
+    border-color:orange;
+    border-size:1px;
+}
+
+a{
+    color:black
+}
+
+a:hover{
+    color:black
+}
+
+
