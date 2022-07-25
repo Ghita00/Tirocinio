@@ -1,6 +1,15 @@
 {% extends 'sito/base.html' %}
 
 {% block breadcrumbDetails %}
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
@@ -65,7 +74,7 @@
                                 <h4 class="resize">{{nome}}</h4>
                             </div>
                             <div class="col-6">
-                                <a href="{{url_for('ecommerce.addWishlist')}}" class="secondary-btn border">
+                                <a href="{{url_for('ecommerce.addWishlist', id=id)}}" class="secondary-btn border">
                                     <div>Aggiungi alla wishlist</div>
                                 </a>
                             </div>
@@ -80,7 +89,7 @@
                             <div class="product__details__option">
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="text" value="2" name="quantita">
+                                        <input type="text" value="1" name="quantita">
                                     </div>
                                 </div>
                                 <input type="submit" class="primary-btn"/>

@@ -55,7 +55,7 @@
                                     <!--<td class="cart__price">$ 15.00</td>-->
                                     <!--<td class="cart__stock">In stock</td>-->
                                     <!-- TODO query che aggiunge al carrello fe rimuove dalla whislist + aggiunta campo in stock-->
-                                    <td class="cart__btn"><a href="{{url_for('ecommerce.modifyWishlist')}}" class="primary-btn">Aggiungi al carrelo</a></td>
+                                    <td class="cart__btn"><a href="{{url_for('ecommerce.modifyWishlist', id=product[i].Id)}}" class="primary-btn">Aggiungi al carrelo</a></td>
                                 </tr>
                             </tbody>
                             {% endfor %}
