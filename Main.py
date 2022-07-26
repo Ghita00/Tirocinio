@@ -33,11 +33,11 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
+
     if current_user.is_authenticated:
         utente = current_user.Nome
     else:
         utente = ''
-
     pages.disattiva(0)
     #ATTENZIONE PER NELLA VARIABILE IMG VA MESSO "{{url_for('static', filename='X')}}" DOVE X E IL RISULTATO QUERY
     #TODO QUERY ARTICOLI IN EVIDENZA
