@@ -84,4 +84,14 @@ def sendMex():
     else:
         return redirect(url_for('profile.login'))
 
+@profile.route('/commento', methods=['GET', 'POST'])
+def commento():
+    return render_template("sito/messaggio.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine))
 
+@profile.route('/sendComment', methods=['GET', 'POST'])
+def sendComment():
+    pages.disattiva(0)
+    if current_user.is_authenticated:
+        return redirect(url_for('profile.commento'))
+    else:
+        return redirect(url_for('profile.login'))

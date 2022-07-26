@@ -73,7 +73,7 @@
                             <div class="col-5">
                                 <h4 class="resize">{{nome}}</h4>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 center">
                                 <a href="{{url_for('ecommerce.addWishlist', id=id)}}" class="secondary-btn border">
                                     <div>Aggiungi alla wishlist</div>
                                 </a>
@@ -100,8 +100,23 @@
             </div>
             <div class="product__details__tab">
                 <div class="col-lg-12">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-1" role="tab" aria-selected="false">Description</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="true">Additional information</a>
+                        </li>
+                    </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                        <div class="tab-pane" id="tabs-1" role="tabpanel">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-lg-8">
+                                    <p>{{descrizione}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane active" id="tabs-2" role="tabpanel">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
                                     <p>{{descrizione}}</p>
