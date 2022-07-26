@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from GenDB import *
 from flask_fontawesome import FontAwesome
-from Utility import Auxcarrello
+from Utility import Auxcarrello, pages
 
 #blueprint
 from Profile import profile
@@ -33,10 +33,12 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
+    #TODO METTERE TUTTI I DISATTIVA
+    pages.disattiva(0)
     #ATTENZIONE PER NELLA VARIABILE IMG VA MESSO "{{url_for('static', filename='X')}}" DOVE X E IL RISULTATO QUERY
     #TODO QUERY ARTICOLI IN EVIDENZA
     #TODO QUERY ULTIMO POST BLOG
-    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, img="immagine", testo = "testo articolo")
+    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, img="immagine", testo = "testo articolo", pages = list(pages.pagine))
 
 @app.route('/about')
 def about():

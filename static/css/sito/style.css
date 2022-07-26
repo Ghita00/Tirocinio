@@ -4058,4 +4058,13 @@ a:hover{
     color:black
 }
 
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.orangeBack {
+    background-color: #fd7e14;
+}
 
