@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, url_for, request, flash
 from flask_login import login_required, current_user
+from sqlalchemy import func
 from werkzeug.utils import redirect
 from GenDB import *
 from Utility import Auxcarrello, pages
@@ -11,8 +12,15 @@ def shop():
     pages.disattiva(1)
     if current_user.is_authenticated:
         utente = current_user.Nome
+        cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
+        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
+        Auxcarrello.totale = round(float(tot[0].totcar), 2)
+        Auxcarrello.quantità = cart[0]
     else:
         utente = ''
+        Auxcarrello.totale = 0
+        Auxcarrello.quantità = 0
+
     if request.method == "POST":
         id = request.form['scelta']
         if id == 2:
@@ -21,6 +29,7 @@ def shop():
             Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
     else:
         Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
+
     return render_template("sito/shop.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, Prod = list(Prodotti), lenProd = len(list(Prodotti)), pages = list(pages.pagine), user = utente)
 
 @ecommerce.route('/shop-details/<id>', methods=['GET', 'POST'])
@@ -28,8 +37,15 @@ def shop_details(id):
     pages.disattiva(1)
     if current_user.is_authenticated:
         utente = current_user.Nome
+        Prodotto = Semilavorati.query.filter(Semilavorati.Id == id).first()
+        cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
+        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
+        Auxcarrello.totale = round(float(tot[0].totcar), 2)
+        Auxcarrello.quantità = cart[0]
     else:
         utente = ''
+        Auxcarrello.totale = 0
+        Auxcarrello.quantità = 0
     if request.method == "POST":
         quantita = request.form['quantita']
         if Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == id) == None:
@@ -39,9 +55,9 @@ def shop_details(id):
             Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == id).update({"QuantitàCarrello" : quantita})
 
         db.session.commit()
+
         return redirect(url_for('ecommerce.shop'))
     else:
-        Prodotto = Semilavorati.query.filter(Semilavorati.Id == id).first()
         return render_template("sito/shop-details.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
                                id = Prodotto.Id, nome = Prodotto.Nome, prezzo = Prodotto.PrezzoUnitario, incipit = "incipit", categoria = 'categoria', tags = 'tag', descrizione="Prodotto.Preparazione", user = utente, pages = list(pages.pagine))
 
@@ -52,11 +68,11 @@ def shoping_cart():
         utente = current_user.Nome
         prod = Semilavorati.query.join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == Semilavorati.Id)
         cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).all()
+        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
         if Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).first() != None:
             return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
-                                   Prod = list(prod), lenProd = len(list(prod)), Cart = list(cart), user = utente, pages = list(pages.pagine))
+                                   Prod = list(prod), lenProd = len(list(prod)), Cart = list(cart), user = utente, pages = list(pages.pagine), totale = round(float(tot[0].totcar),2))
         else:
-            print('ciao broschi')
             flash("Il tuo carrello è attualmente vuoto")
             return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
                                    Prod = list(prod), lenProd = len(list(prod)), Cart = list(cart), user = utente, pages = list(pages.pagine))

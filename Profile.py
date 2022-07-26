@@ -1,9 +1,11 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
+from sqlalchemy import func
 from wtforms import StringField, PasswordField, SubmitField, DateField, FileField
 from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
 from datetime import date
+
 from GenDB import *
 from Utility import Auxcarrello, pages
 
@@ -41,26 +43,30 @@ def login():
                     return render_template('gestionale/index.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine))
                 else:
                     print("Cliente")
-                    cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).count()
-                    print(cart)
-                    Auxcarrello.totale = 0
-                    Auxcarrello.quantità = 0
-                    print(Auxcarrello.quantità)
+                    cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
+                    tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
+                    Auxcarrello.totale = round(float(tot[0].totcar), 2)
+                    Auxcarrello.quantità = cart[0]
                     return redirect(url_for('profile.user'))
-    return render_template('sito/login.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine))
+
+    utente = ''
+    return render_template('sito/login.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine), user = utente)
 
 @profile.route('/user')
 @login_required
 def user():
     pages.disattiva(0)
+    cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
+    tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
+    Auxcarrello.totale = round(float(tot[0].totcar),2)
+    Auxcarrello.quantità = cart[0]
     return render_template('sito/user.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, nome = current_user.Nome, cognome=current_user.Cognome, mail=current_user.Mail, datanascita=current_user.DataNascita, user = current_user.Nome, pages = list(pages.pagine))
 
 @profile.route('/logout')
 @login_required
 def logout():
-    pages.disattiva(0)
     logout_user()
-    return render_template('sito/index.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine))
+    return redirect(url_for('home'))
 
 @profile.route('/register', methods=['GET', 'POST'])
 def register():
@@ -73,7 +79,9 @@ def register():
         db.session.add(new_client)
         db.session.commit()
         return redirect(url_for('profile.login'))
-    return render_template('sito/register.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine))
+
+    utente = ''
+    return render_template('sito/register.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine), user = utente)
 
 @profile.route('/sendMex', methods=['GET', 'POST'])
 def sendMex():

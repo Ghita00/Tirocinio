@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from sqlalchemy import func
+
 from GenDB import *
 from flask_fontawesome import FontAwesome
 from Utility import Auxcarrello, pages
@@ -33,23 +35,35 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-
+    pages.disattiva(0)
     if current_user.is_authenticated:
         utente = current_user.Nome
+        cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
+        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
+        Auxcarrello.totale = round(float(tot[0].totcar), 2)
+        Auxcarrello.quantità = cart[0]
     else:
         utente = ''
-    pages.disattiva(0)
+        Auxcarrello.totale = 0
+        Auxcarrello.quantità = 0
+
     #ATTENZIONE PER NELLA VARIABILE IMG VA MESSO "{{url_for('static', filename='X')}}" DOVE X E IL RISULTATO QUERY
-    #TODO QUERY ARTICOLI IN EVIDENZA
+    favorite = list(Semilavorati.query.filter(Semilavorati.Preferito == True))
     #TODO QUERY ULTIMO POST BLOG
-    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, img="immagine", testo = "testo articolo", pages = list(pages.pagine), user = utente)
+    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, img="immagine", testo = "testo articolo", pages = list(pages.pagine), user = utente, prod_fav = favorite, len_prod_fav = len(favorite))
 
 @app.route('/about')
 def about():
     if current_user.is_authenticated:
         utente = current_user.Nome
+        cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
+        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
+        Auxcarrello.totale = round(float(tot[0].totcar), 2)
+        Auxcarrello.quantità = cart[0]
     else:
         utente = ''
+        Auxcarrello.totale = 0
+        Auxcarrello.quantità = 0
 
     return render_template("sito/about.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = utente)
 
@@ -58,8 +72,14 @@ def contact():
     pages.disattiva(3)
     if current_user.is_authenticated:
         utente = current_user.Nome
+        cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
+        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
+        Auxcarrello.totale = round(float(tot[0].totcar), 2)
+        Auxcarrello.quantità = cart[0]
     else:
         utente = ''
+        Auxcarrello.totale = 0
+        Auxcarrello.quantità = 0
 
     return render_template("sito/contact.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine), user = utente)
 

@@ -57,7 +57,7 @@
                                         </div>
                                         <div class="product__cart__item__text">
                                             <h6>{{Prod[i].Nome}}</h6>
-                                            <h5>{{Prod[i].PrezzoUnitario}}</h5>
+                                            <h5>{{Prod[i].PrezzoUnitario}}€</h5>
                                         </div>
                                     </td>
                                     <form action="" method="post">
@@ -69,7 +69,7 @@
                                         </div>
                                     </td>
                                     </form>
-                                    <td class="cart__price">{{Prod[i].PrezzoUnitario * Cart[i].QuantitàCarrello}}</td>
+                                    <td class="cart__price">{{'%0.2f'| format(Prod[i].PrezzoUnitario * Cart[i].QuantitàCarrello|float)}}€</td>
                                 </tr>
                             </tbody>
                             {% endfor %}
@@ -95,8 +95,8 @@
                     <div class="cart__total">
                         <h6>Cart total</h6>
                         <ul>
-                            <li>Subtotal <span>$ 169.50</span></li>
-                            <li>Total <span>$ 169.50</span></li>
+                            <li>Subtotal <span>{{totale}}€</span></li>
+                            <li>Total <span>{{totale}}€</span></li>
                         </ul>
                         <a href="{{url_for('ecommerce.checkout')}}" class="primary-btn">Proceed to checkout</a>
                     </div>

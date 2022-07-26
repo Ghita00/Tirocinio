@@ -77,7 +77,7 @@
                         </div>
                         <div class="product__item__text">
                             <h6><a href="{{url_for('ecommerce.shop_details', id=Prod[i].Id)}}">{{Prod[i].Nome}}</a></h6>
-                            <div class="product__item__price">${{Prod[i].PrezzoUnitario}}</div>
+                            <div class="product__item__price">{{Prod[i].PrezzoUnitario}}€</div>
                             <div class="cart_add">
                                 <a href="{{url_for('ecommerce.shop_details', id=Prod[i].Id)}}">Add to cart</a>
                             </div>

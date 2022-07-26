@@ -88,23 +88,27 @@
                 <h2>I nostri prodotti in evidenza</h2>
             </div>
             <div class="row">
+                {% for i in range(0, len_prod_fav) %}
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="product__item">
+                    <a class="product__item space" href="{{url_for('ecommerce.shop_details', id=prod_fav[i].Id)}}">
                         <div class="product__item__pic set-bg" data-setbg="{{url_for('static', filename='img/sito/shop/product-1.jpg')}}">
                             <div class="product__label">
-                                <span>Cupcake</span>
+                                <span>{{prod_fav[i].Categoria}}</span>
                             </div>
                         </div>
                         <div class="product__item__text">
-                            <h6><a href="#">Dozen Cupcakes</a></h6>
-                            <div class="product__item__price">$32.00</div>
+                            <h6><a href="{{url_for('ecommerce.shop_details', id=prod_fav[i].Id)}}">{{prod_fav[i].Nome}}</a></h6>
+                            <div class="product__item__price">{{prod_fav[i].PrezzoUnitario}}€</div>
                             <div class="cart_add">
-                                <a href="#">Add to cart</a>
+                                <a href="{{url_for('ecommerce.shop_details', id=prod_fav[i].Id)}}">Add to cart</a>
                             </div>
                         </div>
+                    </a>
                     </div>
-                </div>
+                <br>
+                {% endfor %}
             </div>
+            <br>
             <div class="row">
                 <div class="col-lg-3 center">
                     <a href="{{url_for('ecommerce.shop')}}" class="primary-btn">visita lo shop</a>
