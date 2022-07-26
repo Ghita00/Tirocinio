@@ -65,13 +65,12 @@
                         <div class="header__top__inner">
                             <div class="header__top__left">
                                 <ul>
-                                    {% if user == Undefined %}
+                                    {% if user == '' %}
                                     <li>
                                         <a href="{{url_for('profile.login')}}">Sign in</a>
                                         <span class="arrow_carrot-down"></span>
                                     </li>
-                                    {% endif %}
-                                    {% if user != Undefined %}
+                                    {% else %}
                                     <li>
                                         <a href="{{url_for('profile.user')}}">Accont</a>
                                         <span class="arrow_carrot-down"></span>

@@ -5,7 +5,7 @@ from wtforms import StringField, PasswordField, SubmitField, DateField, FileFiel
 from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
 from datetime import date
 from GenDB import *
-from Utility import Auxcarrello
+from Utility import Auxcarrello, pages
 
 profile = Blueprint('profile', __name__)
 
@@ -29,6 +29,7 @@ class LoginForm(FlaskForm):
 
 @profile.route('/login', methods=['GET', 'POST'])
 def login():
+    pages.disattiva(0)
     form = LoginForm()
     if form.validate_on_submit():
         user = Persone.query.filter_by(Username=form.username.data).first()
@@ -37,29 +38,33 @@ def login():
                 login_user(user)
                 if (Persone.query.join(Dipendenti).filter(Persone.Mail == Dipendenti.Mail).filter(Persone.Username == user.Username).first() != None) :
                     print("Dipendente")
-                    return render_template('gestionale/index.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
+                    return render_template('gestionale/index.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine))
                 else:
                     print("Cliente")
-                    #TODO DA METTERE LA QUERY
+                    cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).count()
+                    print(cart)
                     Auxcarrello.totale = 0
                     Auxcarrello.quantità = 0
                     print(Auxcarrello.quantità)
                     return redirect(url_for('profile.user'))
-    return render_template('sito/login.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form)
+    return render_template('sito/login.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine))
 
 @profile.route('/user')
 @login_required
 def user():
-    return render_template('sito/user.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, nome = current_user.Nome, cognome=current_user.Cognome, mail=current_user.Mail, datanascita=current_user.DataNascita, user = current_user.Nome)
+    pages.disattiva(0)
+    return render_template('sito/user.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, nome = current_user.Nome, cognome=current_user.Cognome, mail=current_user.Mail, datanascita=current_user.DataNascita, user = current_user.Nome, pages = list(pages.pagine))
 
 @profile.route('/logout')
 @login_required
 def logout():
+    pages.disattiva(0)
     logout_user()
-    return render_template('sito/index.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
+    return render_template('sito/index.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine))
 
 @profile.route('/register', methods=['GET', 'POST'])
 def register():
+    pages.disattiva(0)
     form = RegisterForm()
     if form.validate_on_submit():
         new_user = Persone(Mail=form.mail.data, Nome=form.nome.data, Cognome=form.cognome.data, Username=form.username.data, Password=form.password.data, DataNascita=form.datanascita.data, Telefono=form.telefono.data, Rating=0)
@@ -68,14 +73,15 @@ def register():
         db.session.add(new_client)
         db.session.commit()
         return redirect(url_for('profile.login'))
-    return render_template('sito/register.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form)
+    return render_template('sito/register.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine))
 
 @profile.route('/sendMex', methods=['GET', 'POST'])
 def sendMex():
+    pages.disattiva(0)
     if current_user.is_authenticated:
         #TODO QUERY DI METTERE IL MESSAGGIO DENTRO
         return redirect(url_for('profile.user'))
     else:
-        return redirect(url_for('profile.login', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale))
+        return redirect(url_for('profile.login'))
 
 

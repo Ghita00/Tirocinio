@@ -33,20 +33,35 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    #TODO METTERE TUTTI I DISATTIVA
+    if current_user.is_authenticated:
+        utente = current_user.Nome
+    else:
+        utente = ''
+
     pages.disattiva(0)
     #ATTENZIONE PER NELLA VARIABILE IMG VA MESSO "{{url_for('static', filename='X')}}" DOVE X E IL RISULTATO QUERY
     #TODO QUERY ARTICOLI IN EVIDENZA
     #TODO QUERY ULTIMO POST BLOG
-    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, img="immagine", testo = "testo articolo", pages = list(pages.pagine))
+    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, img="immagine", testo = "testo articolo", pages = list(pages.pagine), user = utente)
 
 @app.route('/about')
 def about():
-    return render_template("sito/about.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
+    if current_user.is_authenticated:
+        utente = current_user.Nome
+    else:
+        utente = ''
+
+    return render_template("sito/about.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = utente)
 
 @app.route('/contact')
 def contact():
-    return render_template("sito/contact.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
+    pages.disattiva(3)
+    if current_user.is_authenticated:
+        utente = current_user.Nome
+    else:
+        utente = ''
+
+    return render_template("sito/contact.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine), user = utente)
 
 #gestionale
 @app.route('/gestionale/home')
