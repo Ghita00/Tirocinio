@@ -106,15 +106,34 @@
                         <ul>
                             {% if pages[0] == 1%}
                                 <li class="active"><a href="{{url_for('home')}}">Home</a></li>
+                            {% else %}
+                                <li><a href="{{url_for('home')}}">Home</a></li>
                             {% endif %}
-                            <li><a href="{{url_for('ecommerce.shop')}}">Shop</a>
-                                <ul class="dropdown">
-                                    <li><a href="{{url_for('ecommerce.shoping_cart')}}">Shoping Cart</a></li>
-                                    <li><a href="{{url_for('ecommerce.wishlist')}}">Wishlist</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="{{url_for('blog.blogRoute')}}">Blog</a></li>
-                            <li><a href="{{url_for('contact')}}">Contact</a></li>
+                            {% if pages[1] == 1%}
+                                <li class="active"><a href="{{url_for('ecommerce.shop')}}">Shop</a>
+                                    <ul class="dropdown">
+                                        <li><a href="{{url_for('ecommerce.shoping_cart')}}">Shoping Cart</a></li>
+                                        <li><a href="{{url_for('ecommerce.wishlist')}}">Wishlist</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li><a href="{{url_for('ecommerce.shop')}}">Shop</a>
+                                    <ul class="dropdown">
+                                        <li><a href="{{url_for('ecommerce.shoping_cart')}}">Shoping Cart</a></li>
+                                        <li><a href="{{url_for('ecommerce.wishlist')}}">Wishlist</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if pages[2] == 1%}
+                                <li class="active"><a href="{{url_for('blog.blogRoute')}}">Blog</a></li>
+                            {% else %}
+                                <li><a href="{{url_for('blog.blogRoute')}}">Blog</a></li>
+                            {% endif %}
+                            {% if pages[3] == 1 %}
+                                <li class="active"><a href="{{url_for('contact')}}">Contact</a></li>
+                            {% else %}
+                                <li><a href="{{url_for('contact')}}">Contact</a></li>
+                            {% endif %}
                         </ul>
                     </nav>
                 </div>
