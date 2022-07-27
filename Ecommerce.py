@@ -7,7 +7,6 @@ from Utility import Auxcarrello, pages
 
 ecommerce = Blueprint('ecommerce', __name__)
 
-#TODO attenzione!! brioche al cioccol non vuole essere aggiunto al carrello da shopping_details
 
 @ecommerce.route('/shop', methods=['GET', 'POST'])
 def shop():
@@ -20,8 +19,8 @@ def shop():
             Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(
             Semilavorati.Id == Carrello.Id_Semilavorato)
         if cart[0] == None and tot[0].totcar == None:
-            Auxcarrello.totale = round(float(tot[0].totcar), 2)
-            Auxcarrello.quantità = cart[0]
+            Auxcarrello.totale = 0
+            Auxcarrello.quantità = 0
         else:
             Auxcarrello.totale = round(float(tot[0].totcar), 2)
             Auxcarrello.quantità = cart[0]

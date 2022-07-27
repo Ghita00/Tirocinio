@@ -67,7 +67,6 @@ def user():
     cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
     tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
     if cart[0] == None and tot[0].totcar == None:
-        print('sono qui')
         Auxcarrello.totale = 0
         Auxcarrello.quantità = 0
     else:
@@ -79,6 +78,8 @@ def user():
 @login_required
 def logout():
     logout_user()
+    Auxcarrello.totale = 0
+    Auxcarrello.quantità = 0
     return redirect(url_for('home'))
 
 @profile.route('/register', methods=['GET', 'POST'])
