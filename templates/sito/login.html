@@ -4,10 +4,10 @@
     <section class="class spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 center">
+                <div class="col-10 center">
                     <div class="class__form">
                         <div class="section-title">
-                            <h2>Benvenuto o bentornato</h2>
+                            <h2 class="text-center">Benvenuto o bentornato</h2>
                         </div>
                         {% from "sito/_formhelpers.html" import render_field %}
                         <form method="POST" action="">
@@ -16,7 +16,7 @@
                             {{ render_field(form.password) }}
                             {{ form.submit }}
                         </form>
-                        <a href="{{url_for('profile.register')}}">Non hai ancora un account? Registrati</a>
+                        <a href="{{url_for('profile.register')}}">Non hai ancora un account? Registrati!</a>
                     </div>
                     <br>
                 </div>

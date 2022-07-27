@@ -88,7 +88,7 @@ def sendMex():
     pages.disattiva(0)
     if current_user.is_authenticated:
         #TODO QUERY DI METTERE IL MESSAGGIO DENTRO
-        return redirect(url_for('profile.user'))
+        return redirect(url_for('home'))
     else:
         return redirect(url_for('profile.login'))
 
