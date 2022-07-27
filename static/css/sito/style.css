@@ -2522,7 +2522,7 @@ ol {
   overflow: hidden;
 }
 .blog__sidebar__item .blog__sidebar__item__categories ul li:hover a {
-  text-decoration: line-through;
+  color: #fd7e14
 }
 .blog__sidebar__item .blog__sidebar__item__categories ul li:hover a span {
   color: #f08632;

@@ -31,11 +31,18 @@ def shop():
         Auxcarrello.quantità = 0
 
     if request.method == "POST":
-        id = request.form['scelta']
-        if id == 2:
-            Prodotti = Semilavorati.query.order_by(Semilavorati.PrezzoUnitario).all()
+        if(request.form['hidden'] == '2'):
+            id = request.form['scelta']
+            if id == 2:
+                Prodotti = Semilavorati.query.order_by(Semilavorati.PrezzoUnitario).all()
+            else:
+                Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
         else:
-            Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
+            cat = request.form["cat"]
+            if(cat == "all"):
+                Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
+            else:
+                Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).filter(Semilavorati.Categoria == cat)
     else:
         Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
 
