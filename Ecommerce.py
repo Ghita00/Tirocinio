@@ -7,15 +7,24 @@ from Utility import Auxcarrello, pages
 
 ecommerce = Blueprint('ecommerce', __name__)
 
+#TODO attenzione!! brioche al cioccol non vuole essere aggiunto al carrello da shopping_details
+
 @ecommerce.route('/shop', methods=['GET', 'POST'])
 def shop():
     pages.disattiva(1)
     if current_user.is_authenticated:
         utente = current_user.Nome
-        cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
-        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
-        Auxcarrello.totale = round(float(tot[0].totcar), 2)
-        Auxcarrello.quantità = cart[0]
+        cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(
+            Carrello.Mail_Cliente == current_user.Mail).first()
+        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(
+            Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(
+            Semilavorati.Id == Carrello.Id_Semilavorato)
+        if cart[0] == None and tot[0].totcar == None:
+            Auxcarrello.totale = round(float(tot[0].totcar), 2)
+            Auxcarrello.quantità = cart[0]
+        else:
+            Auxcarrello.totale = round(float(tot[0].totcar), 2)
+            Auxcarrello.quantità = cart[0]
     else:
         utente = ''
         Auxcarrello.totale = 0
@@ -38,23 +47,19 @@ def shop_details(id):
     if current_user.is_authenticated:
         utente = current_user.Nome
         Prodotto = Semilavorati.query.filter(Semilavorati.Id == id).first()
-        cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
-        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
-        Auxcarrello.totale = round(float(tot[0].totcar), 2)
-        Auxcarrello.quantità = cart[0]
     else:
         utente = ''
-        Auxcarrello.totale = 0
-        Auxcarrello.quantità = 0
+        Prodotto = None
     if request.method == "POST":
         quantita = request.form['quantita']
-        if Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == id) == None:
+        print(quantita)
+        if Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == id).first() == None:
             new_cartProd = Carrello(Mail_Cliente = current_user.Mail, Id_Semilavorato = id, QuantitàCarrello = quantita)
             db.session.add(new_cartProd)
+            db.session.commit()
         else:
             Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == id).update({"QuantitàCarrello" : quantita})
-
-        db.session.commit()
+            db.session.commit()
 
         return redirect(url_for('ecommerce.shop'))
     else:
@@ -66,8 +71,8 @@ def shoping_cart():
     pages.disattiva(1)
     if current_user.is_authenticated:
         utente = current_user.Nome
-        prod = Semilavorati.query.join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == Semilavorati.Id)
-        cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).all()
+        prod = Semilavorati.query.join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == Semilavorati.Id).order_by(Carrello.Id_Semilavorato)
+        cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).order_by(Carrello.Id_Semilavorato).all()
         tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
         if Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).first() != None:
             return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
@@ -112,6 +117,17 @@ def modifyWishlist(id):
     db.session.add(new_cartProd)
     delete_wishProd.delete()
     db.session.commit()
+    cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(
+        Carrello.Mail_Cliente == current_user.Mail).first()
+    tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(
+        Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(
+        Semilavorati.Id == Carrello.Id_Semilavorato)
+    if cart[0] == None and tot[0].totcar == None:
+        Auxcarrello.totale = round(float(tot[0].totcar), 2)
+        Auxcarrello.quantità = cart[0]
+    else:
+        Auxcarrello.totale = round(float(tot[0].totcar), 2)
+        Auxcarrello.quantità = cart[0]
     return redirect(url_for('ecommerce.shoping_cart'))
 
 @ecommerce.route('/addWishlist/<id>')

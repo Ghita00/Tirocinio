@@ -38,14 +38,8 @@ def home():
     pages.disattiva(0)
     if current_user.is_authenticated:
         utente = current_user.Nome
-        cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
-        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
-        Auxcarrello.totale = round(float(tot[0].totcar), 2)
-        Auxcarrello.quantità = cart[0]
     else:
         utente = ''
-        Auxcarrello.totale = 0
-        Auxcarrello.quantità = 0
 
     #ATTENZIONE PER NELLA VARIABILE IMG VA MESSO "{{url_for('static', filename='X')}}" DOVE X E IL RISULTATO QUERY
     favorite = list(Semilavorati.query.filter(Semilavorati.Preferito == True))
@@ -56,14 +50,8 @@ def home():
 def about():
     if current_user.is_authenticated:
         utente = current_user.Nome
-        cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
-        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
-        Auxcarrello.totale = round(float(tot[0].totcar), 2)
-        Auxcarrello.quantità = cart[0]
     else:
         utente = ''
-        Auxcarrello.totale = 0
-        Auxcarrello.quantità = 0
 
     return render_template("sito/about.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = utente)
 
@@ -72,14 +60,8 @@ def contact():
     pages.disattiva(3)
     if current_user.is_authenticated:
         utente = current_user.Nome
-        cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
-        tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
-        Auxcarrello.totale = round(float(tot[0].totcar), 2)
-        Auxcarrello.quantità = cart[0]
     else:
         utente = ''
-        Auxcarrello.totale = 0
-        Auxcarrello.quantità = 0
 
     return render_template("sito/contact.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine), user = utente)
 

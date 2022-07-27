@@ -45,8 +45,16 @@ def login():
                     print("Cliente")
                     cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
                     tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
-                    Auxcarrello.totale = round(float(tot[0].totcar), 2)
-                    Auxcarrello.quantità = cart[0]
+                    print(cart[0])
+                    print(tot[0])
+                    if cart[0] == None and tot[0].totcar == None:
+                        print('sono qui')
+                        Auxcarrello.totale = 0
+                        Auxcarrello.quantità = 0
+                    else:
+                        Auxcarrello.totale = round(float(tot[0].totcar), 2)
+                        Auxcarrello.quantità = cart[0]
+
                     return redirect(url_for('profile.user'))
 
     utente = ''
@@ -58,8 +66,13 @@ def user():
     pages.disattiva(0)
     cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
     tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
-    Auxcarrello.totale = round(float(tot[0].totcar),2)
-    Auxcarrello.quantità = cart[0]
+    if cart[0] == None and tot[0].totcar == None:
+        print('sono qui')
+        Auxcarrello.totale = 0
+        Auxcarrello.quantità = 0
+    else:
+        Auxcarrello.totale = round(float(tot[0].totcar), 2)
+        Auxcarrello.quantità = cart[0]
     return render_template('sito/user.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, nome = current_user.Nome, cognome=current_user.Cognome, mail=current_user.Mail, datanascita=current_user.DataNascita, user = current_user.Nome, pages = list(pages.pagine))
 
 @profile.route('/logout')
