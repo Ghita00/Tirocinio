@@ -32,7 +32,7 @@ def shop():
     if request.method == "POST":
         if(request.form['hidden'] == '2'):
             id = request.form['scelta']
-            if id == 2:
+            if id == '2':
                 Prodotti = Semilavorati.query.order_by(Semilavorati.PrezzoUnitario).all()
             else:
                 Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
@@ -44,7 +44,6 @@ def shop():
                 Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).filter(Semilavorati.Categoria == cat)
     else:
         Prodotti = Semilavorati.query.order_by(Semilavorati.Nome).all()
-
     return render_template("sito/shop.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, Prod = list(Prodotti), lenProd = len(list(Prodotti)), pages = list(pages.pagine), user = utente)
 
 @ecommerce.route('/shop-details/<id>', methods=['GET', 'POST'])
