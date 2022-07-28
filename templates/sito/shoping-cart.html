@@ -24,20 +24,34 @@
 
 {% block cart %}
     <!-- Shopping Cart Section Begin -->
+    {%if lenProd == 0%}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="container spad">
+                <div class="row center">
+                    <div class="">
+                        {% for message in messages %}
+                            <h3 class="text-center">{{ message }}</h3>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <img src="{{url_for('static', filename='img/sito/icon/carrello.jpg')}}" class="icon center">
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 center">
+                        <a href="{{url_for('ecommerce.shop')}}" class="primary-btn text-center">visita lo shop</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endwith %}
+    {% else %}
     <section class="shopping-cart spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="shopping__cart__table">
-                     {% with messages = get_flashed_messages() %}
-                      {% if messages %}
-                        <ul class=flashes>
-                        {% for message in messages %}
-                          <li>{{ message }}</li>
-                        {% endfor %}
-                        </ul>
-                      {% endif %}
-                    {% endwith %}
                         <table>
                             <thead>
                                 <tr>
@@ -47,7 +61,7 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            {% if lenProd != Undefined %}
+
                             {% for i in range(0, lenProd) %}
                             <tbody>
                                 <tr>
@@ -73,8 +87,8 @@
                                 </tr>
                             </tbody>
                             {% endfor %}
-                            {% endif %}
                         </table>
+
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -105,4 +119,5 @@
         </div>
     </section>
     <!-- Shopping Cart Section End -->
+{% endif %}
 {% endblock %}

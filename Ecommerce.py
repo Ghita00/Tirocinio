@@ -85,6 +85,7 @@ def shoping_cart():
                                    Prod = list(prod), lenProd = len(list(prod)), Cart = list(cart), user = utente, pages = list(pages.pagine), totale = round(float(tot[0].totcar),2))
         else:
             flash("Il tuo carrello è attualmente vuoto")
+            print(len(list(prod)))
             return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
                                    Prod = list(prod), lenProd = len(list(prod)), Cart = list(cart), user = utente, pages = list(pages.pagine))
     else:
