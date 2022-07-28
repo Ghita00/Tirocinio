@@ -62,6 +62,7 @@ def login():
 
 @profile.route('/user')
 @login_required
+#TODO possibilità di modificare i propri dati
 def user():
     pages.disattiva(0)
     cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
@@ -98,6 +99,7 @@ def register():
     return render_template('sito/register.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine), user = utente)
 
 @profile.route('/sendMex', methods=['GET', 'POST'])
+#TODO
 def sendMex():
     pages.disattiva(0)
     if current_user.is_authenticated:

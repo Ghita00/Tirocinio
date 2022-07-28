@@ -72,6 +72,7 @@ def shop_details(id):
                                id = Prodotto.Id, nome = Prodotto.Nome, prezzo = Prodotto.PrezzoUnitario, incipit = "incipit", categoria = 'categoria', tags = 'tag', descrizione="Prodotto.Preparazione", user = utente, pages = list(pages.pagine))
 
 @ecommerce.route('/shoping-cart', methods=['GET', 'POST'])
+#TODO modifica delle quantità
 def shoping_cart():
     pages.disattiva(1)
     if current_user.is_authenticated:
@@ -97,6 +98,16 @@ def checkout():
         utente = current_user.Nome
     else:
         utente = ''
+
+    delete_cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail)
+    delete_cart.delete()
+    db.session.commit()
+
+    Auxcarrello.totale = 0
+    Auxcarrello.quantità = 0
+
+    flash("Pagamento avvenuto con successo")
+
     return render_template("sito/checkout.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = utente, pages = list(pages.pagine))
 
 @ecommerce.route('/wishlist', methods=['GET', 'POST'])
@@ -122,18 +133,37 @@ def modifyWishlist(id):
     db.session.add(new_cartProd)
     delete_wishProd.delete()
     db.session.commit()
-    cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(
-        Carrello.Mail_Cliente == current_user.Mail).first()
-    tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(
-        Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(
-        Semilavorati.Id == Carrello.Id_Semilavorato)
+
+    cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
+    tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
+
     if cart[0] == None and tot[0].totcar == None:
-        Auxcarrello.totale = round(float(tot[0].totcar), 2)
-        Auxcarrello.quantità = cart[0]
+        Auxcarrello.totale = 0
+        Auxcarrello.quantità = 0
     else:
         Auxcarrello.totale = round(float(tot[0].totcar), 2)
         Auxcarrello.quantità = cart[0]
+
     return redirect(url_for('ecommerce.shoping_cart'))
+
+@ecommerce.route('/deleteWishlist/<id>')
+@login_required
+def deleteWishlist(id):
+    delete_wishProd = WishList.query.filter(WishList.Mail_Cliente == current_user.Mail).filter(WishList.Id_Semilavorato == id)
+    delete_wishProd.delete()
+    db.session.commit()
+
+    cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
+    tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
+
+    if cart[0] == None and tot[0].totcar == None:
+        Auxcarrello.totale = 0
+        Auxcarrello.quantità = 0
+    else:
+        Auxcarrello.totale = round(float(tot[0].totcar), 2)
+        Auxcarrello.quantità = cart[0]
+
+    return redirect(url_for('ecommerce.wishlist'))
 
 @ecommerce.route('/addWishlist/<id>')
 @login_required
@@ -145,5 +175,5 @@ def addWishlist(id):
         new_wishProd = WishList(Mail_Cliente=current_user.Mail, Id_Semilavorato=id)
         db.session.add(new_wishProd)
         db.session.commit()
-        return redirect(url_for('ecommerce.shop'))
+        return redirect(url_for('ecommerce.wishlist'))
 

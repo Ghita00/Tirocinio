@@ -38,14 +38,13 @@
                                 <ul>
                                     <li>By <span>{{ aut[i].Mail_Dipendente}}</span></li>
                                     <li>{{artic[i].DataPubblicazione}}</li>
-                                    <li>112 Views</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="blog__item__text">
                             <h2>{{artic[i].Titolo}}</h2>
                             <p>{{artic[i].Contenuto}}.</p>
-                            <a href="{{url_for('blog.blogDetailsRoute')}}">READ MORE</a>
+                            <a href="{{url_for('blog.blogDetailsRoute', id=artic[i].Id)}}">READ MORE</a>
                         </div>
                     </div>
                     <hr>

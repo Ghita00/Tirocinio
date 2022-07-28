@@ -7,12 +7,11 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-7">
                     <div class="blog__hero__text">
-                        <div class="label">Recipes</div>
-                        <h2>Cooking Cajun Food</h2>
+                        <div class="label">{{artic.Categoria}}</div>
+                        <h2>{{artic.Titolo}}</h2>
                         <ul>
-                            <li>By <span>James Myers</span></li>
-                            <li>13 Nov 2020</li>
-                            <li>112 Views</li>
+                            <li>By <span>{{aut.Nome}} {{aut.Cognome}}</span></li>
+                            <li>{{artic.DataPubblicazione}}</li>
                         </ul>
                     </div>
                 </div>
@@ -30,14 +29,9 @@
                 <div class="col-lg-8">
                     <div class="blog__details__content">
                         <div class="blog__details__text">
-                            <p>The cast brass and cast stainless steel burners have the smallest burrs — by far. This
-                                will mean less chaos in the gas flow, fewer trapped particulate matter in the burner and
-                            a cleaner burning grill. The following comparison shows how the ports are formed.</p>
-                            <p>Why is port formation important? Several reasons. If the hole is punched into a sheet
-                                metal burner, it leaves a large tab inside the burner that will caus e more chaos while
-                                burning. It is more apt to hold trapped food particles and grease, and is therefore more
-                            likely to burn through. (Note the Alfresco burner photo below.</p>
+                            <p>{{artic.Contenuto}}</p>
                         </div>
+                        {% if artic.Categoria == 'Ricette' %}
                         <div class="blog__details__recipe">
                             <div class="blog__details__recipe__item">
                                 <h6><img src="{{url_for('static', filename='img/sito/blog/details/user.png')}}" alt=""> SERVES</h6>
@@ -107,6 +101,7 @@
                                 any, burrs when drilled. This burner has a lifetime warranty, including against rust and
                             burn-through.</p>
                         </div>
+                        {% endif %}
                         <div class="blog__details__tags">
                             <span>Tag</span>
                             <a>Food</a>

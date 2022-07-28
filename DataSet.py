@@ -1,5 +1,7 @@
 from GenDB import *
 
+
+
 Persone = [Persone(Mail='vioricadanci@gmail.com', Nome='Viorica', Cognome='Danci', Username='vioricadanci', Password='Viorica79', DataNascita='1979-07-12', Telefono='3283187029', Rating='0'),
            Persone(Mail='larissadanci@gmail.com', Nome='Larissa', Cognome='Danci', Username='larissadanci', Password='Larissa03', DataNascita='2003-03-01', Telefono='3205608445', Rating='0'),
            Persone(Mail='rominadanci@gmail.com', Nome='Romina', Cognome='Danci', Username='rominadanci', Password='Romina00', DataNascita='2000-01-20', Telefono='3290301407', Rating='0'),

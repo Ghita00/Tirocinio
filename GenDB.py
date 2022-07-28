@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 
-#TODO 1. Sistema questione immagini
+#TODO 1. Sistema questione immagini, 2. aggiungi tabella essaggi, 3. aggiungi tabella commenti
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgresql@localhost:5432/pasticceria"
@@ -444,6 +444,7 @@ class PersonaleTurni(db.Model):
     Turno = relationship('Turni', back_populates='Dipendente')
 
 # associazione tra materie prime e semilavorati
+# TODO aggiungere campi PER QUANTE PERSONE E TEMPO DI PREPARAZIONE
 class Ricette(db.Model):
     __tablename__ = 'ricette'
 

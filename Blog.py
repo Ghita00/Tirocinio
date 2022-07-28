@@ -18,15 +18,19 @@ def blogRoute():
 
     return render_template("sito/blog.html",total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, artic = list(articoli), len_artic = len(list(articoli)), aut = list(autori), len_aut = len(list(autori)), user = utente, pages = list(pages.pagine))
 
-@blog.route('/blog-details')
-def blogDetailsRoute():
+@blog.route('/blog-details/<id>')
+def blogDetailsRoute(id):
     pages.disattiva(2)
     if current_user.is_authenticated:
         utente = current_user.Nome
     else:
         utente = ''
 
-    return render_template("sito/blog-details.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = utente, pages = list(pages.pagine))
+    articolo = Articoli.query.filter(Articoli.Id == id).first()
+    dipendente = Dipendenti.query.join(Blog).filter(Blog.Id_Articolo == id).filter(Dipendenti.Mail == Blog.Mail_Dipendente).first()
+    autore = Persone.query.filter(Persone.Mail == dipendente.Mail).first()
+
+    return render_template("sito/blog-details.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = utente, pages = list(pages.pagine), artic = articolo, aut = autore)
 
 #gestionale
 @blog.route("/gestionale/blog")
