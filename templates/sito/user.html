@@ -13,19 +13,20 @@
                             <img class="pic avatar" src="{{url_for('static', filename='img/sito/blog/details/blog-details.jpg')}}">
                         </div>
                         <div class="col-lg-6">
-                            <div class="blog__details__ingredients">
+                            <div class="blog__details__ingredients center size-user">
                                 <h6>Benvenuto {{nome}}!</h6>
+                                <h5>I tuoi dati:</h5>
                                     Nome: {{nome}}<br>
                                     Cognome: {{cognome}}<br>
                                     Data di nascita: {{datanascita}}<br>
                                     Mail: {{mail}}<br>
                             </div>
                             <br>
-                            <div class="product__details__option">
-                                <a href="#" class="primary-btn">Aggiungi al carrello</a>
+                            <div class="product__details__option center">
+                                <a href="{{url_for('ecommerce.shop')}}" class="primary-btn">Vai al carrello</a>
                             </div>
                             <br>
-                            <div class="product__details__options">
+                            <div class="product__details__options center">
                                 <a href="#" class="primary-btn">Modifica i dati</a>
                             </div>
 
