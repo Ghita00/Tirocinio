@@ -208,13 +208,10 @@
     var proQty = $('.pro-qty');
     proQty.prepend('<span class="dec qtybtn">-</span>');
     proQty.append('<span class="inc qtybtn">+</span>');
-    console.log("qui")
     proQty.on('click', '.qtybtn', function () {
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
         if ($button.hasClass('inc')) {
-            //todo vedere perche non funziona con touch
-            console.log("qui")
             var newVal = parseFloat(oldValue) + 1;
         } else {
             // Don't allow decrementing below zero
@@ -226,8 +223,6 @@
         }
         $button.parent().find('input').val(newVal);
     });
-
-    
 
     $(".product__details__thumb").niceScroll({
         cursorborder: "",

@@ -51,7 +51,6 @@
                     {% endfor %}
                     <div class="shop__pagination">
                         {% for i in range(0, len_artic, 10) %}
-                            <!--TODO GESTIRE PAGINE-->
                             <a href="#">1</a>
                         {% endfor %}
                     </div>
@@ -66,15 +65,11 @@
                         </div>
                         <div class="blog__sidebar__item">
                             <h5>Last posts</h5>
-                            <!--todo metti last post-->
                             <div class="blog__sidebar__recent">
-                                <a href="#" class="blog__sidebar__recent__item">
-                                    <div class="blog__sidebar__recent__item__pic">
-                                        <img src="{{url_for('static', filename='img/sito/blog/br-1.jpg')}}" alt="">
-                                    </div>
+                                <a href="{{url_for('blog.blogDetailsRoute', id=ID)}}" class="blog__sidebar__recent__item">
                                     <div class="blog__sidebar__recent__item__text">
-                                        <h4>Secret To Cooking Vegetables</h4>
-                                        <span>13 Nov 2020</span>
+                                        <h4>{{testo.Titolo}}</h4>
+                                        <span>{{testo.DataPubblicazione}}</span>
                                     </div>
                                 </a>
                             </div>

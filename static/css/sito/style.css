@@ -4090,3 +4090,11 @@ a:hover{
     height: auto;
     width: 250px;
 }
+
+.allert{
+    background: red;
+    text-align: center;
+    font-size: 35px;
+    margin-top: 20px;
+    font-family: "Playfair Display", serif;
+}
