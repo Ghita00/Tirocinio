@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from sqlalchemy import func
@@ -34,6 +34,7 @@ def login():
     pages.disattiva(0)
     form = LoginForm()
     if form.validate_on_submit():
+        flash("Le credenziali sono sbagliate, riprovare")
         user = Persone.query.filter_by(Username=form.username.data).first()
         if user:
             if bcrypt.check_password_hash(user.Password, form.password.data):
@@ -56,8 +57,8 @@ def login():
                         Auxcarrello.quantità = cart[0]
 
                     return redirect(url_for('profile.user'))
-
     utente = ''
+
     return render_template('sito/login.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine), user = utente)
 
 @profile.route('/user')
