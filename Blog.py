@@ -9,14 +9,15 @@ blog = Blueprint('blog', __name__)
 @blog.route('/blog')
 def blogRoute():
     pages.disattiva(2)
-    articoli = Articoli.query.all()
+    articoli = Articoli.query.order_by(Articoli.DataPubblicazione).all()
     autori = Blog.query.join(Articoli).filter(Articoli.Id == Blog.Id_Articolo).all()
+    post = articoli[0]
     if current_user.is_authenticated:
         utente = current_user.Nome
     else:
         utente = ''
 
-    return render_template("sito/blog.html",total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, artic = list(articoli), len_artic = len(list(articoli)), aut = list(autori), len_aut = len(list(autori)), user = utente, pages = list(pages.pagine))
+    return render_template("sito/blog.html", ID = post.Id, testo = post, total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, artic = list(articoli), len_artic = len(list(articoli)), aut = list(autori), len_aut = len(list(autori)), user = utente, pages = list(pages.pagine))
 
 @blog.route('/blog-details/<id>')
 def blogDetailsRoute(id):

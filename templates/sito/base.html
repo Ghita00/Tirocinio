@@ -35,8 +35,12 @@
                 <a href="#" class="search-switch"><img src="{{url_for('static', filename='img/sito/icon/search.png')}}" alt=""></a>
             </div>
             <div class="offcanvas__cart__item">
-                <a href="#"><img src="{{url_for('static', filename='img/sito/icon/cart.png')}}" alt=""> <span>0</span></a>
-                <div class="cart__price">Cart: <span>$0.00</span></div>
+                {% if total >= 11 %}
+                <a href="{{url_for('ecommerce.shoping_cart')}}"><img class="size_icon" src="{{url_for('static', filename='img/sito/icon/cart.png')}}" alt=""><span>{{total}}</span></a>
+                {% else %}
+                <a href="{{url_for('ecommerce.shoping_cart')}}"><img src="{{url_for('static', filename='img/sito/icon/cart.png')}}" alt=""><span>{{total}}</span></a>
+                {% endif %}
+                <div class="cart__price">Cart: <span>{{totalMoney}} €</span></div>
             </div>
         </div>
         <div class="offcanvas__logo">
@@ -103,7 +107,11 @@
                                     <a href="#" class="search-switch"><img src="{{url_for('static', filename='img/sito/icon/search.png')}}" alt=""></a>
                                 </div>
                                 <div class="header__top__right__cart">
+                                    {% if total >= 11 %}
+                                    <a href="{{url_for('ecommerce.shoping_cart')}}"><img class="size_icon" src="{{url_for('static', filename='img/sito/icon/cart.png')}}" alt=""><span>{{total}}</span></a>
+                                    {% else %}
                                     <a href="{{url_for('ecommerce.shoping_cart')}}"><img src="{{url_for('static', filename='img/sito/icon/cart.png')}}" alt=""><span>{{total}}</span></a>
+                                    {% endif %}
                                     <div class="cart__price">Cart: <span>{{totalMoney}} €</span></div>
                                 </div>
                             </div>
@@ -271,7 +279,7 @@
                     <div class="footer__newslatter">
                         <h6>Registrati</h6>
                         <p>Get latest updates and offers.</p>
-                        <form action="{{url_for('profile.login')}}">
+                        <form action="{{url_for('profile.register')}}">
                             <input type="text" placeholder="Email">
                             <button type="submit">Invia</i></button>
                         </form>

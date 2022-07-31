@@ -4036,7 +4036,9 @@ ol {
     padding: 14px 30px;
     color: #000000;
     background: #fdf3ea
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    border:solid;
+    border-size: 2px;
 }
 
 .space{
@@ -4079,4 +4081,20 @@ a:hover{
     width: 150px;
 }
 
+.size_icon{
+    height: 25px;
+    width: 30px;
+}
 
+.size-user{
+    height: auto;
+    width: 250px;
+}
+
+.allert{
+    background: red;
+    text-align: center;
+    font-size: 35px;
+    margin-top: 20px;
+    font-family: "Playfair Display", serif;
+}

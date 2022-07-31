@@ -3,11 +3,12 @@
 {% block breadcrumbDetails %}
     {% with messages = get_flashed_messages() %}
       {% if messages %}
-        <ul class=flashes>
+        <div class="allert margin">
         {% for message in messages %}
-          <li>{{ message }}</li>
+          {{ message }}<br>
+            <a href="{{url_for('ecommerce.wishlist')}}"> Accedi da qui!</a>
         {% endfor %}
-        </ul>
+        </div>
       {% endif %}
     {% endwith %}
     <!-- Breadcrumb Begin -->
@@ -23,7 +24,7 @@
                     <div class="breadcrumb__links">
                         <a href="{{url_for('home')}}">Home</a>
                         <a href="{{url_for('ecommerce.shop')}}">Shop</a>
-                        <span>Sweet autumn leaves</span>
+                        <span>{{nome}}</span>
                     </div>
                 </div>
             </div>

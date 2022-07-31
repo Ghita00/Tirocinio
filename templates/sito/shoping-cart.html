@@ -58,7 +58,6 @@
                                     <th>Product</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
-                                    <th></th>
                                 </tr>
                             </thead>
 
@@ -66,12 +65,11 @@
                             <tbody>
                                 <tr>
                                     <td class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <img src="{{url_for('static', filename='img/sito/shop/cart/cart-1.jpg')}}" alt="">
-                                        </div>
                                         <div class="product__cart__item__text">
-                                            <h6>{{Prod[i].Nome}}</h6>
-                                            <h5>{{Prod[i].PrezzoUnitario}}€</h5>
+                                            <a href="{{url_for('ecommerce.shop_details', id=Prod[i].Id)}}">
+                                                <h6>{{Prod[i].Nome}}</h6>
+                                                <h5>{{Prod[i].PrezzoUnitario}}€</h5>
+                                            </a>
                                         </div>
                                     </td>
                                     <form action="" method="post">
