@@ -46,16 +46,16 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="contact__form">
-                        <form action="{{url_for('profile.sendMex')}}">
+                        <form method="POST" action="{{url_for('profile.sendMex')}}">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="Name">
+                                    <input type="text" name="oggetto" placeholder="Oggetto">
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" placeholder="Email">
+                                    <input type="text" name="mail" placeholder="Email">
                                 </div>
                                 <div class="col-lg-12">
-                                    <textarea placeholder="Message"></textarea>
+                                    <textarea name="message" placeholder="Message"></textarea>
                                     <button type="submit" class="site-btn">Invia</button>
                                 </div>
                             </div>

@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 
-#TODO 1. Sistema questione immagini, 2. aggiungi tabella essaggi, 3. aggiungi tabella commenti
+#TODO 1. Sistema questione immagini
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgresql@localhost:5432/pasticceria"
@@ -103,6 +103,8 @@ class Clienti(db.Model):
     IndirizzoSpedizione = db.Column(db.String(100)) #da ricontrollare
 
     Persona = relationship("Persone", back_populates="Cliente")
+    Messaggio = relationship("Messaggi", back_populates="Cliente")
+    Commento = relationship("Commenti", back_populates="Cliente")
 
     Semilavorato_WishList = relationship("WishList", back_populates='Cliente_WishList',  cascade="all, delete-orphan")
     Semilavorato_Carrello = relationship("Carrello", back_populates='Cliente_Carrello',  cascade="all, delete-orphan")
@@ -419,6 +421,43 @@ class NoteVariazioneEmesse(db.Model):
     def __repr__(self):
         return f"<NotediVariazioneEmesse {self.Id}>"
 
+class Messaggi(db.Model):
+    __tablename__ = 'messaggi'
+
+    Id = db.Column(db.Integer(), primary_key=True)
+    Testo = db.Column(db.String(800))
+    Oggetto = db.Column(db.String(100))
+    Mail_Cliente = db.Column(db.String(), ForeignKey('clienti.Mail', ondelete='CASCADE'))
+
+    Cliente = relationship("Clienti", back_populates="Messaggio")
+
+    def __init__(self, Testo, Oggetto, Mail_Cliente):
+        self.Testo = Testo
+        self.Oggetto = Oggetto
+        self.Mail_Cliente = Mail_Cliente
+
+    def __repr__(self):
+        return f"<messaggio {self.Data}>"
+
+class Commenti(db.Model):
+    __tablename__ = 'commenti'
+
+    Id = db.Column(db.Integer(), primary_key=True)
+    Testo = db.Column(db.String(500))
+    Utente = db.Column(db.String(), ForeignKey('clienti.Mail', ondelete='CASCADE'))
+    Risposta = db.Column(db.Integer(), ForeignKey('commenti.Id', ondelete='CASCADE'))
+
+    Cliente = relationship("Clienti", back_populates="Commento")
+    Commento = relationship("Commenti")
+
+    def __init__(self, Testo, Utente, Risposta):
+        self.Testo = Testo
+        self.Utente = Utente
+        self.Risposta = Risposta
+
+    def __repr__(self):
+        return f"<commento {self.Data}>"
+
 
 #assciazione diendeti articoli
 class Blog(db.Model):
@@ -444,12 +483,13 @@ class PersonaleTurni(db.Model):
     Turno = relationship('Turni', back_populates='Dipendente')
 
 # associazione tra materie prime e semilavorati
-# TODO aggiungere campi PER QUANTE PERSONE E TEMPO DI PREPARAZIONE
 class Ricette(db.Model):
     __tablename__ = 'ricette'
 
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
     Id_MateriaPrima = db.Column(ForeignKey('merce.Id', ondelete='CASCADE'), primary_key=True)   #in quanto specificato che solo le merci che sono materie prime possono comporre ricette
+    Quantita = db.Column(db.Integer())
+    Tempo = db.Column(db.Time())
 
     Semilavorato = relationship('Semilavorati', back_populates='Merce')
     Merce = relationship('Merce', back_populates='Semilavorato')

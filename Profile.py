@@ -62,7 +62,6 @@ def login():
 
 @profile.route('/user')
 @login_required
-#TODO possibilità di modificare i propri dati
 def user():
     pages.disattiva(0)
     cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
@@ -74,6 +73,36 @@ def user():
         Auxcarrello.totale = round(float(tot[0].totcar), 2)
         Auxcarrello.quantità = cart[0]
     return render_template('sito/user.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, nome = current_user.Nome, cognome=current_user.Cognome, mail=current_user.Mail, datanascita=current_user.DataNascita, user = current_user.Nome, pages = list(pages.pagine))
+
+@profile.route('/userModify', methods=['GET', 'POST'])
+@login_required
+def userModify():
+    pages.disattiva(0)
+    if request.method == "POST":
+        # dati per aggiornamento
+        nome = request.form["nome"]
+        cognome = request.form["cognome"]
+        data = request.form["data"]
+        mail = request.form["mail"]
+        username = request.form["username"]
+
+        Persone.query.filter(Persone.Mail == current_user.Mail).update({"Nome" : nome, "Cognome" : cognome, "DataNascita" : data, "Mail" : mail, "Username" : username})
+
+        db.session.commit()
+
+        return redirect(url_for('profile.user'))
+
+
+    cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
+    tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
+    if cart[0] == None and tot[0].totcar == None:
+        Auxcarrello.totale = 0
+        Auxcarrello.quantità = 0
+    else:
+        Auxcarrello.totale = round(float(tot[0].totcar), 2)
+        Auxcarrello.quantità = cart[0]
+    return render_template('sito/userModify.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, nome = current_user.Nome, cognome=current_user.Cognome, mail=current_user.Mail, datanascita=current_user.DataNascita, user = current_user.Nome, pages = list(pages.pagine), utente = current_user)
+
 
 @profile.route('/logout')
 @login_required
@@ -99,20 +128,30 @@ def register():
     return render_template('sito/register.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine), user = utente)
 
 @profile.route('/sendMex', methods=['GET', 'POST'])
-#TODO
 def sendMex():
     pages.disattiva(0)
-    if current_user.is_authenticated:
-        #TODO QUERY DI METTERE IL MESSAGGIO DENTRO
-        return redirect(url_for('home'))
-    else:
-        return redirect(url_for('profile.login'))
+    if request.method == "POST":
+        testo = request.form['message']
+        mail = request.form['mail']
+        oggetto = request.form['oggetto']
+
+        new_mex = Messaggi(Testo=testo,Oggetto=oggetto,Mail_Cliente=mail)
+
+        db.session.add(new_mex)
+        db.session.commit()
+
+    return redirect(url_for('home'))
 
 @profile.route('/commento', methods=['GET', 'POST'])
 def commento():
-    return render_template("sito/messaggio.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine))
+    if request.method == "POST":
+        testo = request.form['txt']
 
-@profile.route('/sendComment', methods=['GET', 'POST'])
+        new_com = Commenti(Testo=testo, Utente=current_user.Mail, Risposta=None)
+        db.session.add(new_com)
+        db.session.commit()
+
+    return render_template("sito/commento.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine))
 def sendComment():
     pages.disattiva(0)
     if current_user.is_authenticated:
