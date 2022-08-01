@@ -34,10 +34,6 @@ def blogDetailsRoute(id):
     return render_template("sito/blog-details.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = utente, pages = list(pages.pagine), artic = articolo, aut = autore)
 
 #gestionale
-@blog.route("/gestionale/blog")
+@blog.route('/gBlog')
 def Gblog():
-    if current_user.is_authenticated:
-        utente = current_user.Nome
-    else:
-        utente = ''
-    return render_template("gestionale/", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = utente)
+    return render_template("gestionale/blog.html")

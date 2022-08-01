@@ -40,7 +40,7 @@ def login():
                 login_user(user)
                 if (Persone.query.join(Dipendenti).filter(Persone.Mail == Dipendenti.Mail).filter(Persone.Username == user.Username).first() != None) :
                     print("Dipendente")
-                    return render_template('gestionale/index.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine))
+                    return render_template('gestionale/index.html')
                 else:
                     print("Cliente")
                     cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
@@ -130,6 +130,7 @@ def register():
     return render_template('sito/register.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine), user = utente)
 
 @profile.route('/sendMex', methods=['GET', 'POST'])
+#TODO se non sei un fra registrati stronzo
 def sendMex():
     pages.disattiva(0)
     if request.method == "POST":

@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <title>Dashboard</title>
 
     <!-- ================= Favicon ================== -->
@@ -43,32 +42,32 @@
         <div class="nano-content">
           <div class="logo"><a href="{{ url_for('Ghome') }}"><span>Dashboard</span></a></div>
           <ul>
-              <li><a class="sidebar-sub-toggle">Ordini<span class="sidebar-collapse-icon"></span></a></li>
-              <li><a class="sidebar-sub-toggle"> Produzione giornaliera<span class="sidebar-collapse-icon "></span></a></li>
-              <li><a class="sidebar-sub-toggle"> Organizzazione Staff<span class="sidebar-collapse-icon "></span></a></li>
-              <li><a class="sidebar-sub-toggle"> Ricettario<span class="sidebar-collapse-icon "></span></a></li>
-              <li><a class="sidebar-sub-toggle"> Magazzino<span class="sidebar-collapse-icon ti-angle-down"></span></a>
+              <li><a href="{{url_for('ordini.ordiniGestionale')}}" >Ordini<span class="sidebar-collapse-icon"></span></a></li>
+              <li><a href="{{url_for('produzione.produzioneGestionale')}}" > Produzione giornaliera<span class="sidebar-collapse-icon "></span></a></li>
+              <li><a href="{{url_for('personale.organizzazioneStaffGestionale')}}" > Organizzazione Staff<span class="sidebar-collapse-icon "></span></a></li>
+              <li><a href="{{url_for('ricettario.ricettarioGestionale')}}" > Ricettario<span class="sidebar-collapse-icon "></span></a></li>
+              <li><a href="{{url_for('magazzino.magazzinoGestionale')}}" > Magazzino<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                   <ul>
-                    <li><a href="chart-flot.html">Prodotti</a></li>
-                    <li><a href="chart-morris.html">Semilavorati</a></li>
-                    <li><a href="chartjs.html">Materie prime</a></li>
+                    <li><a href="{{url_for('magazzino.prodotti')}}">Prodotti</a></li>
+                    <li><a href="{{url_for('magazzino.semilavorati')}}">Semilavorati</a></li>
+                    <li><a href="{{url_for('magazzino.materieprime')}}">Materie prime</a></li>
                   </ul>
               </li>
-              <li><a class="sidebar-sub-toggle">Dipendenti  <span class="sidebar-collapse-icon "></span></a></li>
-              <li><a class="sidebar-sub-toggle">Bilancio  <span class="sidebar-collapse-icon ti-angle-down"></span></a>
+              <li><a href="{{url_for('personale.personaleGestionale')}}" >Dipendenti  <span class="sidebar-collapse-icon "></span></a></li>
+              <li><a href="{{url_for('documenti.bilancioGestionale')}}">Bilancio  <span class="sidebar-collapse-icon ti-angle-down"></span></a>
                   <ul>
-                    <li><a href="chart-flot.html">Costi</a></li>
-                    <li><a href="chart-morris.html">Ricavi</a></li>
+                    <li><a href="{{url_for('documenti.bilancioCosti')}}">Costi</a></li>
+                    <li><a href="{{url_for('documenti.bilancioRicavi')}}">Ricavi</a></li>
                   </ul>
               </li>
-              <li><a class="sidebar-sub-toggle">Documenti<span class="sidebar-collapse-icon ti-angle-down"></span></a>
+              <li><a href="{{url_for('documenti.documentiGestionale')}}">Documenti<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                   <ul>
-                    <li><a href="chart-flot.html">Ricevuti</a></li>
-                    <li><a href="chart-morris.html">Emessi</a></li>
-                    <li><a href="chart-morris.html">Chiusura Cassa</a></li>
+                    <li><a href="{{url_for('documenti.ricevuti')}}">Ricevuti</a></li>
+                    <li><a href="{{url_for('documenti.emessi')}}">Emessi</a></li>
+                    <li><a href="{{url_for('documenti.cassa')}}">Chiusura Cassa</a></li>
                   </ul>
               </li>
-              <li><a class="sidebar-sub-toggle" href="{{ url_for('blog.Gblog') }}">Blog<span class="sidebar-collapse-icon"></span></a></li>
+              <li><a href="{{url_for('blog.Gblog')}}" >Blog<span class="sidebar-collapse-icon"></span></a></li>
           </ul>
         </div>
       </div>

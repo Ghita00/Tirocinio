@@ -11,6 +11,11 @@ from Ecommerce import ecommerce
 from Blog import blog
 from Documenti import documenti
 from Magazzino import magazzino
+from Ordini import ordini
+from Personale import personale
+from Ricettario import ricettario
+from Produzione import produzione
+
 
 #TODO, ATTENZIONE il campo rating va modificato o settato dal manager
 app.config['SECRET_KEY'] = 'thisisasecretkey'
@@ -21,6 +26,12 @@ db.create_all() #serve per il db
 app.register_blueprint(profile, url_prefix = "")
 app.register_blueprint(ecommerce, url_prefix = "")
 app.register_blueprint(blog, url_prefix = "")
+app.register_blueprint(personale, url_prefix = "")
+app.register_blueprint(ordini, url_prefix = "")
+app.register_blueprint(ricettario, url_prefix = "")
+app.register_blueprint(documenti, url_prefix = "")
+app.register_blueprint(magazzino, url_prefix = "")
+app.register_blueprint(produzione, url_prefix = "")
 
 #per il login
 login_manager = LoginManager()
