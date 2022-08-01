@@ -57,13 +57,17 @@ def shop_details(id):
         Prodotto = None
     if request.method == "POST":
         quantita = request.form['quantita']
-        print(quantita)
         if Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == id).first() == None:
             new_cartProd = Carrello(Mail_Cliente = current_user.Mail, Id_Semilavorato = id, QuantitàCarrello = quantita)
             db.session.add(new_cartProd)
             db.session.commit()
         else:
-            Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == id).update({"QuantitàCarrello" : quantita})
+            if int(quantita) > 0:
+                Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == id).update({"QuantitàCarrello" : quantita})
+            else:
+                delete_prod = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == id)
+                delete_prod.delete()
+
             db.session.commit()
 
         return redirect(url_for('ecommerce.shop'))
@@ -72,7 +76,6 @@ def shop_details(id):
                                id = Prodotto.Id, nome = Prodotto.Nome, prezzo = Prodotto.PrezzoUnitario, incipit = "incipit", categoria = 'categoria', tags = 'tag', descrizione="Prodotto.Preparazione", user = utente, pages = list(pages.pagine))
 
 @ecommerce.route('/shoping-cart', methods=['GET', 'POST'])
-#TODO modifica delle quantità
 def shoping_cart():
     pages.disattiva(1)
     if current_user.is_authenticated:
@@ -81,25 +84,13 @@ def shoping_cart():
         cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).order_by(Carrello.Id_Semilavorato).all()
         tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
 
-        #if request.method == "POST":
-        #    quantita = request.form['quantita']
-        #    if quantita > 0:
-        #        Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).filter(Carrello.Id_Semilavorato == id).update({"QuantitàCarrello": quantita})
-        #        db.session.commit()
-        #    else:
-        #        delete_cart()
-
         if Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail).first() != None:
             return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
                                    Prod = list(prod), lenProd = len(list(prod)), Cart = list(cart), user = utente, pages = list(pages.pagine), totale = round(float(tot[0].totcar),2))
         else:
             flash("Il tuo carrello è attualmente vuoto")
-            print(len(list(prod)))
             return render_template("sito/shoping-cart.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale,
                                    Prod = list(prod), lenProd = len(list(prod)), Cart = list(cart), user = utente, pages = list(pages.pagine))
-
-
-
     else:
         return redirect(url_for('profile.login'))
 
@@ -112,16 +103,19 @@ def checkout():
     else:
         utente = ''
 
-    delete_cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail)
-    delete_cart.delete()
-    db.session.commit()
+    if Carrello.query.count() > 0:
+        delete_cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail)
+        delete_cart.delete()
+        db.session.commit()
 
     Auxcarrello.totale = 0
     Auxcarrello.quantità = 0
 
+    print('esplodo')
+
     flash("Pagamento avvenuto con successo")
 
-    return render_template("sito/checkout.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user = utente, pages = list(pages.pagine))
+    return redirect(url_for('home'))
 
 @ecommerce.route('/wishlist', methods=['GET', 'POST'])
 def wishlist():

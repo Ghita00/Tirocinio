@@ -2,6 +2,19 @@
 
 {% block hero %}
 <!-- Hero Section Begin -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="container spad">
+            <div class="row center">
+                <div class="">
+                    {% for message in messages %}
+                        <h3 class="text-center">{{ message }}</h3>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% endwith %}
     <section class="hero">
         <div class="hero__slider owl-carousel">
             <div class="hero__item set-bg" data-setbg="{{url_for('static', filename='img/sito/hero/hero-1.jpg')}}">

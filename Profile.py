@@ -34,7 +34,6 @@ def login():
     pages.disattiva(0)
     form = LoginForm()
     if form.validate_on_submit():
-        flash("Le credenziali sono sbagliate, riprovare")
         user = Persone.query.filter_by(Username=form.username.data).first()
         if user:
             if bcrypt.check_password_hash(user.Password, form.password.data):
@@ -46,10 +45,8 @@ def login():
                     print("Cliente")
                     cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()
                     tot = session.query(func.sum(Semilavorati.PrezzoUnitario * Carrello.QuantitàCarrello).label('totcar')).join(Carrello).filter(Carrello.Mail_Cliente == current_user.Mail).filter(Semilavorati.Id == Carrello.Id_Semilavorato)
-                    print(cart[0])
-                    print(tot[0])
+
                     if cart[0] == None and tot[0].totcar == None:
-                        print('sono qui')
                         Auxcarrello.totale = 0
                         Auxcarrello.quantità = 0
                     else:
@@ -57,6 +54,10 @@ def login():
                         Auxcarrello.quantità = cart[0]
 
                     return redirect(url_for('profile.user'))
+            else:
+                flash("Le credenziali sono sbagliate, riprovare")
+        else:
+            flash("Le credenziali sono sbagliate, riprovare")
     utente = ''
 
     return render_template('sito/login.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine), user = utente)
@@ -132,9 +133,9 @@ def register():
 def sendMex():
     pages.disattiva(0)
     if request.method == "POST":
-        testo = request.form['message']
         mail = request.form['mail']
         oggetto = request.form['oggetto']
+        testo = request.form['message']
 
         new_mex = Messaggi(Testo=testo,Oggetto=oggetto,Mail_Cliente=mail)
 

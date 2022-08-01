@@ -1,6 +1,5 @@
 from flask import Flask, render_template
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from sqlalchemy import func
 
 from GenDB import *
 from flask_fontawesome import FontAwesome
@@ -45,7 +44,7 @@ def home():
     favorite = list(Semilavorati.query.filter(Semilavorati.Preferito == True))
 
     post = Articoli.query.order_by(Articoli.DataPubblicazione).first()
-    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, img="immagine", testo = post, pages = list(pages.pagine), user = utente, prod_fav = favorite, len_prod_fav = len(favorite))
+    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, img = "immagine", testo = post, pages = list(pages.pagine), user = utente, prod_fav = favorite, len_prod_fav = len(favorite))
 
 @app.route('/about')
 def about():
