@@ -1,1 +1,25 @@
 {% extends 'gestionale/base.html' %}
+
+{% block articoli %}
+<a href="#" class="btn btn-primary">Aggiungi articolo</a>
+<br>
+<br>
+<table class="table">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col" class="text-start">Handle</th>
+    </tr>
+
+    {% for i in range(0, 10) %}
+    <tr>
+      <th scope="row" class="text-start">1</th>
+      <td class="text-start">Mark</td>
+      <td class="text-start">Otto</td>
+      <td class="text-start">@mdo</td>
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}

@@ -1,4 +1,24 @@
 {% extends 'gestionale/base.html' %}
 
 {% block ricette %}
+<a href="{{url_for('ricettario.aggiungiRicetta')}}" class="btn btn-primary">Aggiungi ricetta</a>
+<br>
+<br>
+<div class="row">
+    {% for i in range(0, 10)%}
+        <a href="{{url_for('ricettario.ricetta', id=1)}}">
+        <div class="col-5">
+            <div class="card" style="width: 18rem;">
+            <img src="{{url_for('static', filename='img/sito/shop/details/product-big-1.jpg')}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                </div>
+            </div>
+        </div>
+        </a>
+    {% endfor %}
+</div>
+
 {% endblock %}
