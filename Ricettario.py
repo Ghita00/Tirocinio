@@ -21,8 +21,12 @@ def ricettarioGestionale():
     recipes = Ricette.query.all()
     return render_template("gestionale/ricettario.html", ricette = list(recipes), len_ricette = len(list(recipes)))
 
-@ricettario.route('/newRicetta', methods=['GET', 'POST'])
-def newRicetta():
+@ricettario.route('/addRicetta', methods=['GET', 'POST'])
+def aggiungiRicetta():
     form = newRecipe();
+    return render_template("gestionale/formRicette.html", form=form)
 
-    return render_template("gestionale/newRicetta.html", form=form)
+@ricettario.route('/ricetta/<id>', methods=['GET', 'POST'])
+def ricetta(id):
+    return render_template("gestionale/ricetteSingle.html")
+

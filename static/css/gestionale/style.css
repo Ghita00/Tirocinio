@@ -2702,9 +2702,7 @@ thead tr th {
   color: #373757;
   font-weight: 500;
 }
-thead tr th:last-child {
-  text-align: right;
-}
+
 tbody tr th {
   color: #373757;
   font-family: 'Roboto', sans-serif;
@@ -2714,9 +2712,7 @@ tbody tr td {
   font-family: 'Roboto', sans-serif;
   color: #868e96;
 }
-tbody tr td:last-child {
-  text-align: right;
-}
+
 .table > tbody > tr > td,
 .table > tbody > tr > th,
 .table > tfoot > tr > td,
@@ -4512,3 +4508,4 @@ h6.h1 {
     display: inline-block !important;
   }
 }
+
