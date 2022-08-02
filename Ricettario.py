@@ -1,8 +1,28 @@
 from flask import Blueprint, render_template
-from flask_login import current_user
+from GenDB import *
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField, DateField, FileField, SelectField, IntegerRangeField, \
+    validators, TimeField, SelectMultipleField, TextAreaField
+from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
 
 ricettario = Blueprint('ricettario', __name__)
 
+class newRecipe(FlaskForm):
+    Nome = StringField(validators=[InputRequired()], render_kw={"placeholder": "Nome"})
+    MateriePrime = SelectMultipleField('Materie prime', choices=list(session.query(Merce.Nome).filter(Merce.MateriaPrima == True)))
+    Persone = IntegerRangeField('Persone', [validators.NumberRange(min=1, max=20)])
+    Tempo = TimeField('Durata')
+    Preparazione = TextAreaField('Inserire preparazione')
+
+    submbit = SubmitField('Aggiungi')
+
 @ricettario.route('/ricettarioGestionale')
 def ricettarioGestionale():
-    return render_template("gestionale/ricettario.html")
+    recipes = Ricette.query.all()
+    return render_template("gestionale/ricettario.html", ricette = list(recipes), len_ricette = len(list(recipes)))
+
+@ricettario.route('/newRicetta', methods=['GET', 'POST'])
+def newRicetta():
+    form = newRecipe();
+
+    return render_template("gestionale/newRicetta.html", form=form)

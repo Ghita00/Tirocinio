@@ -1,0 +1,20 @@
+{% extends 'gestionale/base.html' %}
+
+{% block newRicetta %}
+<body>
+  </div>
+  {% from "sito/_formhelpers.html" import render_field %}
+      <form method="POST" action="">
+          <dl>
+            {{ form.hidden_tag() }}
+            {{ render_field(form.Nome) }}
+            {{ render_field(form.MateriePrime) }}
+            {{ render_field(form.Persone) }}
+            {{ render_field(form.Tempo) }}
+            {{ render_field(form.Preparazione) }}
+          </dl>
+          {{ form.submit }}
+      </form>
+  </div>
+</body>
+{% endblock %}
