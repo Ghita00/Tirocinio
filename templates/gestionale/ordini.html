@@ -1,1 +1,56 @@
 {% extends 'gestionale/base.html' %}
+
+{% block ricevuti %}
+<p class="h2">Ordini Ricevuti</p>
+<table class="table">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col" class="text-start">Contatto</th>
+        <th scope="col">Importo</th>
+      <th scope="col" class="text-start">Status</th>
+    </tr>
+
+    {% for i in range(0, 10) %}
+    <tr>
+      <th scope="row" class="text-start">1</th>
+      <td class="text-start">Mark</td>
+      <td class="text-start">Otto</td>
+      <td class="text-start">@mdo</td>
+        <td class="text-start">Otto</td>
+      <td class="text-start">@mdo</td>
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}
+{% block emessi %}
+<hr>
+<p class="h2">Ordini Emessi</p>
+<a href="#" class="btn btn-primary">Aggiungi ordine</a>
+<br>
+<br>
+<table class="table">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col" class="text-start">Contatto</th>
+        <th scope="col">Importo</th>
+      <th scope="col" class="text-start">Status</th>
+    </tr>
+
+    {% for i in range(0, 10) %}
+    <tr>
+      <th scope="row" class="text-start">1</th>
+      <td class="text-start">Mark</td>
+      <td class="text-start">Otto</td>
+      <td class="text-start">@mdo</td>
+        <td class="text-start">Otto</td>
+      <td class="text-start">@mdo</td>
+    </tr>
+    {% endfor %}
+
+</table>
+{% endblock %}
