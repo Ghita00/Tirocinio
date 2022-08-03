@@ -1,1 +1,31 @@
 {% extends 'gestionale/base.html' %}
+
+{% block settimana %}
+<div class="row">
+    <div class="col-3">
+        <p class="h2">Ordini Ricevuti</p>
+    </div>
+</div>
+<table class="table">
+    <th class="text-center">Giorni</th>
+    {% for i in range(0, 7) %}
+    <tr>
+        <td class="text-center">{{i}}</td>
+        {% for j in range(0, 3) %}
+        <td>torte - {{j}}</td>
+        {% endfor %}
+        <td><a href="" class="btn">Aggiungi produzione</a></td>
+    </tr>
+    {% endfor %}
+
+</table>
+<form action="{{url_for('ordini.ordiniGestionale')}}" method="post">
+        <div class="col-3">
+            <button type="submit" class="btn btn-secondary" name="settimana" value="-1">Precedenti 10</button>
+        </div>
+        <br>
+        <div class="col-3">
+            <button type="submit" name="settimana" value="1" class="btn btn-primary">Successivi 10</button>
+        </div>
+    </form>
+{% endblock %}

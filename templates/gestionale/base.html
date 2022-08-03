@@ -44,7 +44,7 @@
           <ul>
               <li><a href="{{url_for('ordini.ordiniGestionale')}}" >Ordini<span class="sidebar-collapse-icon"></span></a></li>
               <li><a href="{{url_for('produzione.produzioneGestionale')}}" > Produzione giornaliera<span class="sidebar-collapse-icon "></span></a></li>
-              <li><a href="{{url_for('personale.organizzazioneStaffGestionale')}}" > Organizzazione Staff<span class="sidebar-collapse-icon "></span></a></li>
+              <li><a href="{{url_for('personale.organizzazioneStaffGestionale')}}" > Organizzazione Turni<span class="sidebar-collapse-icon "></span></a></li>
               <li><a href="{{url_for('ricettario.ricettarioGestionale')}}" > Ricettario<span class="sidebar-collapse-icon "></span></a></li>
               <li><a href="{{url_for('magazzino.magazzinoGestionale')}}" > Magazzino<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                   <ul>
@@ -234,12 +234,15 @@
                 {% block emessi %}
                 {% endblock %}
 
+                <!-- blocchi per produzioneGiornaliera -->
+                {% block settimana %}
+                {% endblock %}
                 <!-- footer -->
                 <div class="main-content">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer">
-                                <p>2018 © Admin Board. - <a href="#">example.com</a></p>
+                                <p>2018 © Admin Board
                             </div>
                         </div>
                     </div>

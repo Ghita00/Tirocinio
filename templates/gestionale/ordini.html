@@ -1,56 +1,90 @@
 {% extends 'gestionale/base.html' %}
 
 {% block ricevuti %}
-<p class="h2">Ordini Ricevuti</p>
+<div class="row">
+    <div class="col-3">
+        <p class="h2">Ordini Ricevuti</p>
+    </div>
+
+</div>
+
 <table class="table">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col" class="text-start">Contatto</th>
+        <th scope="col" class="text-center">Numero doc</th>
+        <th scope="col">Nome cliente</th>
+        <th scope="col">Contatto</th>
         <th scope="col">Importo</th>
-      <th scope="col" class="text-start">Status</th>
+        <th scope="col" class="text-start">Status</th>
+        <th scope="col" class="text-start">Data</th>
     </tr>
 
     {% for i in range(0, 10) %}
     <tr>
-      <th scope="row" class="text-start">1</th>
-      <td class="text-start">Mark</td>
-      <td class="text-start">Otto</td>
-      <td class="text-start">@mdo</td>
+        <th class="text-start text-center">{{i}}</th>
+        <td class="text-start">Mark</td>
         <td class="text-start">Otto</td>
-      <td class="text-start">@mdo</td>
+        <td class="text-start">@mdo</td>
+        <td class="text-start">Otto</td>
+        <td class="text-start">Otto</td>
     </tr>
     {% endfor %}
 
 </table>
+<form action="{{url_for('ordini.ordiniGestionale')}}" method="post">
+        <input type="hidden" name="nascosto" value="1">
+        <div class="col-3">
+            <button type="submit" class="btn btn-secondary" name="ricevuti" value="-1">Precedenti 10</button>
+        </div>
+        <br>
+        <div class="col-3">
+            <button type="submit" name="ricevuti" value="1" class="btn btn-primary">Successivi 10</button>
+        </div>
+    </form>
 {% endblock %}
+
 {% block emessi %}
+<br>
 <hr>
-<p class="h2">Ordini Emessi</p>
-<a href="#" class="btn btn-primary">Aggiungi ordine</a>
-<br>
-<br>
+<br><br>
+<div class="row">
+    <div class="col-4">
+        <p class="h2">Ordini Effettuati</p>
+    </div>
+    <div class="col-2">
+        <a href="{{url_for('ordini.newOrdine')}}" class="btn btn-primary">Aggiungi ordine</a>
+    </div>
+</div>
+
 <table class="table">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col" class="text-start">Contatto</th>
+      <th scope="col" class="text-center">Numero doc</th>
+        <th scope="col">Nome cliente</th>
+        <th scope="col">Contatto</th>
         <th scope="col">Importo</th>
-      <th scope="col" class="text-start">Status</th>
+        <th scope="col" class="text-start">Status</th>
+        <th scope="col" class="text-start">Data</th>
     </tr>
 
     {% for i in range(0, 10) %}
     <tr>
-      <th scope="row" class="text-start">1</th>
+      <th scope="row" class="text-start text-center">1</th>
       <td class="text-start">Mark</td>
       <td class="text-start">Otto</td>
       <td class="text-start">@mdo</td>
-        <td class="text-start">Otto</td>
       <td class="text-start">@mdo</td>
+        <td class="text-start">@mdo</td>
     </tr>
     {% endfor %}
 
 </table>
+<form action="{{url_for('ordini.ordiniGestionale')}}" method="post">
+        <input type="hidden" name="nascosto" value="2">
+        <div class="col-2">
+            <button type="submit" class="btn btn-secondary" name="emessi" value="-1">Precedenti 10</button>
+        </div>
+        <br>
+        <div class="col-2">
+            <button type="submit" name="emessi" value="1" class="btn btn-primary">Successivi 10</button>
+        </div>
+</form>
 {% endblock %}
