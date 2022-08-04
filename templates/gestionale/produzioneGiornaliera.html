@@ -7,25 +7,44 @@
     </div>
 </div>
 <table class="table">
-    <th class="text-center">Giorni</th>
-    {% for i in range(0, 7) %}
     <tr>
-        <td class="text-center">{{i}}</td>
-        {% for j in range(0, 3) %}
-        <td>torte - {{j}}</td>
-        {% endfor %}
-        <td><a href="" class="btn">Aggiungi produzione</a></td>
+        <!--TODO METTERE DATE-->
+        <th class="text-center">Lunedì - </th>
+        <th class="text-center">Mertedì - </th>
+        <th class="text-center">Mercoledì - </th>
+        <th class="text-center">Giovedì - </th>
+        <th class="text-center">Venerdì - </th>
+        <th class="text-center">Sabato - </th>
+        <th class="text-center">Domenica - </th>
     </tr>
+    <tr>
+    {% for i in range(0, 7) %}
+        <td>
+            <ul>
+                {% for i in range(0, 3) %}
+                    <li class="text-center">torta</li>
+                {% endfor %}
+            </ul>
+        </td>
     {% endfor %}
-
+    </tr>
+    <tr>
+        {% for i in range(0, 7) %}
+        <td>
+            <a href="{{url_for('ordini.newOrdine')}}" class="btn">Aggiungi ordine</a><!--TODO CON IL REDIRECT GIUSTO-->
+        </td>
+        {% endfor %}
+    </tr>
 </table>
-<form action="{{url_for('ordini.ordiniGestionale')}}" method="post">
-        <div class="col-3">
+<form action="{{url_for('ordini.ordiniGestionale')}}" method="post"><!--TODO CON IL REDIRECT GIUSTO-->
+    <div class="row g-3">
+        <div class="col-auto">
             <button type="submit" class="btn btn-secondary" name="settimana" value="-1">Precedenti 10</button>
         </div>
         <br>
-        <div class="col-3">
+        <div class="col-auto">
             <button type="submit" name="settimana" value="1" class="btn btn-primary">Successivi 10</button>
         </div>
-    </form>
+    </div>
+</form>
 {% endblock %}
