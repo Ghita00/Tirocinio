@@ -20,6 +20,7 @@
     <!-- Standard iPhone Touch Icon-->
     <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
 
+
     <link href="{{url_for('static', filename='css/gestionale/lib/calendar2/pignose.calendar.min.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='css/gestionale/lib/chartist/chartist.min.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='css/gestionale/lib/themify-icons.css')}}" rel="stylesheet">
@@ -246,6 +247,12 @@
                 {% block magazzino %}
                 {% endblock %}
 
+                <!-- blocchi per bilancio -->
+                {% block grafici %}
+                {% endblock %}
+                {% block analisiSezioni %}
+                {% endblock %}
+
                 <!-- footer -->
                 <div class="main-content">
                     <div class="row">
@@ -261,6 +268,7 @@
         </div>
     </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
      <!-- jquery vendor -->
     <script src="{{url_for('static', filename='js/gestionale/lib/jquery.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/gestionale/lib/jquery.nanoscroller.min.js')}}"></script>
@@ -288,6 +296,7 @@
     <script src="{{url_for('static', filename='js/gestionale/lib/owl-carousel/owl.carousel-init.js')}}"></script>
     <!-- scripit init-->
     <script src="{{url_for('static', filename='js/gestionale/dashboard2.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/bilancio.js')}}"></script>
 
     <!-- CDN -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
