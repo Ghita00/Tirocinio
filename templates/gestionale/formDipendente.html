@@ -1,4 +1,16 @@
 {% extends 'gestionale/base.html' %}
 
-{% block form %}
+{% block formDipendente %}
+    {% from "sito/_formhelpers.html" import render_field %}
+        <form method="POST" action="">
+            <dl>
+              {{ form.hidden_tag() }}
+              {{ render_field(form.nome) }}
+              {{ render_field(form.cognome) }}
+              {{ render_field(form.datanascita) }}
+              {{ render_field(form.mail) }}
+              {{ render_field(form.telefono) }}
+            </dl>
+            {{ form.submit }}
+        </form>
 {% endblock %}

@@ -5,12 +5,18 @@
 <br>
 <br>
 <div class="row">
-    {% for i in range(0, 10)%}
+    {% for i in range(0, len_Dip)%}
         <div class="col-4">
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 22rem;">
             <img src="{{url_for('static', filename='img/sito/shop/details/product-big-1.jpg')}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
+                    <h5 class="card-title">{{Dip[i].Nome}} {{Dip[i].Cognome}}</h5>
+                    <li>
+                        <ul>Data di nascita: {{Dip[i].DataNascita}}</ul>
+                        <ul>Mail: {{Dip[i].Mail}}</ul>
+                        <ul>Telefono: {{Dip[i].Telefono}}</ul>
+                        <ul>Data di assunzione: {{Dip_Data[i].DataAssunzione}}</ul>
+                    </li>
                     <a href="#" class="btn btn-primary">Visualizza turni</a>
                 </div>
             </div>
