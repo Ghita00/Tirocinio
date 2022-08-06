@@ -20,6 +20,7 @@
     <!-- Standard iPhone Touch Icon-->
     <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
 
+
     <link href="{{url_for('static', filename='css/gestionale/lib/calendar2/pignose.calendar.min.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='css/gestionale/lib/chartist/chartist.min.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='css/gestionale/lib/themify-icons.css')}}" rel="stylesheet">
@@ -44,7 +45,7 @@
           <ul>
               <li><a href="{{url_for('ordini.ordiniGestionale')}}" >Ordini<span class="sidebar-collapse-icon"></span></a></li>
               <li><a href="{{url_for('produzione.produzioneGestionale')}}" > Produzione giornaliera<span class="sidebar-collapse-icon "></span></a></li>
-              <li><a href="{{url_for('personale.organizzazioneStaffGestionale')}}" > Organizzazione Staff<span class="sidebar-collapse-icon "></span></a></li>
+              <li><a href="{{url_for('personale.organizzazioneStaffGestionale')}}" > Organizzazione Turni<span class="sidebar-collapse-icon "></span></a></li>
               <li><a href="{{url_for('ricettario.ricettarioGestionale')}}" > Ricettario<span class="sidebar-collapse-icon "></span></a></li>
               <li><a href="{{url_for('magazzino.magazzinoGestionale')}}" > Magazzino<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                   <ul>
@@ -232,12 +233,36 @@
                 {% block articoli %}
                 {% endblock %}
 
+                <!-- blocchi per ordini -->
+                {% block ricevuti %}
+                {% endblock %}
+                {% block emessi %}
+                {% endblock %}
+
+                <!-- blocchi per produzioneGiornaliera -->
+                {% block settimana %}
+                {% endblock %}
+
+                <!-- blocchi per organizazioneStaff -->
+                {% block calendarioTurni %}
+                {% endblock %}
+
+                <!-- blocchi per magazzino -->
+                {% block magazzino %}
+                {% endblock %}
+
+                <!-- blocchi per bilancio -->
+                {% block grafici %}
+                {% endblock %}
+                {% block analisiSezioni %}
+                {% endblock %}
+
                 <!-- footer -->
                 <div class="main-content">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer">
-                                <p>2018 © Admin Board. - <a href="#">example.com</a></p>
+                                <p>2018 © Admin Board
                             </div>
                         </div>
                     </div>
@@ -247,6 +272,7 @@
         </div>
     </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
      <!-- jquery vendor -->
     <script src="{{url_for('static', filename='js/gestionale/lib/jquery.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/gestionale/lib/jquery.nanoscroller.min.js')}}"></script>
@@ -274,6 +300,7 @@
     <script src="{{url_for('static', filename='js/gestionale/lib/owl-carousel/owl.carousel-init.js')}}"></script>
     <!-- scripit init-->
     <script src="{{url_for('static', filename='js/gestionale/dashboard2.js')}}"></script>
+    <script src="{{url_for('static', filename='js/gestionale/bilancio.js')}}"></script>
 
     <!-- CDN -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

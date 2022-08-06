@@ -4103,3 +4103,8 @@ a:hover{
     height: 50px;
     width: 50px;
 }
+
+.chartBox{
+    width: 700px;
+    height: 700px;
+}
