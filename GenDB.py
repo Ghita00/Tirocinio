@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 
-#TODO 1. Sistema questione immagini
+#TODO 1. Sistema questione immagini, sistema Q.tà delle ricette e per quante persone
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgresql@localhost:5432/pasticceria"
@@ -250,13 +250,14 @@ class Semilavorati(db.Model):
     FatturaVendita = relationship("ContenutoVenditaSemilavorati", back_populates='Semilavorato', cascade="all, delete-orphan")
     Immagine = relationship("ImmaginiSemilavorati", back_populates='Semilavorato', cascade="all, delete-orphan")
 
-    def __init__(self, Nome, Quantità, PrezzoUnitario, IVA, Preparazione, Categoria):
+    def __init__(self, Nome, Quantità, PrezzoUnitario, IVA, Preparazione, Categoria, Descrizione):
         self.Nome = Nome
         self.Quantità = Quantità
         self.PrezzoUnitario = PrezzoUnitario
         self.IVA = IVA
         self.Preparazione = Preparazione
         self.Categoria = Categoria
+        self.Descrizione = Descrizione
 
     def __repr__(self):
         return f"<Semilavorati {self.Id}>"

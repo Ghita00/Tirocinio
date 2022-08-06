@@ -1,5 +1,33 @@
 {% extends 'gestionale/base.html' %}
 
-{% block form %}
-TODO DA FARE CON FLASK FORM
+{% block formRicette %}
+<body>
+    <script>
+    function outputUpdate(numero) {
+        document.querySelector('#persone').value = numero;
+    }
+    </script>
+  <div>
+    <h3>{{nome}}</h3>
+    {% from "sito/_formhelpers.html" import render_field %}
+      <form method="POST" action="">
+          <dl>
+            {{ form.hidden_tag() }}
+            <!--TODO campo da materie prime -->
+              {% for i in range(0, len_ing) %}
+                <h5>{{ing[i][0]}}</h5>
+                {{form.Ingrediente[i]}}
+              {% endfor %}
+
+               {{ form.Persone.label }}:
+               {{ form.Persone(min=0, max=20, oninput="outputUpdate(value)") }}
+               <output for="Persone" id="persone">{{ form.Persone.data }}</output>
+
+            {{ render_field(form.Tempo) }}
+            {{ render_field(form.Preparazione) }}
+          </dl>
+          {{ form.submit }}
+      </form>
+  </div>
+</body>
 {% endblock %}

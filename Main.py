@@ -1,6 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-
+from flask_session import Session
 from GenDB import *
 from flask_fontawesome import FontAwesome
 from Utility import Auxcarrello, pages

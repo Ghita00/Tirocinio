@@ -1,6 +1,6 @@
 {% extends 'gestionale/base.html' %}
 
-{% block newRicetta %}
+{% block formSemilavorato %}
 <body>
   </div>
   {% from "sito/_formhelpers.html" import render_field %}
@@ -8,10 +8,10 @@
           <dl>
             {{ form.hidden_tag() }}
             {{ render_field(form.Nome) }}
-            {{ render_field(form.MateriePrime) }}
-            {{ render_field(form.Persone) }}
-            {{ render_field(form.Tempo) }}
-            {{ render_field(form.Preparazione) }}
+            {{ render_field(form.PrezzoUnitario) }}
+            {{ render_field(form.IVA) }}
+            {{ render_field(form.Categoria) }}
+            {{ render_field(form.Descrizione) }}
           </dl>
           {{ form.submit }}
       </form>
