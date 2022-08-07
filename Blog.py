@@ -1,10 +1,25 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, url_for
 from flask_login import current_user
+from werkzeug.utils import redirect
 
-from GenDB import *
 from Utility import Auxcarrello, pages
+from datetime import date
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, IntegerRangeField, \
+    validators, TimeField, TextAreaField, FloatField, FieldList, Form, FormField, IntegerField, DateField, \
+    PasswordField, TelField
+from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
+from GenDB import *
 
 blog = Blueprint('blog', __name__)
+
+class FormAddArticolo(FlaskForm):
+    Titolo = StringField(validators=[InputRequired()], render_kw={"placeholder": "Titolo"})
+    Contenuto = TextAreaField(validators=[InputRequired()], render_kw={"placeholder": "Scrivi qui..."})
+    Categoria = StringField(validators=[InputRequired()], render_kw={"placeholder": "Categoria"})
+
+    submit = SubmitField('Pubblica')
+
 
 @blog.route('/blog')
 def blogRoute():
@@ -36,4 +51,24 @@ def blogDetailsRoute(id):
 #gestionale
 @blog.route('/gBlog')
 def Gblog():
-    return render_template("gestionale/blog.html")
+    artic = Articoli.query.all()
+    aut = session.query(Blog.Mail_Dipendente).order_by(Blog.Id_Articolo)
+    print(list(artic))
+    return render_template("gestionale/blog.html", articoli = list(artic), autore = list(aut))
+
+@blog.route('/gBlogaddArticolo', methods=['GET', 'POST'])
+def addArticolo():
+    form = FormAddArticolo()
+    if form.validate_on_submit():
+        new_artc = Articoli(Titolo=form.Titolo.data, Categoria=form.Categoria.data, Contenuto=form.Contenuto.data, DataPubblicazione=date.today())
+        db.session.add(new_artc)
+        db.session.commit()
+
+        articolo = session.query(Articoli.Id).filter(Articoli.DataPubblicazione == date.today()).first()
+        new_Blog = Blog(Id_Articolo=int(articolo[0]), Mail_Dipendente=current_user.Mail)
+        db.session.add(new_Blog)
+        db.session.commit()
+
+        return redirect(url_for("blog.Gblog"))
+
+    return render_template("gestionale/formArticolo.html", form=form)

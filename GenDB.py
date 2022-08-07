@@ -200,10 +200,11 @@ class Articoli(db.Model):
     Dipendente = relationship("Blog", back_populates='Articolo', cascade="all, delete-orphan")
     Immagine = relationship("ImmaginiArticoli", back_populates='Articolo', cascade="all, delete-orphan")
 
-    def __init__(self, Titolo, Contenuto, DataPubblicazione):
+    def __init__(self, Titolo, Contenuto, DataPubblicazione, Categoria):
         self.Titolo = Titolo
         self.Contenuto = Contenuto
         self.DataPubblicazione = DataPubblicazione
+        self.Categoria = Categoria
 
     def __repr__(self):
         return f"<Articolo {self.Id}>"

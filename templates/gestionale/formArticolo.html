@@ -1,0 +1,14 @@
+{% extends 'gestionale/base.html' %}
+
+{% block formArticoli %}
+    {% from "sito/_formhelpers.html" import render_field %}
+        <form method="POST" action="">
+            <dl>
+              {{ form.hidden_tag() }}
+              {{ render_field(form.Titolo) }}
+              {{ render_field(form.Categoria) }}
+              {{ render_field(form.Contenuto) }}
+            </dl>
+            {{ form.submit }}
+        </form>
+{% endblock %}

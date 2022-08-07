@@ -1,23 +1,27 @@
 {% extends 'gestionale/base.html' %}
 
 {% block articoli %}
-<a href="#" class="btn btn-primary">Aggiungi articolo</a>
+<a href="{{url_for('blog.addArticolo')}}" class="btn btn-primary">Aggiungi articolo</a>
 <br>
 <br>
 <table class="table">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col" class="text-start">Handle</th>
+      <th scope="col">Id</th>
+      <th scope="col">Titolo</th>
+      <th scope="col">Contenuto</th>
+      <th scope="col" class="text-start">Data di pubblicazione</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Autore</th>
     </tr>
 
-    {% for i in range(0, 10) %}
+    {% for i in range(0, articoli|length) %}
     <tr>
-      <th scope="row" class="text-start">1</th>
-      <td class="text-start">Mark</td>
-      <td class="text-start">Otto</td>
-      <td class="text-start">@mdo</td>
+      <th scope="row" class="text-start">{{articoli[i].Id}}</th>
+      <td class="text-start">{{articoli[i].Titolo}}</td>
+      <td class="text-start">{{articoli[i].Contenuto}}</td>
+      <td class="text-start">{{articoli[i].DataPubblicazione}}</td>
+      <td class="text-start">{{articoli[i].Categoria}}</td>
+      <td class="text-start">{{autore[i].Mail_Dipendente}}</td>
     </tr>
     {% endfor %}
 
