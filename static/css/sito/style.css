@@ -4104,7 +4104,15 @@ a:hover{
     width: 50px;
 }
 
-.chartBox{
-    width: 700px;
-    height: 700px;
+.black{
+    color: black;
 }
+
+.margin-top{
+    margin-top: 45px;
+}
+
+.orange{
+    background-color: orange;
+}
+

@@ -4512,3 +4512,8 @@ h6.h1 {
 .rating-color{
     color:#fbc634 !important;
 }
+
+.chartBox{
+    width: 700px;
+    height: 700px;
+}
