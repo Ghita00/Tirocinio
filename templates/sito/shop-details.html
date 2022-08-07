@@ -3,11 +3,14 @@
 {% block breadcrumbDetails %}
     {% with messages = get_flashed_messages() %}
       {% if messages %}
-        <div class="allert margin">
-        {% for message in messages %}
-          {{ message }}<br>
-            <a href="{{url_for('ecommerce.wishlist')}}"> Accedi da qui!</a>
-        {% endfor %}
+
+        <div class="card spad center margin-top" style="width: 18rem;">
+            <div class="card-body orange">
+                {% for message in messages %}
+                <h2 class="black">{{ message }}</h2>
+                <a href="{{url_for('ecommerce.wishlist')}}"> Accedi da qui!</a>
+                {% endfor %}
+            </div>
         </div>
       {% endif %}
     {% endwith %}

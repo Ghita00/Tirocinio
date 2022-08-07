@@ -4,14 +4,13 @@
 <!-- Hero Section Begin -->
     {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <div class="container spad">
-            <div class="row center">
-                <div class="">
-                    {% for message in messages %}
-                        <h3 class="text-center">{{ message }}</h3>
-                    {% endfor %}
-                </div>
+        <div class="card spad center margin-top" style="width: 18rem;">
+            <div class="card-body orange">
+                {% for message in messages %}
+                <h2 class="black">{{ message }}</h2>
+                {% endfor %}
             </div>
+        </div>v>
         </div>
         {% endif %}
     {% endwith %}
