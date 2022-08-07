@@ -4,26 +4,38 @@
 <a href="{{url_for('blog.addArticolo')}}" class="btn btn-primary">Aggiungi articolo</a>
 <br>
 <br>
-<table class="table">
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Titolo</th>
-      <th scope="col">Contenuto</th>
-      <th scope="col" class="text-start">Data di pubblicazione</th>
-      <th scope="col">Categoria</th>
-      <th scope="col">Autore</th>
-    </tr>
+{% if articoli|length == 0 %}
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+{% else %}
+    <table class="table">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Titolo</th>
+          <th scope="col">Contenuto</th>
+          <th scope="col" class="text-start">Data di pubblicazione</th>
+          <th scope="col">Categoria</th>
+          <th scope="col">Autore</th>
+        </tr>
 
-    {% for i in range(0, articoli|length) %}
-    <tr>
-      <th scope="row" class="text-start">{{articoli[i].Id}}</th>
-      <td class="text-start">{{articoli[i].Titolo}}</td>
-      <td class="text-start">{{articoli[i].Contenuto}}</td>
-      <td class="text-start">{{articoli[i].DataPubblicazione}}</td>
-      <td class="text-start">{{articoli[i].Categoria}}</td>
-      <td class="text-start">{{autore[i].Mail_Dipendente}}</td>
-    </tr>
-    {% endfor %}
+        {% for i in range(0, articoli|length) %}
+        <tr>
+          <th scope="row" class="text-start">{{articoli[i].Id}}</th>
+          <td class="text-start">{{articoli[i].Titolo}}</td>
+          <td class="text-start">{{articoli[i].Contenuto}}</td>
+          <td class="text-start">{{articoli[i].DataPubblicazione}}</td>
+          <td class="text-start">{{articoli[i].Categoria}}</td>
+          <td class="text-start">{{autore[i].Mail_Dipendente}}</td>
+        </tr>
+        {% endfor %}
 
-</table>
+    </table>
+{%endif%}
 {% endblock %}

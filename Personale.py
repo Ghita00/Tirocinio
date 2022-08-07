@@ -15,6 +15,11 @@ def personaleGestionale():
     dip_data = session.query(Dipendenti.DataAssunzione).all()
     dip = Persone.query.join(Dipendenti).filter(Dipendenti.Mail == Persone.Mail).all()
 
+    if dip == None:
+        flash("Non hai dipendenti")
+        return render_template("gestionale/dipendenti.html", len_Dip=0)
+
+
     return render_template("gestionale/dipendenti.html", Dip=list(dip), len_Dip=len(list(dip)), Dip_Data=list(dip_data), len_Dip_Data=len(list(dip_data)))
 
 class RegistrazioneDipendente(FlaskForm):
@@ -44,5 +49,6 @@ def addDipendente():
 
 @personale.route('/organizzazioneStaff')
 def organizzazioneStaffGestionale():
-    return render_template("gestionale/organizzazioneStaff.html")
+    turni = Turni.query.all()
+    return render_template("gestionale/organizzazioneStaff.html", Turni=list(turni))
 

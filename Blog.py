@@ -52,9 +52,13 @@ def blogDetailsRoute(id):
 @blog.route('/gBlog')
 def Gblog():
     artic = Articoli.query.all()
-    aut = session.query(Blog.Mail_Dipendente).order_by(Blog.Id_Articolo)
-    print(list(artic))
-    return render_template("gestionale/blog.html", articoli = list(artic), autore = list(aut))
+
+    if artic == None:
+        flash("Non ci sono articoli")
+        return render_template("gestionale/blog.html", articoli=0)
+    else:
+        aut = session.query(Blog.Mail_Dipendente).order_by(Blog.Id_Articolo)
+        return render_template("gestionale/blog.html", articoli = list(artic), autore = list(aut))
 
 @blog.route('/gBlogaddArticolo', methods=['GET', 'POST'])
 def addArticolo():
