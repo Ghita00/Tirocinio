@@ -38,27 +38,31 @@ class newRecipe(FlaskForm):
 def ricettarioGestionale():
     recipes = session.query(Ricette.Id_Semilavorato).group_by(Ricette.Id_Semilavorato).count()
 
-    prod = Semilavorati.query.join(Ricette).filter(Ricette.Id_Semilavorato == Semilavorati.Id)  #campi semi con ricette
-    ing = list(session.query(Ricette, Merce).join(Merce).filter(Merce.Id == Ricette.Id_MateriaPrima))
+    if recipes == None:
+        flash("Non hai ricette.")
+        return render_template("gestionale/ricettario.html", len_ricette=0)
+    else:
+        prod = Semilavorati.query.join(Ricette).filter(Ricette.Id_Semilavorato == Semilavorati.Id)  #campi semi con ricette
+        ing = list(session.query(Ricette, Merce).join(Merce).filter(Merce.Id == Ricette.Id_MateriaPrima))
 
-    list_ric = []
-    lista_aux = []
+        list_ric = []
+        lista_aux = []
 
 
-    for i in range(0, len(list(ing))):
-        if i == 0:
-            lista_aux.append((ing[i][1].Nome, ing[i][0].Quantita))
-        else:
-            if ing[i][0].Id_Semilavorato == ing[i-1][0].Id_Semilavorato:
+        for i in range(0, len(list(ing))):
+            if i == 0:
                 lista_aux.append((ing[i][1].Nome, ing[i][0].Quantita))
             else:
-                list_ric.append(lista_aux)
-                lista_aux = []
-                lista_aux.append((ing[i][1].Nome, ing[i][0].Quantita))
+                if ing[i][0].Id_Semilavorato == ing[i-1][0].Id_Semilavorato:
+                    lista_aux.append((ing[i][1].Nome, ing[i][0].Quantita))
+                else:
+                    list_ric.append(lista_aux)
+                    lista_aux = []
+                    lista_aux.append((ing[i][1].Nome, ing[i][0].Quantita))
 
-    list_ric.append(lista_aux)
+        list_ric.append(lista_aux)
 
-    return render_template("gestionale/ricettario.html", len_ricette = recipes, Prod=list(prod), Ing=list_ric, len_Ing=len(list_ric))
+        return render_template("gestionale/ricettario.html", len_ricette = recipes, Prod=list(prod), Ing=list_ric, len_Ing=len(list_ric))
 
 @ricettario.route('/addSemilavorato', methods=['GET', 'POST'])
 def addSemi():

@@ -16,8 +16,12 @@
     {% for i in range(0, 7) %}
         <td>
             <ul>
-                {% for i in range(0, 2) %}
-                    <li class="text-center">Libero</li>
+                {% for i in range(0, Turni|length) %}
+                    <li class="text-center"> <h5>{{Turni[i].Nome}}</h5> </li>
+                    <li class="text-center">dalle {{Turni[i].OraInizio}} alle {{Turni[i].OraFine}}</li>
+                    {% for j in range(0,2) %}
+                        <ul class="text-center">Giovanni</ul>
+                    {% endfor %}
                 {% endfor %}
             </ul>
         </td>
