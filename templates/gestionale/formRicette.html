@@ -8,6 +8,7 @@
     }
     </script>
   <div>
+      <h2 class="text-center">Aggiungi le diverse informazioni per la Ricetta</h2>
     <h3>{{nome}}</h3>
     {% from "sito/_formhelpers.html" import render_field %}
       <form method="POST" action="" >
@@ -35,7 +36,7 @@
                       {{ render_field(form.Tempo) }}
                   </div>
               </div>
-              <br>
+
 
             {{ render_field(form.Preparazione, class='semi'+form.Preparazione.name) }}
           </dl>
