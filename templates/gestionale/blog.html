@@ -17,7 +17,7 @@
 {% else %}
     <table class="table">
         <tr>
-          <th scope="col">Id</th>
+
           <th scope="col">Titolo</th>
           <th scope="col">Contenuto</th>
           <th scope="col" class="text-start">Data di pubblicazione</th>
@@ -27,9 +27,9 @@
 
         {% for i in range(0, articoli|length) %}
         <tr>
-          <th scope="row" class="text-start">{{articoli[i].Id}}</th>
-          <td class="text-start">{{articoli[i].Titolo}}</td>
-          <td class="text-start">{{articoli[i].Contenuto}}</td>
+
+          <th class="text-start">{{articoli[i].Titolo}}</th>
+          <td class="text-start resize">{{articoli[i].Contenuto}}</td>
           <td class="text-start">{{articoli[i].DataPubblicazione}}</td>
           <td class="text-start">{{articoli[i].Categoria}}</td>
           <td class="text-start">{{autore[i].Mail_Dipendente}}</td>

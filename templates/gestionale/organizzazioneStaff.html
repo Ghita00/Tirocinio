@@ -14,14 +14,15 @@
     </tr>
     <tr>
     {% for i in range(0, 7) %}
-        <td>
+        <td class="paddingCalendar">
             <ul>
                 {% for i in range(0, Turni|length) %}
                     <li class="text-center"> <h5>{{Turni[i].Nome}}</h5> </li>
-                    <li class="text-center">dalle {{Turni[i].OraInizio}} alle {{Turni[i].OraFine}}</li>
+                    <li class="text-center">{{Turni[i].OraInizio}}-{{Turni[i].OraFine}}</li>
                     {% for j in range(0,2) %}
                         <ul class="text-center">Giovanni</ul>
                     {% endfor %}
+                <br>
                 {% endfor %}
             </ul>
         </td>
@@ -29,7 +30,7 @@
     </tr>
     <tr>
         {% for i in range(0, 7) %}
-        <td>
+        <td class="text-center">
             <a href="{{url_for('ordini.newOrdine')}}" class="btn">Aggiungi<br>Personale</a><!--TODO CON IL REDIRECT GIUSTO-->
         </td>
         {% endfor %}

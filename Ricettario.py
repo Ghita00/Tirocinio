@@ -15,7 +15,7 @@ class newSemi(FlaskForm):
     Categoria = StringField(validators=[InputRequired()], render_kw={"placeholder": "Categoria"})
     Descrizione = TextAreaField('Inserire una piccola decrizione del nuovo prodotto', validators=[InputRequired()])
 
-    submit = SubmitField('Aggiungi')
+    submit = SubmitField('Prosegui')
 
 class materiePrime:
     merce = list((session.query(Merce.Nome, Merce.Id).filter(Merce.MateriaPrima == True)))

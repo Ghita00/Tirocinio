@@ -5,9 +5,17 @@
         <form method="POST" action="">
             <dl>
               {{ form.hidden_tag() }}
-              {{ render_field(form.Titolo) }}
-              {{ render_field(form.Categoria) }}
-              {{ render_field(form.Contenuto) }}
+                <div class="row">
+                    <div class="col-5">
+                        {{ render_field(form.Titolo, class="Blog"+form.Titolo.name) }}
+                    </div>
+                    <div class="col">
+                        {{ render_field(form.Categoria) }}
+                    </div>
+                </div>
+
+
+              {{ render_field(form.Contenuto, class="Bigtext") }}
             </dl>
             {{ form.submit }}
         </form>
