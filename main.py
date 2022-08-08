@@ -15,7 +15,6 @@ from Personale import personale
 from Ricettario import ricettario
 from Produzione import produzione
 
-
 #TODO, ATTENZIONE il campo rating va modificato o settato dal manager
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 fa = FontAwesome(app) #serve per i font
