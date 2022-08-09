@@ -52,3 +52,7 @@ def organizzazioneStaffGestionale():
     turni = Turni.query.all()
     return render_template("gestionale/organizzazioneStaff.html", Turni=list(turni))
 
+@personale.route('/turni/<id>')
+def tabellaTurni(id):
+    return render_template("gestionale/turniSingle.html", nome="luca", meseACT="agosto")
+

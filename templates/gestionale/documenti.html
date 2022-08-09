@@ -1,1 +1,104 @@
 {% extends 'gestionale/base.html' %}
+
+{% block documenti %}
+<h2>Documenti</h2>
+<a href="#" class="btn btn-primary">Inserisci nuovo documento ricevuto</a>
+<br>
+<br>
+<div class="container">
+    <h2>Fatture acquisto</h2>
+    <table class="table">
+        <tr>
+            <th class="text-center">Numero documento</th>
+            <th>Mittente</th>
+            <th>Data emissione</th>
+            <th>Ammontare</th>
+            <th>Status</th>
+            <th>Vaziarioni Opzionali</th>
+        </tr>
+        {% for i in range(0, 10)%}
+        <tr>
+            <td class="text-center">{{i}}</td>
+            <td>Gabibo</td>
+            <td>1/1/2000</td>
+            <td>5000000.00</td>
+            <td>Da pagare</td>
+            <td>-</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<br>
+<br>
+<div class="container">
+    <h2>Fatture vendita</h2>
+    <table class="table">
+        <tr>
+            <th class="text-center">Numero documento</th>
+            <th>Beneficiario</th>
+            <th>Data emissione</th>
+            <th>Ammontare</th>
+            <th>Status</th>
+            <th>Vaziarioni Opzionali</th>
+        </tr>
+        {% for i in range(0, 10)%}
+        <tr>
+            <td class="text-center">{{i}}</td>
+            <td>Gabibo</td>
+            <td>1/1/2000</td>
+            <td>5000000.00</td>
+            <td>Da pagare</td>
+            <td>-</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<br>
+<br>
+<div class="container">
+    <h2>DDT</h2>
+    <table class="table">
+        <tr>
+            <th class="text-center">Numero documento</th>
+            <th>Mittente</th>
+            <th>Data emissione</th>
+            <th>Note</th>
+            <th>Peso</th>
+            <th>Colli</th>
+            <th>Ammontare</th>
+            <th>Status</th>
+        </tr>
+        {% for i in range(0, 10)%}
+        <tr>
+            <td class="text-center">{{i}}</td>
+            <td>Gabibo</td>
+            <td>1/1/2000</td>
+            <td>descrizione del gabibo sesso pazzo</td>
+            <td>500kg</td>
+            <td>3</td>
+            <td>5000000.00</td>
+            <td>Da pagare</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<br>
+<br>
+<div class="container">
+    <h2>Scontrini Battuti</h2>
+    <table class="table">
+        <tr>
+            <th class="text-center">Numero totale/th>
+            <th>Data emissione</th>
+            <th>Ammontare finale</th>
+        </tr>
+        {% for i in range(0, 10)%}
+        <tr>
+            <td class="text-center">{{i*10}}</td>
+            <td>1/1/2000</td>
+            <td>5000000.00</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -1,6 +1,7 @@
 {% extends 'gestionale/base.html' %}
 
 {% block persone %}
+<h2>Dipendenti</h2>
 <a href="{{url_for('personale.addDipendente')}}" class="btn btn-primary">Aggiungi dipendente</a>
 <br>
 <br>
@@ -28,8 +29,9 @@
                             <ul>Telefono: {{Dip[i].Telefono}}</ul>
                             <ul>Data di assunzione: {{Dip_Data[i].DataAssunzione}}</ul>
                         </li>
-                        <!--TODO tabellone turni del singolo dipendente-->
-                        <a href="#" class="btn btn-primary">Visualizza turni</a>
+                        <div class="center">
+                            <a href="{{url_for('personale.tabellaTurni', id=1)}}" class="btn btn-primary ">Visualizza turni</a>
+                        </div>
                     </div>
                 </div>
             </div>
