@@ -26,7 +26,3 @@ def ordiniGestionale():
     else:
         #passare sempre i primi 10 elementi delle liste
         return render_template("gestionale/ordini.html")
-
-@ordini.route('/newOrdine')
-def newOrdine():
-    return render_template("gestionale/nuovoOrdine.html")

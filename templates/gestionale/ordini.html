@@ -1,31 +1,28 @@
 {% extends 'gestionale/base.html' %}
 
 {% block ricevuti %}
-<div class="row">
-    <div class="col-3">
-        <p class="h2">Ordini Ricevuti</p>
-    </div>
-
-</div>
+<br>
+<p class="h2">Ordini Ricevuti</p>
+<br>
 
 <table class="table">
     <tr>
         <th scope="col" class="text-center">Numero doc</th>
-        <th scope="col">Nome cliente</th>
-        <th scope="col">Contatto</th>
-        <th scope="col">Importo</th>
-        <th scope="col" class="text-start">Status</th>
-        <th scope="col" class="text-start">Data</th>
+        <th scope="col" class="text-center">Nome cliente</th>
+        <th scope="col" class="text-center">Contatto</th>
+        <th scope="col" class="text-center">Importo</th>
+        <th scope="col" class="text-start text-center">Status</th>
+        <th scope="col" class="text-start text-center">Data</th>
     </tr>
 
     {% for i in range(0, 10) %}
     <tr>
         <th class="text-start text-center">{{i}}</th>
-        <td class="text-start">Mark</td>
-        <td class="text-start">Otto</td>
-        <td class="text-start">@mdo</td>
-        <td class="text-start">Otto</td>
-        <td class="text-start">Otto</td>
+        <td class="text-start text-center">Mark</td>
+        <td class="text-start text-center">Otto</td>
+        <td class="text-start text-center">@mdo</td>
+        <td class="text-start p-3 mb-2 bg-danger text-white text-center">Otto</td>
+        <td class="text-start text-center">Otto</td>
     </tr>
     {% endfor %}
 
@@ -49,27 +46,25 @@
 <hr>
 <br>
 <p class="h2">Ordini Effettuati</p>
-<a href="{{url_for('ordini.newOrdine')}}" class="btn btn-primary">Aggiungi ordine</a>
-<br>
 <br>
 <table class="table">
     <tr>
       <th scope="col" class="text-center">Numero doc</th>
-        <th scope="col">Nome cliente</th>
-        <th scope="col">Contatto</th>
-        <th scope="col">Importo</th>
-        <th scope="col" class="text-start">Status</th>
-        <th scope="col" class="text-start">Data</th>
+        <th scope="col" class="text-center">Nome cliente</th>
+        <th scope="col" class="text-center">Contatto</th>
+        <th scope="col" class="text-center">Importo</th>
+        <th scope="col" class="text-start text-center">Status</th>
+        <th scope="col" class="text-start text-center">Data</th>
     </tr>
 
     {% for i in range(0, 10) %}
     <tr>
-      <th scope="row" class="text-start text-center">1</th>
-      <td class="text-start">Mark</td>
-      <td class="text-start">Otto</td>
-      <td class="text-start">@mdo</td>
-      <td class="text-start">@mdo</td>
-        <td class="text-start">@mdo</td>
+        <th scope="row" class="text-start text-center">1</th>
+        <td class="text-start text-center">Mark</td>
+        <td class="text-start text-center">Otto</td>
+        <td class="text-start text-center">@mdo</td>
+        <td class="text-start text-center p-3 mb-2 bg-danger text-white">@mdo</td>
+        <td class="text-start text-center">@mdo</td>
     </tr>
     {% endfor %}
 
