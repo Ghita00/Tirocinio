@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for
+from flask import Blueprint, render_template, url_for, flash
 from flask_login import current_user
 from werkzeug.utils import redirect
 
@@ -54,7 +54,7 @@ def Gblog():
     artic = Articoli.query.all()
 
     if artic == None:
-        flash("Non ci sono articoli")
+        flash("Non ci sono articoli pubblicati fin ora")
         return render_template("gestionale/blog.html", articoli=0)
     else:
         aut = session.query(Blog.Mail_Dipendente).order_by(Blog.Id_Articolo)

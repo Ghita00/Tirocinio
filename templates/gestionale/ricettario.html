@@ -8,11 +8,11 @@
 {% if len_ricette == 0 %}
     {% with messages = get_flashed_messages() %}
       {% if messages %}
-        <ul class=flashes>
+        <div class="center">
         {% for message in messages %}
-          <li>{{ message }}</li>
+          <h2 class="text-center">{{ message }}</h2>
         {% endfor %}
-        </ul>
+        </div>
       {% endif %}
     {% endwith %}
 {% else %}
