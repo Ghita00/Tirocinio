@@ -25,8 +25,8 @@ class RegistrazioneDipendente(FlaskForm):
     submit = SubmitField('Register')
 
 class addTurno(FlaskForm):
-    dipendente = SelectField('dipendente', choices=[])
-    turno = SelectField('turno', choices=[])
+    dipendente = SelectField('Dipendente', choices=[])
+    turno = SelectField('Turno', choices=[])
 
     submit = SubmitField('Aggiungi')
 
