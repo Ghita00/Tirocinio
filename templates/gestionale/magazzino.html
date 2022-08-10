@@ -41,6 +41,7 @@
                         <i class="fa fa-star"></i>
                     </div>
                     <br>
+                    <!--TODO trova modo per capire se mettere la descrizione o meno-->
                     <p class="card-text">Descrizione</p>
                     <p>quantità: {{Prod[i].Quantità}}</p>
                     <p>prezzo: {{Prod[i].PrezzoUnitario}}$</p>
@@ -55,6 +56,13 @@
                             <a href="">
                                 <img src="{{url_for('static', filename='img/sito/icon/heart.png')}}" alt="">
                             </a>
+                        </div>
+                        <!--TODO if per capire se è di un tipo o di un altro-->
+                        <div class="col-auto">
+                            <a href="{{url_for('magazzino.modificaSemilavorato', id=Prod[i].Id)}}">Modifica prodotto</a>
+                        </div>
+                        <div class="col-auto">
+                            <a href="{{url_for('magazzino.modificaMerce', id=Prod[i].Id)}}">Modifica merce</a>
                         </div>
                     </div>
                 </div>
