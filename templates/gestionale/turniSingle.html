@@ -1,7 +1,7 @@
 {% extends 'gestionale/base.html' %}
 
 {% block turniSingleTable %}
-<h2>Turni svolti dal dipendente {{nome}} durante il mese di {{meseACT}}</h2>
+<h2>Turni svolti dal dipendente {{Dip.Nome}} {{Dip.Cognome}} durante il mese di {{meseACT}}</h2>
 <div class="container">
     <table class="table">
         <tr>
@@ -9,17 +9,17 @@
             <th>Ore standard</th>
             <th>Ore straordinarie</th>
         </tr>
-        {% for i in range(0, 10) %}
+        {% for i in range(0, Turni|length) %}
         <tr>
-            <td>mattina</td>
-            <td >4</td>
+            <td>mattina<!--TODO nome del turno--></td>
+            <td>5<!--TODO calcolo delle ore lavorate quel giorno--></td>
             <td>2</td>
         </tr>
         {% endfor %}
     </table>
     <hr>
     <div>
-        <p>Totale ore: 150 ore e 25 straordinarie</p>
+        <p>Totale ore: {{Tot[0]}} ore e 25 straordinarie</p>
         <p>Costo previsto: 1200.00 euro </p>
     </div>
 </div>

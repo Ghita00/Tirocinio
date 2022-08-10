@@ -22,7 +22,7 @@
                     <!--TODO casta le ore-->
                     <li class="text-center">{{Turni[i].OraInizio}}-{{Turni[i].OraFine}}</li>
                     {% for j in range(0,2) %}
-                        <ul class="text-center">Giovanni</ul>
+                        <ul class="text-center">-</ul>
                     {% endfor %}
                 <br>
                 {% endfor %}
@@ -33,7 +33,7 @@
     <tr>
         {% for i in range(0, 7) %}
         <td class="text-center">
-            <a href="{{url_for('ordini.newOrdine')}}" class="btn">Aggiungi<br>Personale</a><!--TODO CON IL REDIRECT GIUSTO-->
+            <a href="{{url_for('personale.addDipendenteTurno', data='30.09.2022')}}" class="btn">Aggiungi<br>Personale</a><!--TODO CON IL REDIRECT GIUSTO-->
         </td>
         {% endfor %}
     </tr>
