@@ -10,7 +10,7 @@ def documentiGestionale():
     fattureVen = []
     DTT = []
     scontrini = []
-    
+
     if request.method == "POST":
         nascosto = request.form["nascosto"]
         if nascosto == '1':
