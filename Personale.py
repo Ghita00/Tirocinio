@@ -55,10 +55,19 @@ def addDipendente():
 
     return render_template("gestionale/formDipendente.html", form=form)
 
-@personale.route('/organizzazioneStaff')
+@personale.route('/organizzazioneStaff', methods=['GET', 'POST'])
 def organizzazioneStaffGestionale():
     turni = Turni.query.all()
-    return render_template("gestionale/organizzazioneStaff.html", Turni=list(turni))
+    if request.method == "POST":
+        giorniSettimana = []  # TODO LISTA GIORNI
+        variazione = request.form["settimana"]
+        # if(variazione == 1):
+            # slider ricevuti avanti di 1
+        # if(variazione == -1):
+            # slider ricevuti indietro di 1
+        return render_template("gestionale/organizzazioneStaff.html", Turni=list(turni))
+    else:
+        return render_template("gestionale/organizzazioneStaff.html", Turni=list(turni))
 
 @personale.route('/addDipTurno/<data>', methods=['GET', 'POST'])
 def addDipendenteTurno(data):
