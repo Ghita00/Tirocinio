@@ -28,6 +28,13 @@
 
 <div class="row">
     {% for i in range(0, Prod|length)%}
+        {% if categoria == 0 %}
+            {% if i < Semi|length %}
+                {% set categoria = 1 %}
+            {% else %}
+                {% set categoria = 2 %}
+            {% endif %}
+        {% endif %}
         <div class="col-4">
             <div class="card" style="width: 18rem;">
             <img src="{{url_for('static', filename='img/sito/shop/details/product-big-1.jpg')}}" class="card-img-top" alt="...">
@@ -41,11 +48,12 @@
                         <i class="fa fa-star"></i>
                     </div>
                     <br>
-                    <!--TODO trova modo per capire se mettere la descrizione o meno-->
-                    <p class="card-text">Descrizione</p>
-                    <p>quantità: {{Prod[i].Quantità}}</p>
-                    <p>prezzo: {{Prod[i].PrezzoUnitario}}$</p>
-
+                    {% if categoria == 1 %}
+                    <p class="card-text">Descrizione: {{Prod[i].Descrizione}}</p>
+                    <p class="card-text">Incipit: {{Prod[i].Incipit}}</p>
+                    {% endif %}
+                    <p>Quantità: {{Prod[i].Quantità}}</p>
+                    <p>Prezzo: {{Prod[i].PrezzoUnitario}}$</p>
                     <div class="row g-3">
                         <div class="col-auto">
                             <a href="">
@@ -57,13 +65,15 @@
                                 <img src="{{url_for('static', filename='img/sito/icon/heart.png')}}" alt="">
                             </a>
                         </div>
-                        <!--TODO if per capire se è di un tipo o di un altro-->
+                        {% if categoria == 1 %}
                         <div class="col-auto">
                             <a href="{{url_for('magazzino.modificaSemilavorato', id=Prod[i].Id)}}">Modifica prodotto</a>
                         </div>
+                        {% else %}
                         <div class="col-auto">
                             <a href="{{url_for('magazzino.modificaMerce', id=Prod[i].Id)}}">Modifica merce</a>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

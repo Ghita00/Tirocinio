@@ -251,7 +251,7 @@ class Semilavorati(db.Model):
     FatturaVendita = relationship("ContenutoVenditaSemilavorati", back_populates='Semilavorato', cascade="all, delete-orphan")
     Immagine = relationship("ImmaginiSemilavorati", back_populates='Semilavorato', cascade="all, delete-orphan")
 
-    def __init__(self, Nome, Quantità, PrezzoUnitario, IVA, Preparazione, Categoria, Descrizione):
+    def __init__(self, Nome, Quantità, PrezzoUnitario, IVA, Preparazione, Categoria, Descrizione, Incipit):
         self.Nome = Nome
         self.Quantità = Quantità
         self.PrezzoUnitario = PrezzoUnitario
@@ -259,6 +259,7 @@ class Semilavorati(db.Model):
         self.Preparazione = Preparazione
         self.Categoria = Categoria
         self.Descrizione = Descrizione
+        self.Incipit = Incipit
 
     def __repr__(self):
         return f"<Semilavorati {self.Id}>"
