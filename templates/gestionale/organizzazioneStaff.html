@@ -20,7 +20,7 @@
                 {% for i in range(0, Turni|length) %}
                     <li class="text-center"> <h5>{{Turni[i].Nome}}</h5> </li>
                     <!--TODO casta le ore-->
-                    <li class="text-center">{{Turni[i].OraInizio}}-{{Turni[i].OraFine}}</li>
+                    <li class="text-center">{{Turni[i].OraInizioTurno}}-{{Turni[i].OraFineTurno}}</li>
                     {% for j in range(0,2) %}
                         <ul class="text-center">-</ul>
                     {% endfor %}

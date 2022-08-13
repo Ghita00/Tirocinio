@@ -1,5 +1,5 @@
 from datetime import date
-
+from datetime import datetime
 from sqlalchemy import func
 from werkzeug.utils import redirect
 from flask import Blueprint, render_template, url_for, request, flash
@@ -81,8 +81,8 @@ def addDipendenteTurno(data):
         dipMail = session.query(Persone.Mail).filter(Persone.Nome == dip[0]).filter(Persone.Cognome == dip[1]).first()
         turnoId = session.query(Turni.Id).filter(Turni.Nome == form.turno.data).first()
 
-        oraI = session.query(Turni.OraInizio).filter(Turni.Id == turnoId[0]).first()
-        oraF = session.query(Turni.OraFine).filter(Turni.Id == turnoId[0]).first()
+        oraI = session.query(Turni.OraInizioTurno).filter(Turni.Id == turnoId[0]).first()
+        oraF = session.query(Turni.OraFineTurno).filter(Turni.Id == turnoId[0]).first()
 
         new_persTurni = PersonaleTurni(Mail_Dipendente = dipMail[0], Id_Turno = turnoId[0], Data = data, OraInizio = str(oraI[0]), OraFine = str(oraF[0]))
         db.session.add(new_persTurni)
@@ -95,9 +95,35 @@ def addDipendenteTurno(data):
 
 @personale.route('/turni/<id>')
 def tabellaTurni(id):
-    turni = PersonaleTurni.query.filter(PersonaleTurni.Mail_Dipendente == id)
-    dip = Persone.query.filter(Persone.Mail == id)
-    #TODO query per passarmi anche i dati sul turno
-    tot = session.query(func.sum(PersonaleTurni.OraFine - PersonaleTurni.OraInizio)).filter(PersonaleTurni.Mail_Dipendente == id).first()
-    return render_template("gestionale/turniSingle.html", Dip=list(dip), meseACT="agosto", Turni = list(turni), Tot = list(tot))
+    turni = list(session.query(Turni.Nome, Turni.CompensoOrario, Turni.OraInizioTurno, Turni.OraFineTurno, PersonaleTurni.OraInizio, PersonaleTurni.OraFine).join(PersonaleTurni).filter(PersonaleTurni.Mail_Dipendente == id).filter(PersonaleTurni.Id_Turno == Turni.Id).order_by(PersonaleTurni.Id_Turno))
+    dip = Persone.query.filter(Persone.Mail == id).first()
+
+    differenze = []
+
+    for x in turni:
+        dateTimeA = datetime.combine(date.today(), x.OraInizio)
+        dateTimeB = datetime.combine(date.today(), x.OraFine)
+        # Get the difference between datetimes (as timedelta)
+        dateTimeDifferenceAll = dateTimeB - dateTimeA
+
+        dateTimeA = datetime.combine(date.today(), x.OraInizioTurno)
+        dateTimeB = datetime.combine(date.today(), x.OraFineTurno)
+        dateTimeDifference = dateTimeB - dateTimeA
+
+        y = (dateTimeDifference.total_seconds()/3600, (dateTimeDifferenceAll-dateTimeDifference).total_seconds()/3600)
+
+        differenze.append(y)
+
+    tot = 0
+    totStra = 0
+
+    for x in differenze:
+        tot+=x[0]
+        totStra+=x[1]
+
+    stipendio = (tot * turni[0].CompensoOrario) + (totStra * (turni[0].CompensoOrario + 1.5))
+
+
+
+    return render_template("gestionale/turniSingle.html", Dip=dip, meseACT="agosto", Turni = turni, Differenze = differenze, TotOre=tot, TotOreStra=totStra, Stip=round(stipendio, 2))
 

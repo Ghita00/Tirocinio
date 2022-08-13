@@ -214,16 +214,16 @@ class Turni(db.Model):
 
     Id = db.Column(db.Integer(), primary_key=True)
     Nome = db.Column(db.String(60), nullable=False)
-    OraInizio = db.Column(db.Time(), nullable=False)
-    OraFine = db.Column(db.Time(), nullable=False)
+    OraInizioTurno = db.Column(db.Time(), nullable=False)
+    OraFineTurno = db.Column(db.Time(), nullable=False)
     CompensoOrario = db.Column(db.Float(), nullable=False)
 
     Dipendente = relationship("PersonaleTurni", back_populates='Turno', cascade="all, delete-orphan")
 
-    def __init__(self, Nome, OraInizio, OraFine, CompensoOrario):
+    def __init__(self, Nome, OraInizioTurno, OraFineTurno, CompensoOrario):
         self.Nome = Nome
-        self.OraInizio = OraInizio
-        self.OraFine = OraFine
+        self.OraInizioTurno = OraInizioTurno
+        self.OraFineTurno = OraFineTurno
         self.CompensoOrario = CompensoOrario
 
     def __repr__(self):

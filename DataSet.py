@@ -31,16 +31,16 @@ Allergeni = [Allergeni(Nome='Cereali contenenti glutine'),
              Allergeni(Nome='Lupini'),
              Allergeni(Nome='Molluschi')]
 
-Turni = [Turni(Nome='Mattiniero', OraInizio='05:00:00', OraFine='13:00:00', CompensoOrario='8.90'),
-         Turni(Nome='Pomeridiano', OraInizio='13:00:00', OraFine='18:00:00', CompensoOrario='8.90'),
-         Turni(Nome='Serale', OraInizio='18:00:00', OraFine='23:00:00', CompensoOrario='8.90'),
-         Turni(Nome='Giornaliero', OraInizio='05:00:00', OraFine='17:00:00', CompensoOrario='8.90')]
+Turni = [Turni(Nome='Mattiniero', OraInizioTurno='05:00:00', OraFineTurno='13:00:00', CompensoOrario='8.90'),
+         Turni(Nome='Pomeridiano', OraInizioTurno='13:00:00', OraFineTurno='18:00:00', CompensoOrario='8.90'),
+         Turni(Nome='Serale', OraInizioTurno='18:00:00', OraFineTurno='23:00:00', CompensoOrario='8.90'),
+         Turni(Nome='Giornaliero', OraInizioTurno='05:00:00', OraFineTurno='17:00:00', CompensoOrario='8.90')]
 
-Semilavorati = [Semilavorati(Nome='Brioche Crema', Quantità='20', PrezzoUnitario='1.10', IVA='10', Preparazione=None, Categoria='Brioche', Descrizione=""),
-                Semilavorati(Nome='Brioche Cioccolato', Quantità='20', PrezzoUnitario='1.10', IVA='10', Preparazione=None, Categoria='Brioche', Descrizione=""),
-                Semilavorati(Nome='Brioche Vuota', Quantità='20', PrezzoUnitario='1.10', IVA='10', Preparazione=None, Categoria='Brioche', Descrizione=""),
-                Semilavorati(Nome='Brioche Marmellata', Quantità='20', PrezzoUnitario='1.10', IVA='10', Preparazione=None, Categoria='Brioche', Descrizione=""),
-                Semilavorati(Nome='Brioche Frutti di bosco', Quantità='20', PrezzoUnitario='1.10', IVA='10', Preparazione=None, Categoria='Brioche', Descrizione="")]
+Semilavorati = [Semilavorati(Nome='Brioche Crema', Quantità='20', PrezzoUnitario='1.10', IVA='10', Preparazione=None, Categoria='Brioche', Descrizione="", Incipit=""),
+                Semilavorati(Nome='Brioche Cioccolato', Quantità='20', PrezzoUnitario='1.10', IVA='10', Preparazione=None, Categoria='Brioche', Descrizione="", Incipit=""),
+                Semilavorati(Nome='Brioche Vuota', Quantità='20', PrezzoUnitario='1.10', IVA='10', Preparazione=None, Categoria='Brioche', Descrizione="", Incipit=""),
+                Semilavorati(Nome='Brioche Marmellata', Quantità='20', PrezzoUnitario='1.10', IVA='10', Preparazione=None, Categoria='Brioche', Descrizione="", Incipit=""),
+                Semilavorati(Nome='Brioche Frutti di bosco', Quantità='20', PrezzoUnitario='1.10', IVA='10', Preparazione=None, Categoria='Brioche', Descrizione="", Incipit="")]
 
 Merce = [Merce(Nome='Farina', Quantità='10', PrezzoUnitario='5.00', IVA='10', MateriaPrima=True),
          Merce(Nome='Uova', Quantità='60', PrezzoUnitario='2.00', IVA='10', MateriaPrima=True),
