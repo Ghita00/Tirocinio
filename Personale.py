@@ -27,6 +27,7 @@ class RegistrazioneDipendente(FlaskForm):
 class addTurno(FlaskForm):
     dipendente = SelectField('Dipendente', choices=[])
     turno = SelectField('Turno', choices=[])
+    data = DateField('Data')
 
     submit = SubmitField('Aggiungi')
 
@@ -57,20 +58,24 @@ def addDipendente():
 
 @personale.route('/organizzazioneStaff', methods=['GET', 'POST'])
 def organizzazioneStaffGestionale():
-    turni = Turni.query.all()
-    if request.method == "POST":
-        giorniSettimana = []  # TODO LISTA GIORNI
-        variazione = request.form["settimana"]
-        # if(variazione == 1):
-            # slider ricevuti avanti di 1
-        # if(variazione == -1):
-            # slider ricevuti indietro di 1
-        return render_template("gestionale/organizzazioneStaff.html", Turni=list(turni))
-    else:
-        return render_template("gestionale/organizzazioneStaff.html", Turni=list(turni))
+    personale = session.query(PersonaleTurni.Data, PersonaleTurni.Mail_Dipendente, Turni.Nome, Turni.OraInizioTurno, Turni.OraFineTurno)\
+        .join(Turni, Turni.Id == PersonaleTurni.Id_Turno).all()
 
-@personale.route('/addDipTurno/<data>', methods=['GET', 'POST'])
-def addDipendenteTurno(data):
+    events = []
+
+    for x in personale:
+        events.append({
+            'Dipendente' : x.Mail_Dipendente,
+            'Turno' : x.Nome,
+            'Data' : x.Data,
+            'OraInizio' : x.OraInizioTurno,
+            'OraFine' : x.OraFineTurno,
+        })
+
+    return render_template("gestionale/organizzazioneStaff.html", events = events)
+
+@personale.route('/addDipTurno', methods=['GET', 'POST'])
+def addDipendenteTurno():
     form = addTurno()
     form.dipendente.choices = [ dipendente.Nome + " " + dipendente.Cognome for dipendente in Persone.query.join(Dipendenti).filter(Persone.Mail == Dipendenti.Mail).all()]
     form.turno.choices = [turno.Nome for turno in Turni.query.all()]
@@ -84,7 +89,7 @@ def addDipendenteTurno(data):
         oraI = session.query(Turni.OraInizioTurno).filter(Turni.Id == turnoId[0]).first()
         oraF = session.query(Turni.OraFineTurno).filter(Turni.Id == turnoId[0]).first()
 
-        new_persTurni = PersonaleTurni(Mail_Dipendente = dipMail[0], Id_Turno = turnoId[0], Data = data, OraInizio = str(oraI[0]), OraFine = str(oraF[0]))
+        new_persTurni = PersonaleTurni(Mail_Dipendente = dipMail[0], Id_Turno = turnoId[0], OraInizio = str(oraI[0]), OraFine = str(oraF[0]), Data=form.data.data)
         db.session.add(new_persTurni)
         db.session.commit()
 

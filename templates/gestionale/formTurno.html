@@ -3,7 +3,7 @@
 {% block formTurno %}
     {% from "sito/_formhelpers.html" import render_field %}
     <form method="POST" action="" class="center">
-        <h2>Aggiungi Turno dipendente del giorno TODO</h2>
+        <h2>Aggiungi Turno dipendente del giorno</h2>
         {{ form.hidden_tag() }}
         <div class="row g-3">
           <div class="col-sm">
@@ -11,6 +11,9 @@
           </div>
           <div class="col-sm">
             {{ render_field(form.turno) }}
+          </div>
+            <div class="col-sm">
+            {{ render_field(form.data) }}
           </div>
         </div>
         {{ form.submit }}

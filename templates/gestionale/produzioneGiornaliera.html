@@ -1,50 +1,32 @@
 {% extends 'gestionale/base.html' %}
 
 {% block settimana %}
-<div class="row">
-    <div class="col-5">
-        <p class="h2">Produzione giornaliera</p>
-    </div>
-</div>
-<table class="table">
-    <tr>
-        <!--TODO METTERE DATE-->
-        <th class="text-center">Lunedì - </th>
-        <th class="text-center">Mertedì - </th>
-        <th class="text-center">Mercoledì - </th>
-        <th class="text-center">Giovedì - </th>
-        <th class="text-center">Venerdì - </th>
-        <th class="text-center">Sabato - </th>
-        <th class="text-center">Domenica - </th>
-    </tr>
-    <tr>
-    {% for i in range(0, 7) %}
-        <td>
-            <ul>
-                {% for i in range(0, 3) %}
-                    <li class="text-center">torta</li>
-                {% endfor %}
-            </ul>
-        </td>
-    {% endfor %}
-    </tr>
-    <tr>
-        {% for i in range(0, 7) %}
-        <td>
-            <a href="#" class="btn">Aggiungi <br>produzione</a><!--TODO CON IL REDIRECT GIUSTO-->
-        </td>
-        {% endfor %}
-    </tr>
-</table>
-<form action="{{url_for('produzione.produzioneGestionale')}}" method="post"><!--TODO CON IL REDIRECT GIUSTO-->
-    <div class="row g-3">
-        <div class="col-auto">
-            <button type="submit" class="btn btn-secondary" name="settimana" value="-1">Precedenti 10</button>
-        </div>
-        <br>
-        <div class="col-auto">
-            <button type="submit" name="settimana" value="1" class="btn btn-primary">Successivi 10</button>
-        </div>
-    </div>
-</form>
+<a href="{{url_for('personale.addDipendenteTurno')}}" class="btn">Aggiungi Prodotto</a>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js"></script>
+
+<div id="calendar"></div>
+    <script>
+        let calendarEl = document.getElementById('calendar');
+
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridWeek',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events : [
+            {% for event in events %}
+                {
+                    title : '{{event.Dipendente}} {{event.Turno}} ',
+                    start : '{{event.Data}} {{event.OraInizio}}',
+                    end : '{{event.Data}} {{event.OraFine}}',
+                },
+            {% endfor %}
+        ],
+        });
+
+        calendar.render();
+    </script>
 {% endblock %}
