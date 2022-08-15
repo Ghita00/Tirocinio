@@ -22,9 +22,8 @@
         events : [
             {% for event in events %}
                 {
-                    title : '{{event.Dipendente}} {{event.Turno}} ',
-                    start : '{{event.Data}} {{event.OraInizio}}',
-                    end : '{{event.Data}} {{event.OraFine}}',
+                    title : '{{event.Cosa}} {{event.Quanto}} ',
+                    start : '{{event.Quando}}',
                 },
             {% endfor %}
         ],

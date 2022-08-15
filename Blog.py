@@ -80,12 +80,12 @@ def addArticolo():
 
 @blog.route('/Messaggi', methods=['GET', 'POST'])
 def messaggi():
-    mex = list() #TODO QUERY MESSAGGI
+    mes = list(Messaggi.query.all())
     if request.method == "POST":
         help.aggiorna(0, request.form["mex"])
         end = help.endSlied(0)
         start = end - 10
         #calcolare qui lo slide di mex con end e start
-        return render_template("gestionale/messaggi.html")
+        return render_template("gestionale/messaggi.html", messaggi=mes[start:end])
     else:
-        return render_template("gestionale/messaggi.html")
+        return render_template("gestionale/messaggi.html", messaggi=mes[0:10])

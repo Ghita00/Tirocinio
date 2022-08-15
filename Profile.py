@@ -130,7 +130,6 @@ def register():
     return render_template('sito/register.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, form=form, pages = list(pages.pagine), user = utente)
 
 @profile.route('/sendMex', methods=['GET', 'POST'])
-#TODO se non sei un fra registrati stronzo
 def sendMex():
     pages.disattiva(0)
     if request.method == "POST":
@@ -138,12 +137,18 @@ def sendMex():
         oggetto = request.form['oggetto']
         testo = request.form['message']
 
-        new_mex = Messaggi(Testo=testo,Oggetto=oggetto,Mail_Cliente=mail)
+        if (Clienti.query.filter(Clienti.Mail == mail).first()) != None:
 
-        db.session.add(new_mex)
-        db.session.commit()
+            new_mex = Messaggi(Testo=testo,Oggetto=oggetto,Mail_Cliente=mail)
 
-    return redirect(url_for('home'))
+            db.session.add(new_mex)
+            db.session.commit()
+
+            return redirect(url_for('home'))
+
+        else:
+            flash('Per favore registrati prima')
+            return redirect(url_for('profile.login'))
 
 @profile.route('/commento', methods=['GET', 'POST'])
 def commento():
@@ -155,9 +160,10 @@ def commento():
         db.session.commit()
 
     return render_template("sito/commento.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine))
-def sendComment():
-    pages.disattiva(0)
-    if current_user.is_authenticated:
-        return redirect(url_for('profile.commento'))
-    else:
-        return redirect(url_for('profile.login'))
+
+#def sendComment():
+#    pages.disattiva(0)
+#    if current_user.is_authenticated:
+#        return redirect(url_for('profile.commento'))
+#    else:
+#        return redirect(url_for('profile.login'))

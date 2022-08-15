@@ -5,19 +5,19 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Id</th>
+      <th scope="col">Mittente</th>
+      <th scope="col">Oggetto</th>
+      <th scope="col">Contenuto</th>
     </tr>
   </thead>
   <tbody>
-    {% for i in range(0, 10)%}
+    {% for mex in messaggi%}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <th scope="row">{{mex.Id}}</th>
+      <td>{{mex.Mail_Cliente}}</td>
+      <td>{{mex.Oggetto}}</td>
+      <td>{{mex.Testo}}</td>
     </tr>
     {% endfor %}
   </tbody>
