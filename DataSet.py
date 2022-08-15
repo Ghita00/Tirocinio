@@ -72,7 +72,8 @@ WishList = [WishList(Mail_Cliente='rominadanci@gmail.com', Id_Semilavorato=1),
             WishList(Mail_Cliente='prova@gmail.com', Id_Semilavorato=3),
             WishList(Mail_Cliente='prova@gmail.com', Id_Semilavorato=5)]
 
-Data = [Persone, Dipendenti, Clienti, DittaFornitrice, Allergeni, Turni, Semilavorati, Merce, Articoli, Blog, WishList]
+#Data = [Persone, Dipendenti, Clienti, DittaFornitrice, Allergeni, Turni, Semilavorati, Merce, Articoli]
+Data = [ Blog, WishList]
 
 for i in Data:
     session.add_all(i)

@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, url_for, flash
+from flask import Blueprint, render_template, url_for, flash, request
 from flask_login import current_user
 from werkzeug.utils import redirect
 
-from Utility import Auxcarrello, pages
+from Utility import Auxcarrello, pages, help
 from datetime import date
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerRangeField, \
@@ -10,6 +10,7 @@ from wtforms import StringField, SubmitField, IntegerRangeField, \
     PasswordField, TelField
 from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
 from GenDB import *
+
 
 blog = Blueprint('blog', __name__)
 
@@ -76,3 +77,15 @@ def addArticolo():
         return redirect(url_for("blog.Gblog"))
 
     return render_template("gestionale/formArticolo.html", form=form)
+
+@blog.route('/Messaggi', methods=['GET', 'POST'])
+def messaggi():
+    mex = list() #TODO QUERY MESSAGGI
+    if request.method == "POST":
+        help.aggiorna(0, request.form["mex"])
+        end = help.endSlied(0)
+        start = end - 10
+        #calcolare qui lo slide di mex con end e start
+        return render_template("gestionale/messaggi.html")
+    else:
+        return render_template("gestionale/messaggi.html")

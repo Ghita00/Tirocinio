@@ -19,7 +19,7 @@ const myChart = new Chart(ctx, {
     },
     options: {
         scales: {
-            xAxes: [{   
+            xAxes: [{
                 gridLines: {
                     color: "rgba(0, 0, 0, 0)",
                 }

@@ -65,16 +65,17 @@
                                 <img src="{{url_for('static', filename='img/sito/icon/heart.png')}}" alt="">
                             </a>
                         </div>
-                        {% if categoria == 1 %}
+                    </div>
+                    <br>
+                    {% if categoria == 1 %}
                         <div class="col-auto">
-                            <a href="{{url_for('magazzino.modificaSemilavorato', id=Prod[i].Id)}}">Modifica prodotto</a>
+                            <a href="{{url_for('magazzino.modificaSemilavorato', id=Prod[i].Id)}}" class="btn btn-primary">Modifica prodotto</a>
                         </div>
                         {% else %}
                         <div class="col-auto">
-                            <a href="{{url_for('magazzino.modificaMerce', id=Prod[i].Id)}}">Modifica merce</a>
+                            <a href="{{url_for('magazzino.modificaMerce', id=Prod[i].Id)}}" class="btn btn-primary">Modifica merce</a>
                         </div>
                         {% endif %}
-                    </div>
                 </div>
             </div>
         </div>

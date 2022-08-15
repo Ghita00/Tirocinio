@@ -69,6 +69,7 @@
                   </ul>
               </li>
               <li><a href="{{url_for('blog.Gblog')}}" >Blog<span class="sidebar-collapse-icon"></span></a></li>
+              <li><a href="{{url_for('blog.messaggi')}}" >Messaggi<span class="sidebar-collapse-icon"></span></a></li>
           </ul>
         </div>
       </div>
@@ -268,6 +269,18 @@
 
                 <!-- blocchi per documenti -->
                 {% block documenti %}
+                {% endblock %}
+
+                <!--blocchi per messaggi-->
+                {% block mex %}
+                {% endblock %}
+
+                <!-- blocchi per formProduzione -->
+                {% block formPro %}
+                {% endblock %}
+
+                <!-- blocchi per ordiniSingle -->
+                {% block ordineS %}
                 {% endblock %}
 
                 <!-- footer -->

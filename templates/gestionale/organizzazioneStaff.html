@@ -1,10 +1,14 @@
 {% extends 'gestionale/base.html' %}
 
 {% block calendarioTurni %}
-<a href="{{url_for('personale.addDipendenteTurno')}}" class="btn">Aggiungi Personale</a>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.css">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js"></script>
 
+<h2>Organizzione turni</h2>
+<a href="{{url_for('personale.addDipendenteTurno')}}" class="btn-primary btn">Aggiungi Personale</a>
+<br>
+<br>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js"></script>
 <div id="calendar"></div>
     <script>
         let calendarEl = document.getElementById('calendar');

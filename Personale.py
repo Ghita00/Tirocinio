@@ -126,9 +126,11 @@ def tabellaTurni(id):
         tot+=x[0]
         totStra+=x[1]
 
-    stipendio = (tot * turni[0].CompensoOrario) + (totStra * (turni[0].CompensoOrario + 1.5))
+    if len(turni) > 0:
+        stipendio = (tot * turni[0].CompensoOrario) + (totStra * (turni[0].CompensoOrario + 1.5))
+    else:
+        stipendio =0
+    data = str(datetime.now().month) + "/" + str(datetime.now().year)
 
-
-
-    return render_template("gestionale/turniSingle.html", Dip=dip, meseACT="agosto", Turni = turni, Differenze = differenze, TotOre=tot, TotOreStra=totStra, Stip=round(stipendio, 2))
+    return render_template("gestionale/turniSingle.html", Dip=dip, meseACT=data, Turni = turni, Differenze = differenze, TotOre=tot, TotOreStra=totStra, Stip=round(stipendio, 2))
 
