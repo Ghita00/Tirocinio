@@ -2,12 +2,12 @@
 
 {% block dati %}
 <div class="center">
-    <h2 class="text-center">Nome del dolce</h2>
-    <h4 class="text-center">Categoria</h4>
+    <h2 class="text-center">{{Ricetta.Nome}}</h2>
+    <h4 class="text-center">{{Ricetta.Categoria}}</h4>
     <br>
 </div>
 <div class="center">
-    <p class="text-center">Inserire la descrizione</p>
+    <p class="text-center">{{Ricetta.Descrizione}}</p>
     <br>
 </div>
 <div class="row">
@@ -15,8 +15,9 @@
         <div class="center">
             <h6>Ingredienti</h6>
             <p class="padding">
-                {% for i in range(0, 10) %}
-                    uova(1000),
+                {% for ingrediente in Ingredienti %}
+                    {{ingrediente[0]}} {{ingrediente[1]}} {{ingrediente[2]}}
+                    </br>
                 {% endfor %}
             </p>
         </div>
@@ -25,15 +26,15 @@
         <div class="center">
             <h6>Altre informazioni</h6>
             <ul>
-                <li>numero persone: 98</li>
-                <li>tempo di preparazione: 12.0h</li>
+                <li>numero persone: </li>
+                <li>tempo di preparazione: {{Ricetta.Tempo}}</li>
             </ul>
         </div>
     </div>
 </div>
 <div class="center">
     <p class="text-center">
-        Questa è la ricetta
+        {{Ricetta.Preparazione}}
     </p>
 </div>
 

@@ -85,7 +85,17 @@ def messaggi():
         help.aggiorna(0, request.form["mex"])
         end = help.endSlied(0)
         start = end - 10
-        #calcolare qui lo slide di mex con end e start
+
         return render_template("gestionale/messaggi.html", messaggi=mes[start:end])
     else:
         return render_template("gestionale/messaggi.html", messaggi=mes[0:10])
+
+@blog.route('/dropArtic/<id>', methods=['GET', 'POST'])
+def dropArticolo(id):
+    artic = Articoli.query.filter(Articoli.Id == id)
+    artic.delete()
+    db.session.commit()
+
+    flash('Articolo cancellato con successo')
+
+    return redirect(url_for("blog.Gblog"))

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for
+from flask import Blueprint, render_template, url_for, flash
 from werkzeug.utils import redirect
 from GenDB import *
 from flask_wtf import FlaskForm
@@ -7,6 +7,8 @@ from wtforms import StringField, SubmitField, IntegerRangeField, \
 from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
 
 ricettario = Blueprint('ricettario', __name__)
+
+#TODO rivedi quantità e tempo nelle ricette
 
 class newSemi(FlaskForm):
     Nome = StringField(validators=[InputRequired()], render_kw={"placeholder": "Nome"})
@@ -68,7 +70,7 @@ def ricettarioGestionale():
 def addSemi():
     form = newSemi()
     if form.validate_on_submit():
-        new_Semi = Semilavorati(Nome=form.Nome.data, Preparazione='', IVA=form.IVA.data, Categoria=form.Categoria.data, Descrizione=form.Descrizione.data, PrezzoUnitario=form.PrezzoUnitario.data, Quantità=0)
+        new_Semi = Semilavorati(Nome=form.Nome.data, Preparazione='', IVA=form.IVA.data, Categoria=form.Categoria.data, Descrizione=form.Descrizione.data, PrezzoUnitario=form.PrezzoUnitario.data, Quantità=0, Incipit='')
         db.session.add(new_Semi)
         db.session.commit()
 
@@ -94,7 +96,9 @@ def aggiungiRicetta(id):
             if ingrediente[i] > 0 :
                 new_Rec = Ricette(Id_Semilavorato = id, Id_MateriaPrima = materiePrime.matPrime[i][1], Quantita = ingrediente[i], Tempo = form.Tempo.data)
                 db.session.add(new_Rec)
-                db.session.commit()
+
+        Semilavorati.query.filter(Semilavorati.Id == id).update({"Preparazione":form.Preparazione.data})
+        db.session.commit()
 
         return redirect(url_for('ricettario.ricettarioGestionale'))
 
@@ -102,5 +106,14 @@ def aggiungiRicetta(id):
 
 @ricettario.route('/ricetta/<id>', methods=['GET', 'POST'])
 def ricetta(id):
-    return render_template("gestionale/ricetteSingle.html")
+    ricetta = session.query(Semilavorati.Nome, Semilavorati.Descrizione, Semilavorati.Incipit, Ricette.Tempo, Semilavorati.Preparazione). \
+        join(Ricette, Semilavorati.Id == Ricette.Id_Semilavorato). \
+        filter(Semilavorati.Id == id).first()
+
+    ingredienti = session.query(Merce.Nome, Ricette.Quantita, Allergeni.Nome).\
+        join(Ricette, Ricette.Id_MateriaPrima == Merce.Id).\
+        join(Allergeni, Allergeni.Id == Merce.Id_Allergene).\
+        filter(Ricette.Id_Semilavorato == id).all()
+
+    return render_template("gestionale/ricetteSingle.html", Ricetta=ricetta, Ingredienti=ingredienti)
 

@@ -54,7 +54,20 @@ def addDipendente():
         db.session.add(new_Dip)
         db.session.commit()
 
+        return redirect(url_for("personale.personaleGestionale"))
+
     return render_template("gestionale/formDipendente.html", form=form)
+
+@personale.route('/dropDip/<id>', methods=['GET', 'POST'])
+def dropDipendente(id):
+    dip = Persone.query.filter(Persone.Mail == id)
+
+    dip.delete()
+    db.session.commit()
+
+    flash('Dipendente cancellato con successo')
+
+    return redirect(url_for("personale.personaleGestionale"))
 
 @personale.route('/organizzazioneStaff', methods=['GET', 'POST'])
 def organizzazioneStaffGestionale():

@@ -2,6 +2,8 @@
 
 {% block magazzino %}
 <h2>Magazzino</h2>
+<a href="{{url_for('ricettario.addSemi')}}">Add Semilavorato</a>
+<a href="{{url_for('magazzino.addMerce')}}">Add Merce</a>
 <div class="row g-3">
     <div class="col-auto">
         {% if attiva[1] == 1 %}

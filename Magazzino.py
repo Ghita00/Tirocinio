@@ -1,10 +1,26 @@
-from flask import Blueprint, render_template, request, url_for
+from datetime import date
+from datetime import datetime
+from sqlalchemy import func
 from werkzeug.utils import redirect
-
-from Utility import pages
+from flask import Blueprint, render_template, url_for, request, flash
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, IntegerRangeField, \
+    validators, TimeField, TextAreaField, FloatField, FieldList, Form, FormField, IntegerField, DateField, \
+    PasswordField, TelField, SelectField, RadioField
+from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
 from GenDB import *
+from Utility import pages
 
 magazzino = Blueprint('magazzino', __name__)
+
+
+class AddMerce(FlaskForm):
+    Nome = StringField('Nome')
+    Prezzo = FloatField('Prezzo')
+    IVA = FloatField('iva')
+    Allergeni = RadioField('Allergeni')
+
+    Submit = SubmitField('Aggiungi')
 
 
 @magazzino.route('/magazzinoGestionale')
@@ -70,3 +86,23 @@ def modificaMerce(id):
         return redirect(url_for('magazzino.magazzinoGestionale'))
 
     return render_template("gestionale/modificaMerce.html", Merce = merce)
+
+@magazzino.route('/magazzino/addMerce', methods=['GET', 'POST'])
+def addMerce():
+    form = AddMerce()
+
+    form.Allergeni.choices = session.query(Allergeni.Nome).all()
+
+    if request.method == "POST":
+        nome = request.form['nome']
+        prezzo = request.form['prezzo']
+        iva = request.form['iva']
+        quantità = request.form['quantità']
+        materieprime = request.form['materiaprima']
+
+        Merce.query.filter(Merce.Id == id).update({"Nome":nome, "Quantità":quantità, "PrezzoUnitario":prezzo, "IVA":iva, "MateriaPrima":bool(materieprime)})
+        db.session.commit()
+
+        return redirect(url_for('magazzino.magazzinoGestionale'))
+
+    return render_template("gestionale/formMerce.html", form=form)
