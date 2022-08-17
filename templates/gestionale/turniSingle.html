@@ -1,6 +1,8 @@
 {% extends 'gestionale/base.html' %}
 
 {% block turniSingleTable %}
+
+<a href="{{url_for('personale.addDipendenteTurno')}}" class="btn-primary btn">Aggiungi Personale</a>
 <h2>Turni svolti da {{Dip.Nome}} {{Dip.Cognome}} del {{meseACT}}</h2>
 <div class="container">
     <table class="table">

@@ -9,6 +9,9 @@ from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 
 #TODO 1. Sistema questione immagini, sistema Q.tà delle ricette e per quante persone
+#TODO 2. Ricette fatto delle quantità + tempo
+#TODO 3. Personale turni rivedi chiave primaria
+#TODO 4. Semilavorati aggiungi tag è nello shop o meno
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgresql@localhost:5432/pasticceria"

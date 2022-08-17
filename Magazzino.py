@@ -106,3 +106,9 @@ def addMerce():
         return redirect(url_for('magazzino.magazzinoGestionale'))
 
     return render_template("gestionale/formMerce.html", form=form)
+
+@magazzino.route('/magazzino/addPrefe/<id>')
+def addPrefe(id):
+    Semilavorati.query.filter(Semilavorati.Id == id).update({'Preferito' : (False if Semilavorati.Preferito else True)})
+    db.session.commit()
+    return redirect(url_for("magazzino.magazzinoGestionale"))

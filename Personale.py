@@ -1,6 +1,5 @@
 from datetime import date
 from datetime import datetime
-from sqlalchemy import func
 from werkzeug.utils import redirect
 from flask import Blueprint, render_template, url_for, request, flash
 from flask_wtf import FlaskForm
@@ -12,14 +11,12 @@ from GenDB import *
 
 personale = Blueprint('personale', __name__)
 
+
 class RegistrazioneDipendente(FlaskForm):
     nome = StringField(validators=[InputRequired()], render_kw={"placeholder": "Nome"})
     cognome = StringField(validators=[InputRequired()], render_kw={"placeholder": "Cognome"})
     datanascita = DateField(validators=[InputRequired()], format='%Y-%m-%d')
     mail = StringField(validators=[InputRequired()], render_kw={"placeholder": "Mail"})
-    #username = StringField(validators=[InputRequired()], render_kw={"placeholder": "Username"})
-    #password = PasswordField(validators=[InputRequired()], render_kw={"placeholder": "Password"})
-    #password_confirm = PasswordField(validators=[InputRequired(), EqualTo('password', message='Passwords must match')],render_kw={"placeholder": "Repeat Password"})
     telefono = TelField(validators=[InputRequired()], render_kw={"placeholder": "Telefono"})
 
     submit = SubmitField('Register')
@@ -48,7 +45,7 @@ def addDipendente():
     form = RegistrazioneDipendente()
 
     if form.validate_on_submit():
-        new_Person = Persone(Nome=form.nome.data, Cognome=form.cognome.data, DataNascita=form.datanascita.data, Mail=form.mail.data, Telefono=form.telefono.data, Username='', Password='-', Rating=0)
+        new_Person = Persone(Nome=form.nome.data, Cognome=form.cognome.data, DataNascita=form.datanascita.data, Mail=form.mail.data, Telefono=form.telefono.data, Username=form.mail.data, Password='password', Rating=0)
         new_Dip = Dipendenti(Mail=form.mail.data, DataAssunzione=date.today())
         db.session.add(new_Person)
         db.session.add(new_Dip)

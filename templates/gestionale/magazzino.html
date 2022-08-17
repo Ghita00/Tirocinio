@@ -65,8 +65,9 @@
                                 <img src="{{url_for('static', filename='img/sito/icon/cart.png')}}" alt="">
                             </a>
                         </div>
+                        <!--TODO cuoricino colorato se semi è già in prefe-->
                         <div class="col-auto">
-                            <a href="">
+                            <a href="{{url_for('magazzino.addPrefe', id=Prod[i].Id)}}">
                                 <img src="{{url_for('static', filename='img/sito/icon/heart.png')}}" alt="">
                             </a>
                         </div>

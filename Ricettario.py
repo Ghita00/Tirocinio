@@ -8,8 +8,6 @@ from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
 
 ricettario = Blueprint('ricettario', __name__)
 
-#TODO rivedi quantità e tempo nelle ricette
-
 class newSemi(FlaskForm):
     Nome = StringField(validators=[InputRequired()], render_kw={"placeholder": "Nome"})
     PrezzoUnitario = FloatField(validators=[InputRequired()], default=0.0)
