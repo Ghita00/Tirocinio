@@ -34,7 +34,7 @@
           <td class="text-start text-center">{{articoli[i].DataPubblicazione}}</td>
           <td class="text-start text-center">{{articoli[i].Categoria}}</td>
           <td class="text-start text-center">{{autore[i].Mail_Dipendente}}</td>
-          <td class="text-start text-center"><a href="{{url_for('blog.dropArticolo', id=articoli[i].Id)}}" class="btn btn-primary">Cancella articolo</a></td>
+          <td class="text-start text-center"><a href="{{url_for('blog.dropArticolo', id=articoli[i].Id)}}" class="btn btn-outline-danger">Cancella articolo</a></td>
         </tr>
         {% endfor %}
 

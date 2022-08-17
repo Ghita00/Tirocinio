@@ -1,34 +1,64 @@
 {% extends 'gestionale/base.html' %}
 
 {% block formPro %}
-<form method="post" action="">
-    <input type="hidden" name="nascosto" value="1">
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-5">
+        <h2 class="text-center">Aggiungi Produzione Giornaliera</h2>
+        <form method="post" action="" class="form-group">
+            <input type="hidden" name="nascosto" value="1">
+            <label>Quantità</label>
+            <input type="number" name="quantita" value="{{Quantita}}">
 
-    <label>Quantità</label>
-    <input type="number" name="quantita" value="{{Quantita}}">
-
-    <button type="submit">Invia</button>
-</form>
+            <button type="submit">Invia</button>
+        </form>
+    </div>
+</div>
+<hr>
 {% if Quantita > 0 %}
-    <form method="post" action="">
+    <form method="post" action="" class="form-group">
         <input type="hidden" name="nascosto" value="2">
         <input type="hidden" name="volte" value="{{Quantita}}">
-        {% for i in range(0, Quantita) %}
-            <label>Prodotto</label>
-            <select name="prodotto-{{i}}">
-                {% for semi in Semi %}
-                    <option value="{{semi.Id}}">{{semi.Nome}}</option>
-                {% endfor %}
-            </select>
-            <label>Quantità</label>
-            <input type="number" name="quantita-{{i}}">
-        {% endfor %}
-        <label>Data</label>
-        <input type="date" name="data">
-        <label>Note</label>
-        <textarea name="note" rows="4" cols="50"></textarea>
 
-        <button type="submit">Aggiungi</button>
+        {% for i in range(0, Quantita) %}
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <label>Prodotto</label><br>
+                <select name="prodotto-{{i}}">
+                    {% for semi in Semi %}
+                        <option value="{{semi.Id}}">{{semi.Nome}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label>Quantità</label><br>
+                <input type="number" name="quantita-{{i}}">
+            </div>
+        </div>
+        {% endfor %}
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">
+                <label>Data di produzione</label><br>
+                <input type="date" name="data">
+
+            </div>
+            <div class="col-3">
+                <label>Note di produzione</label><br>
+                <textarea name="note" rows="4" cols="50" placeholder="Spazio per eventuali note"></textarea>
+                <br>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-2"></div>
+            <button type="submit" class="btn btn-primary">Aggiungi</button>
+        </div>
     </form>
 {% endif %}
 {% endblock %}

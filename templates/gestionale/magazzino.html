@@ -2,28 +2,31 @@
 
 {% block magazzino %}
 <h2>Magazzino</h2>
-<a href="{{url_for('ricettario.addSemi')}}">Add Semilavorato</a>
-<a href="{{url_for('magazzino.addMerce')}}">Add Merce</a>
+<a href="{{url_for('ricettario.addSemi')}}" class="btn btn-outline-secondary">Add Semilavorato</a>
+<a href="{{url_for('magazzino.addMerce')}}" class="btn btn-primary">Add Merce</a>
+<br>
+<br>
+<hr>
 <div class="row g-3">
     <div class="col-auto">
         {% if attiva[1] == 1 %}
             <a href="{{url_for('magazzino.semilavorati')}}" class="btn btn-success mb-3">Semilavorati</a>
         {% else %}
-            <a href="{{url_for('magazzino.semilavorati')}}" class="btn btn-secondary mb-3">Semilavorati</a>
+            <a href="{{url_for('magazzino.semilavorati')}}" class="btn btn-outline-success mb-3">Semilavorati</a>
         {% endif %}
     </div>
     <div class="col-auto">
         {% if attiva[2] == 1 %}
             <a href="{{url_for('magazzino.prodotti')}}" class="btn btn-success mb-3">Prodotti</a>
         {% else %}
-            <a href="{{url_for('magazzino.prodotti')}}" class="btn btn-secondary mb-3">Prodotti</a>
+            <a href="{{url_for('magazzino.prodotti')}}" class="btn btn-outline-success mb-3">Prodotti</a>
         {% endif %}
     </div>
     <div class="col-auto">
         {% if attiva[3] == 1 %}
             <a href="{{url_for('magazzino.materieprime')}}" class="btn btn-success mb-3">Materie Prime</a>
         {% else %}
-            <a href="{{url_for('magazzino.materieprime')}}" class="btn btn-secondary mb-3">Materie Prime</a>
+            <a href="{{url_for('magazzino.materieprime')}}" class="btn btn-outline-success mb-3">Materie Prime</a>
         {% endif %}
     </div>
 </div>
@@ -41,7 +44,8 @@
             <div class="card" style="width: 18rem;">
             <img src="{{url_for('static', filename='img/sito/shop/details/product-big-1.jpg')}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title text-center">{{Prod[i].Nome}}</h5>
+                    <h4 class="card-title text-center">{{Prod[i].Nome}}</h4>
+                    <p class=" text-center fw-light">{{Prod[i].Categoria}}</p>
                     <div class="small-ratings text-center">
                         <i class="fa fa-star rating-color"></i>
                         <i class="fa fa-star rating-color"></i>
@@ -51,8 +55,7 @@
                     </div>
                     <br>
                     {% if categoria == 1 %}
-                    <p class="card-text">Descrizione: {{Prod[i].Descrizione}}</p>
-                    <p class="card-text">Incipit: {{Prod[i].Incipit}}</p>
+                        <p class="card-text">{{Prod[i].Incipit}}</p>
                     {% endif %}
                     <p>Quantità: {{Prod[i].Quantità}}</p>
                     <p>Prezzo: {{Prod[i].PrezzoUnitario}}$</p>

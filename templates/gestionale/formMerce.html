@@ -2,29 +2,28 @@
 
 {% block formMerce %}
 <h2>Aggiungi merce</h2>
-    {% from "sito/_formhelpers.html" import render_field %}
-        <form method="POST" action="">
-            <dl>
-              {{ form.hidden_tag() }}
-                <div class="row">
-                    <div class="col-5">
-                        {{ render_field(form.Nome) }}
-                    </div>
-                    <div class="col">
-                        {{ render_field(form.Prezzo) }}
-                    </div>
-                     <div class="col-5">
-                        {{ render_field(form.IVA) }}
-                    </div>
-                    <div class="col">
-                        {{ render_field(form.Allergeni) }}
-                    </div>
-                </div>
+{% from "sito/_formhelpers.html" import render_field %}
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <div class="row">
+        <div class="col-4">
+            {{ render_field(form.Nome) }}
+        </div>
+        <div class="col-4">
+            {{ render_field(form.Prezzo) }}
+        </div>
+        <div class="col-4">
+            {{ render_field(form.IVA) }}
+        </div>
 
-
-            </dl>
-            {{ form.submit }}
-        </form>
+    </div>
+    <div class="row">
+       <div class="col">
+            {{ render_field(form.Allergeni) }}
+        </div>
+    </div>
+    {{ render_field(form.Submit) }}
+</form>
 
 
 {% endblock %}
