@@ -109,6 +109,7 @@ def addMerce():
 
 @magazzino.route('/magazzino/addPrefe/<id>')
 def addPrefe(id):
-    Semilavorati.query.filter(Semilavorati.Id == id).update({'Preferito' : (False if Semilavorati.Preferito else True)})
+    prefe = session.query(Semilavorati.Preferito).filter(Semilavorati.Id == id).first()
+    Semilavorati.query.filter(Semilavorati.Id == id).update({'Preferito' : not prefe[0]})
     db.session.commit()
     return redirect(url_for("magazzino.magazzinoGestionale"))

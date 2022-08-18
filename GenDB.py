@@ -8,10 +8,6 @@ from sqlalchemy.orm import sessionmaker
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 
-#TODO 1. Sistema questione immagini, sistema Q.tà delle ricette e per quante persone
-#TODO 2. Ricette fatto delle quantità + tempo
-#TODO 3. Personale turni rivedi chiave primaria
-#TODO 4. Semilavorati aggiungi tag è nello shop o meno
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgresql@localhost:5432/pasticceria"
@@ -159,16 +155,19 @@ class DDT(db.Model):
     Importo = db.Column(db.Float(), nullable=False)
     Peso = db.Column(db.Float())
     Colli = db.Column(db.Integer())
+    Status = db.Column(db.Boolean())
 
     Fornitore = relationship("DittaFornitrice", back_populates="DDT")
 
-    def __init__(self, Mail_Fornitore, DataEmissione, Note, Importo, Peso, Colli):
-        self.Mail_Fornitore = Mail_Fornitore
+    def __init__(self, Id_Fornitore, DataEmissione, Note, Importo, Peso, Colli, NumDocumento):
+        self.Id_Fornitore = Id_Fornitore
         self.DataEmissione = DataEmissione
         self.Note = Note
         self.Importo = Importo
         self.Colli = Colli
         self.Peso = Peso
+        self.NumDocumento = NumDocumento
+        self.Status = False
 
     def __repr__(self):
         return f"<DDT {self.Id}>"
@@ -241,28 +240,35 @@ class Semilavorati(db.Model):
     PrezzoUnitario = db.Column(db.Float(), nullable=False)
     IVA = db.Column(db.Float())
     Preparazione = db.Column(db.String(1000))
+    TempoPreparazione = db.Column(db.Float())
+    Porzioni = db.Column(db.Integer())
     Categoria = db.Column(db.String(60))
     Descrizione = db.Column(db.String(500))
     Preferito = db.Column(db.Boolean())
     Incipit = db.Column(db.String(100))
+    Shop = db.Column(db.Boolean())
 
     Scontrino = relationship("ScontriniSemilavorati", back_populates='Semilavorato',  cascade="all, delete-orphan")
-    Merce = relationship("Ricette", back_populates='Semilavorato', cascade="all, delete-orphan")
+    Merce = relationship("Ingredienti", back_populates='Semilavorato', cascade="all, delete-orphan")
     Cliente_WishList = relationship("WishList", back_populates='Semilavorato_WishList',  cascade="all, delete-orphan")
     Cliente_Carrello = relationship("Carrello", back_populates='Semilavorato_Carrello',  cascade="all, delete-orphan")
     Produzione = relationship("Produzione", back_populates='Semilavorato',  cascade="all, delete-orphan")
     FatturaVendita = relationship("ContenutoVenditaSemilavorati", back_populates='Semilavorato', cascade="all, delete-orphan")
     Immagine = relationship("ImmaginiSemilavorati", back_populates='Semilavorato', cascade="all, delete-orphan")
 
-    def __init__(self, Nome, Quantità, PrezzoUnitario, IVA, Preparazione, Categoria, Descrizione, Incipit):
+    def __init__(self, Nome, Quantità, PrezzoUnitario, IVA, Preparazione, Categoria, Descrizione, Incipit, TempoPreparazione, Porzioni):
         self.Nome = Nome
         self.Quantità = Quantità
         self.PrezzoUnitario = PrezzoUnitario
         self.IVA = IVA
         self.Preparazione = Preparazione
+        self.TempoPreparazione = TempoPreparazione
+        self.Porzioni = Porzioni
         self.Categoria = Categoria
         self.Descrizione = Descrizione
         self.Incipit = Incipit
+        self.Preferito = False
+        self.Shop = False
 
     def __repr__(self):
         return f"<Semilavorati {self.Id}>"
@@ -309,18 +315,19 @@ class Merce(db.Model):
 
     Allergene = relationship("Allergeni", back_populates = "Merce")
 
-    Semilavorato = relationship("Ricette", back_populates='Merce', cascade="all, delete-orphan")
+    Semilavorato = relationship("Ingredienti", back_populates='Merce', cascade="all, delete-orphan")
     Scontrino = relationship("ScontriniMerce", back_populates='Merce', cascade="all, delete-orphan")
     FatturaAcquisto = relationship("ContenutoAcquisto", back_populates='Merce',  cascade="all, delete-orphan")
     FatturaVendita = relationship("ContenutoVenditaMerce", back_populates='Merce',  cascade="all, delete-orphan")
     Immagine = relationship("ImmaginiMerce", back_populates='Merce', cascade="all, delete-orphan")
 
-    def __init__(self, Nome, Quantità, PrezzoUnitario, IVA, MateriaPrima):
+    def __init__(self, Nome, Quantità, PrezzoUnitario, IVA, MateriaPrima, Id_Allergene):
         self.Nome = Nome
         self.Quantità = Quantità
         self.PrezzoUnitario = PrezzoUnitario
         self.IVA = IVA
         self.MateriaPrima = MateriaPrima
+        self.Id_Allergene = Id_Allergene
 
     def __repr__(self):
         return f"<Merce {self.Id}>"
@@ -347,6 +354,7 @@ class FattureAcquisto(db.Model):
     Id_Fornitore = db.Column(db.String(11), ForeignKey('dittaFornitrice.PartitaIVA', ondelete='CASCADE'))
     NumDocumento = db.Column(db.Integer(), nullable=False)
     Data = db.Column(db.Date(), nullable=False)
+    Status = db.Column(db.Boolean())
 
     Fornitore = relationship("DittaFornitrice", back_populates="FatturaAcquisto")
 
@@ -354,10 +362,11 @@ class FattureAcquisto(db.Model):
 
     Merce = relationship("ContenutoAcquisto", back_populates='FatturaAcquisto',  cascade="all, delete-orphan")
 
-    def __init__(self, Mail_Fornitore, NumDocumento, Data):
-        self.Mail_Fornitore = Mail_Fornitore
+    def __init__(self, Id_Fornitore, NumDocumento, Data):
+        self.Id_Fornitore = Id_Fornitore
         self.NumDocumento = NumDocumento
         self.Data = Data
+        self.Status = False
 
     def __repr__(self):
         return f"<FattureAcquisto {self.Id}>"
@@ -369,16 +378,18 @@ class FattureVendita(db.Model):
     Mail_Cliente = db.Column(db.String(60), ForeignKey('clienti.Mail', ondelete='CASCADE'))
     NumDocumento = db.Column(db.Integer(), nullable=False)
     Data = db.Column(db.Date(), nullable=False)
+    Status = db.Column(db.Boolean())
 
     NotaVariazioneEmesse = relationship("NoteVariazioneEmesse", back_populates = "FatturaVendita")
 
     Merce = relationship("ContenutoVenditaMerce", back_populates='FatturaVendita', cascade="all, delete-orphan")
     Semilavorato = relationship("ContenutoVenditaSemilavorati", back_populates='FatturaVendita',  cascade="all, delete-orphan")
 
-    def __init__(self, Mail_Fornitore, NumDocumento, Data):
-        self.Mail_Fornitore = Mail_Fornitore
+    def __init__(self, Mail_Cliente, NumDocumento, Data):
+        self.Mail_Cliente = Mail_Cliente
         self.NumDocumento = NumDocumento
         self.Data = Data
+        self.Status = False
 
     def __repr__(self):
         return f"<FattureVendita {self.Id}>"
@@ -481,7 +492,7 @@ class PersonaleTurni(db.Model):
 
     Mail_Dipendente = db.Column(ForeignKey('dipendenti.Mail', ondelete='CASCADE'), primary_key=True)
     Id_Turno = db.Column(ForeignKey('turni.Id', ondelete='CASCADE'), primary_key=True)
-    Data = db.Column(db.Date())
+    Data = db.Column(db.Date(), primary_key=True)
     OraInizio = db.Column(db.Time())
     OraFine = db.Column(db.Time())
 
@@ -489,13 +500,12 @@ class PersonaleTurni(db.Model):
     Turno = relationship('Turni', back_populates='Dipendente')
 
 # associazione tra materie prime e semilavorati
-class Ricette(db.Model):
-    __tablename__ = 'ricette'
+class Ingredienti(db.Model):
+    __tablename__ = 'ingredienti'
 
     Id_Semilavorato = db.Column(ForeignKey('semilavorati.Id', ondelete='CASCADE'), primary_key=True)
-    Id_MateriaPrima = db.Column(ForeignKey('merce.Id', ondelete='CASCADE'), primary_key=True)   #in quanto specificato che solo le merci che sono materie prime possono comporre ricette
+    Id_MateriaPrima = db.Column(ForeignKey('merce.Id', ondelete='CASCADE'), primary_key=True)   #in quanto specificato che solo le merci che sono materie prime possono comporre Ingredienti
     Quantita = db.Column(db.Integer())
-    Tempo = db.Column(db.Time())
 
     Semilavorato = relationship('Semilavorati', back_populates='Merce')
     Merce = relationship('Merce', back_populates='Semilavorato')

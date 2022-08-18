@@ -23,27 +23,27 @@ class materiePrime:
     for i in range(0, len(merce)):
         matPrime.append((merce[i][0], merce[i][1]))
 
-class Ingredienti(Form):
+class IngredientiForm(Form):
     Quantità = FloatField('Quantità', default=0)
 
 class newRecipe(FlaskForm):
-    Ingrediente = FieldList(FormField(Ingredienti), min_entries=len(materiePrime.matPrime))
+    Ingrediente = FieldList(FormField(IngredientiForm), min_entries=len(materiePrime.matPrime))
     Persone = IntegerRangeField('Persone', [validators.NumberRange(min=1, max=20)], default=0)
-    Tempo = TimeField('Durata', validators=[InputRequired()])
+    Tempo = IntegerField('Durata', validators=[InputRequired()])
     Preparazione = TextAreaField('Inserire preparazione', validators=[InputRequired()])
 
     submit = SubmitField('Aggiungi')
 
 @ricettario.route('/ricettarioGestionale')
 def ricettarioGestionale():
-    recipes = session.query(Ricette.Id_Semilavorato).group_by(Ricette.Id_Semilavorato).count()
+    recipes = session.query(Ingredienti.Id_Semilavorato).group_by(Ingredienti.Id_Semilavorato).count()
 
     if recipes == None:
         flash("Non hai ricette.")
         return render_template("gestionale/ricettario.html", len_ricette=0)
     else:
-        prod = Semilavorati.query.join(Ricette).filter(Ricette.Id_Semilavorato == Semilavorati.Id)  #campi semi con ricette
-        ing = list(session.query(Ricette, Merce).join(Merce).filter(Merce.Id == Ricette.Id_MateriaPrima))
+        prod = Semilavorati.query.join(Ingredienti).filter(Ingredienti.Id_Semilavorato == Semilavorati.Id)  #campi semi con ricette
+        ing = list(session.query(Ingredienti, Merce).join(Merce).filter(Merce.Id == Ingredienti.Id_MateriaPrima))
 
         list_ric = []
         lista_aux = []
@@ -68,7 +68,7 @@ def ricettarioGestionale():
 def addSemi():
     form = newSemi()
     if form.validate_on_submit():
-        new_Semi = Semilavorati(Nome=form.Nome.data, Preparazione='', IVA=form.IVA.data, Categoria=form.Categoria.data, Descrizione=form.Descrizione.data, PrezzoUnitario=form.PrezzoUnitario.data, Quantità=0, Incipit='')
+        new_Semi = Semilavorati(Nome=form.Nome.data, Preparazione='', IVA=form.IVA.data, Categoria=form.Categoria.data, Descrizione=form.Descrizione.data, PrezzoUnitario=form.PrezzoUnitario.data, Quantità=0, Incipit='', TempoPreparazione=0, Porzioni=1)
         db.session.add(new_Semi)
         db.session.commit()
 
@@ -92,10 +92,10 @@ def aggiungiRicetta(id):
     if(form.validate_on_submit()):
         for i in range(0, len(ingrediente)):
             if ingrediente[i] > 0 :
-                new_Rec = Ricette(Id_Semilavorato = id, Id_MateriaPrima = materiePrime.matPrime[i][1], Quantita = ingrediente[i], Tempo = form.Tempo.data)
+                new_Rec = Ingredienti(Id_Semilavorato = id, Id_MateriaPrima = materiePrime.matPrime[i][1], Quantita = ingrediente[i])
                 db.session.add(new_Rec)
 
-        Semilavorati.query.filter(Semilavorati.Id == id).update({"Preparazione":form.Preparazione.data})
+        Semilavorati.query.filter(Semilavorati.Id == id).update({"Preparazione":form.Preparazione.data, "Porzioni" : form.Persone.data, "TempoPreparazione" : form.Tempo.data})
         db.session.commit()
 
         return redirect(url_for('ricettario.ricettarioGestionale'))
@@ -104,14 +104,14 @@ def aggiungiRicetta(id):
 
 @ricettario.route('/ricetta/<id>', methods=['GET', 'POST'])
 def ricetta(id):
-    ricetta = session.query(Semilavorati.Nome, Semilavorati.Descrizione, Semilavorati.Incipit, Ricette.Tempo, Semilavorati.Preparazione). \
-        join(Ricette, Semilavorati.Id == Ricette.Id_Semilavorato). \
+    ricetta = session.query(Semilavorati.Nome, Semilavorati.Descrizione, Semilavorati.Incipit, Semilavorati.TempoPreparazione, Semilavorati.Preparazione, Semilavorati.Porzioni). \
+        join(Ingredienti, Semilavorati.Id == Ingredienti.Id_Semilavorato). \
         filter(Semilavorati.Id == id).first()
 
-    ingredienti = session.query(Merce.Nome, Ricette.Quantita, Allergeni.Nome).\
-        join(Ricette, Ricette.Id_MateriaPrima == Merce.Id).\
+    ingredienti = session.query(Merce.Nome, Ingredienti.Quantita, Allergeni.Nome).\
+        join(Ingredienti, Ingredienti.Id_MateriaPrima == Merce.Id).\
         join(Allergeni, Allergeni.Id == Merce.Id_Allergene).\
-        filter(Ricette.Id_Semilavorato == id).all()
+        filter(Ingredienti.Id_Semilavorato == id).all()
 
     return render_template("gestionale/ricetteSingle.html", Ricetta=ricetta, Ingredienti=ingredienti)
 

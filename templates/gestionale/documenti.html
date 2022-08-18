@@ -14,16 +14,16 @@
             <th class="text-center">Data emissione</th>
             <th class="text-center">Ammontare</th>
             <th class="text-center">Status</th>
-            <th class="text-center">Vaziarioni Opzionali</th>
+            <th class="text-center">Variazioni Opzionali</th>
         </tr>
-        {% for i in range(0, 10)%}
+        {% for fattura in FAcquisto%}
         <tr>
-            <td class="text-center">{{i}}</td>
-            <td class="text-center">Gabibo</td>
-            <td class="text-center">1/1/2000</td>
-            <td class="text-center">5000000.00</td>
+            <td class="text-center">{{fattura.Id}}</td>
+            <td class="text-center">{{fattura.Nome}}</td>
+            <td class="text-center">{{fattura.Data}}</td>
+            <td class="text-center">{{'%0.2f'| format(fattura.Totale)}}</td>
             <td class="p-3 mb-2 bg-danger text-white text-center">Da pagare</td>
-            <td class="text-center">-</td>
+            <td class="text-center">da calcolare</td>
         </tr>
         {% endfor %}
     </table>
@@ -53,14 +53,14 @@
             <th class="text-center">Status</th>
             <th class="text-center">Vaziarioni Opzionali</th>
         </tr>
-        {% for i in range(0, 10)%}
+        {% for fattura in FVendita%}
         <tr>
-            <td class="text-center">{{i}}</td>
-            <td class="text-center">Gabibo</td>
-            <td class="text-center">1/1/2000</td>
-            <td class="text-center">5000000.00</td>
+            <td class="text-center">{{fattura.Id}}</td>
+            <td class="text-center">{{fattura.Mail_Cliente}}</td>
+            <td class="text-center">{{fattura.Data}}</td>
+            <td class="text-center">{{'%0.2f'| format(fattura.Totale)}}</td>
             <td class="p-3 mb-2 bg-danger text-white text-center">Da pagare</td>
-            <td class="text-center">-</td>
+            <td class="text-center">da calcolare</td>
         </tr>
         {% endfor %}
     </table>
@@ -92,15 +92,15 @@
             <th class="text-center">Ammontare</th>
             <th class="text-center">Status</th>
         </tr>
-        {% for i in range(0, 10)%}
+        {% for ddt in listDDT%}
         <tr>
-            <td class="text-center">{{i}}</td>
-            <td class="text-center">Gabibo</td>
-            <td class="text-center">1/1/2000</td>
-            <td class="text-center">descrizione del gabibo sesso pazzo</td>
-            <td class="text-center">500kg</td>
-            <td class="text-center">3</td>
-            <td class="text-center">5000000.00</td>
+            <td class="text-center">{{ddt.Id}}</td>
+            <td class="text-center">{{ddt.Id_Fornitore}}</td>
+            <td class="text-center">{{ddt.DataEmissione}}</td>
+            <td class="text-center">{{ddt.Note}}</td>
+            <td class="text-center">{{ddt.Peso}}</td>
+            <td class="text-center">{{ddt.Colli}}</td>
+            <td class="text-center">{{ddt.Importo}}</td>
             <td class="p-3 mb-2 bg-danger text-white text-center">Da pagare</td>
         </tr>
         {% endfor %}
@@ -124,15 +124,15 @@
     <h2>Scontrini Battuti</h2>
     <table class="table">
         <tr>
-            <th class="text-center">Numero totale/th>
+            <th class="text-center">Numero totale</th>
             <th class="text-center">Data emissione</th>
             <th class="text-center">Ammontare finale</th>
         </tr>
-        {% for i in range(0, 10)%}
+        {% for scontrini in listScontrini%}
         <tr>
-            <td class="text-center">{{i*10}}</td>
-            <td class="text-center">1/1/2000</td>
-            <td class="text-center">5000000.00</td>
+            <td class="text-center">{{scontrini.Id}}</td>
+            <td class="text-center">{{scontrini.Data}}</td>
+            <td class="text-center">{{'%0.2f'| format(scontrini.Totale)}}</td>
         </tr>
         {% endfor %}
     </table>

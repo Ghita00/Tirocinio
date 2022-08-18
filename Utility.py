@@ -13,7 +13,7 @@ class Active():
 pages = Active()
 
 class SliderHelp():
-    #mex, ordini_r, ordini_e, fatture_a, fatture_v, ddt, scontrini
+    #mex(0), ordini_r(1), ordini_e(2), fatture_a(3), fatture_v(4), ddt(5), scontrini(6)
     sliders = [0,0,0,0,0,0,0]
 
     def aggiorna(self, i, value):
