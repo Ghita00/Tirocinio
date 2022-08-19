@@ -1,0 +1,97 @@
+{% extends 'gestionale/base.html' %}
+
+{% block documentiSingle %}
+
+<h1>Dettagli del documento nr. {{id}}</h1>
+
+{% if categoria == '0' %}
+    Nome: {{doc[0].Nome}} </br>
+    PartitaIVA : {{doc[0].Contatto}} </br>
+    Data: {{doc[0].Data}} </br>
+    Status : {% if doc[0].Status == True%} Pagato {% else %} Non pagato {% endif %} </br>
+
+    <h3>Prodotti</h3>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Prezzo Unitario</th>
+            <th>Quantità</th>
+        </tr>
+        {% for prodotto in prod %}
+        <tr>
+            <td>{{prodotto.Prodotto}}</td>
+            <td>{{prodotto.Prezzo}}</td>
+            <td>{{prodotto.Quantita}}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+{% endif %}
+{% if categoria == '1' %}
+    Nome: {{doc[0].Nome}} </br>
+    Telefono : {{doc[0].Contatto}} </br>
+    Data: {{doc[0].Data}} </br>
+    Status : {% if doc[0].Status == True%} Pagato {% else %} Non pagato {% endif %} </br>
+
+    <h3>Prodotti</h3>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Prezzo Unitario</th>
+            <th>Quantità</th>
+        </tr>
+        {% for prodotto in prod %}
+        <tr>
+            <td>{{prodotto.Prodotto}}</td>
+            <td>{{prodotto.Prezzo}}</td>
+            <td>{{prodotto.Quantita}}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+{% endif %}
+{% if categoria == '2' %}
+    Nome: {{doc[0].Nome}} </br>
+    PartitaIVA : {{doc[0].Contatto}} </br>
+    Data: {{doc[0].Data}} </br>
+    Status : {% if doc[0].Status == True%} Pagato {% else %} Non pagato {% endif %} </br>
+
+    <h3>Prodotti</h3>
+    <table>
+        <tr>
+            <th>Peso</th>
+            <th>Importo</th>
+            <th>Colli</th>
+        </tr>
+        {% for prodotto in prod %}
+        <tr>
+            <td>{{prodotto.Prodotto}}</td>
+            <td>{{prodotto.Prezzo}}</td>
+            <td>{{prodotto.Quantita}}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+{% endif %}
+{% if categoria == '3' %}
+    Data: {{doc[0].Data}} </br>
+
+    <h3>Prodotti</h3>
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Prezzo Unitario</th>
+            <th>Quantità</th>
+        </tr>
+        {% for prodotto in prod %}
+        <tr>
+            <td>{{prodotto.Prodotto}}</td>
+            <td>{{prodotto.Prezzo}}</td>
+            <td>{{prodotto.Quantita}}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+{% endif %}
+
+{% endblock %}

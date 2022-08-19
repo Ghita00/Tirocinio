@@ -1,0 +1,32 @@
+{% extends 'gestionale/base.html' %}
+
+{% block formdocumenti %}
+    <h2>Aggiungi nuovo documento</h2>
+    {% from "sito/_formhelpers.html" import render_field %}
+        <form method="POST" action="">
+            <dl>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="Fattura di acquisto">Fattura di acquisto
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="Fattura di acquisto">Fattura di vendita
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="Fattura di acquisto">DDT
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="Fattura di acquisto">Scontrino
+                    </label>
+                </div>
+
+            </dl>
+
+        </form>
+{% endblock %}

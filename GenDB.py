@@ -122,7 +122,7 @@ class DittaFornitrice(db.Model):
     __tablename__ = 'dittaFornitrice'
 
     PartitaIVA = db.Column(db.String(11), primary_key=True)
-    Nome = db.Column(db.String(60), nullable=False)
+    NomeDitta = db.Column(db.String(60), nullable=False)
     Mail = db.Column(db.String(50), nullable=False)
     Telefono = db.Column(db.String(15), nullable=False)
     Via = db.Column(db.String(50))
@@ -132,9 +132,9 @@ class DittaFornitrice(db.Model):
     DDT = relationship("DDT", back_populates = "Fornitore")
     FatturaAcquisto = relationship("FattureAcquisto", back_populates = "Fornitore")
 
-    def __init__(self, PartitaIVA, Nome, Mail, Telefono, Via, Città, Stato):
+    def __init__(self, PartitaIVA, NomeDitta, Mail, Telefono, Via, Città, Stato):
         self.PartitaIVA = PartitaIVA
-        self.Nome = Nome
+        self.NomeDitta = NomeDitta
         self.Mail = Mail
         self.Telefono = Telefono
         self.Via = Via

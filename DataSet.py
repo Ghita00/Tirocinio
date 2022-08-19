@@ -12,9 +12,9 @@ Dipendenti = [Dipendenti(Mail='vioricadanci@gmail.com', DataAssunzione='11-07-20
 Clienti = [Clienti(Mail='prova@gmail.com', DataRegistrazione='11-07-2022'),
            Clienti(Mail='rominadanci@gmail.com', DataRegistrazione='11-07-2022')]
 
-DittaFornitrice = [DittaFornitrice(PartitaIVA='86334519757', Nome='StoccoSRL', Mail='stoccosrl@gmail.com', Telefono='0423406067', Via='Rossini 5', Città='Treviso', Stato='Italia'),
-                   DittaFornitrice(PartitaIVA='88924578120', Nome='ColorantiSRL', Mail='colorantisrl@gmail.com', Telefono='0423807699', Via='San Marco 3', Città='Salzano', Stato='Italia'),
-                   DittaFornitrice(PartitaIVA='89671233099', Nome='DolciariaSPA', Mail='dolciariaspa@gmail.com', Telefono='0423809766', Via='Cristoforo Colombo 15', Città='Treviso', Stato='Italia')]
+DittaFornitrice = [DittaFornitrice(PartitaIVA='86334519757', NomeDitta='StoccoSRL', Mail='stoccosrl@gmail.com', Telefono='0423406067', Via='Rossini 5', Città='Treviso', Stato='Italia'),
+                   DittaFornitrice(PartitaIVA='88924578120', NomeDitta='ColorantiSRL', Mail='colorantisrl@gmail.com', Telefono='0423807699', Via='San Marco 3', Città='Salzano', Stato='Italia'),
+                   DittaFornitrice(PartitaIVA='89671233099', NomeDitta='DolciariaSPA', Mail='dolciariaspa@gmail.com', Telefono='0423809766', Via='Cristoforo Colombo 15', Città='Treviso', Stato='Italia')]
 
 Allergeni = [Allergeni(Nome='Cereali contenenti glutine'),
              Allergeni(Nome='Soia'),
@@ -73,27 +73,9 @@ WishList = [WishList(Mail_Cliente='rominadanci@gmail.com', Id_Semilavorato=1),
             WishList(Mail_Cliente='prova@gmail.com', Id_Semilavorato=3),
             WishList(Mail_Cliente='prova@gmail.com', Id_Semilavorato=5)]
 
-FattureAcquisto = [FattureAcquisto(Id_Fornitore='86334519757', NumDocumento=1, Data='11-07-2022'),
-                   FattureAcquisto(Id_Fornitore='88924578120', NumDocumento=1, Data='11-07-2022'),
-                   FattureAcquisto(Id_Fornitore='86334519757', NumDocumento=2, Data='11-08-2022'),
-                   FattureAcquisto(Id_Fornitore='89671233099', NumDocumento=1, Data='11-06-2022'),
-                   FattureAcquisto(Id_Fornitore='89671233099', NumDocumento=2, Data='11-05-2022'),
-                   FattureAcquisto(Id_Fornitore='86334519757', NumDocumento=3, Data='11-08-2022'),
-                   FattureAcquisto(Id_Fornitore='89671233099', NumDocumento=3, Data='11-04-2022'),
-                   FattureAcquisto(Id_Fornitore='89671233099', NumDocumento=4, Data='11-05-2022'),
-                   FattureAcquisto(Id_Fornitore='88924578120', NumDocumento=2, Data='11-03-2022'),
-                   FattureAcquisto(Id_Fornitore='86334519757', NumDocumento=4, Data='11-02-2022'),
-                   FattureAcquisto(Id_Fornitore='88924578120', NumDocumento=3, Data='11-01-2022')]
+FattureAcquisto = [FattureAcquisto(Id_Fornitore='86334519757', NumDocumento=1, Data='11-07-2022')]
 
-FattureVendita = [FattureVendita(Mail_Cliente='prova@gmail.com', NumDocumento=1,Data='11-01-2022'),
-                  FattureVendita(Mail_Cliente='prova@gmail.com', NumDocumento=2,Data='11-02-2022'),
-                  FattureVendita(Mail_Cliente='prova@gmail.com', NumDocumento=3,Data='11-03-2022'),
-                  FattureVendita(Mail_Cliente='prova@gmail.com', NumDocumento=4,Data='11-04-2022'),
-                  FattureVendita(Mail_Cliente='prova@gmail.com', NumDocumento=5,Data='11-05-2022'),
-                  FattureVendita(Mail_Cliente='rominadanci@gmail.com', NumDocumento=1,Data='11-06-2022'),
-                  FattureVendita(Mail_Cliente='rominadanci@gmail.com', NumDocumento=2,Data='11-07-2022'),
-                  FattureVendita(Mail_Cliente='rominadanci@gmail.com', NumDocumento=3,Data='11-08-2022'),
-                  FattureVendita(Mail_Cliente='rominadanci@gmail.com', NumDocumento=4,Data='11-01-2022')]
+FattureVendita = [FattureVendita(Mail_Cliente='prova@gmail.com', NumDocumento=1,Data='11-01-2022')]
 
 DDT = [DDT(Id_Fornitore='86334519757', NumDocumento=1, DataEmissione='11-01-2022', Note='Urgenza', Importo=50, Peso=10, Colli=7),
        DDT(Id_Fornitore='86334519757', NumDocumento=2, DataEmissione='11-03-2022', Note='Fragile', Importo=100, Peso=50, Colli=8),
@@ -141,7 +123,7 @@ ContenutoVenditaSemilavorati = [ContenutoVenditaSemilavorati(Id_FatturaVendità=
                                 ContenutoVenditaSemilavorati(Id_FatturaVendità=1, Id_Semilavorato=3, Quantità=10)]
 
 Data = []
-#Data = [Persone, Dipendenti, Clienti, DittaFornitrice, Allergeni, Turni, Semilavorati ,Merce, Articoli, FattureAcquisto, FattureVendita, DDT, Scontrini, ScontriniMerce, ScontriniSemilavorati, ContenutoVenditaSemilavorati, ContenutoAcquisto]
+#Data = [Persone, Dipendenti, Clienti, DittaFornitrice, Allergeni, Turni, Semilavorati, Merce, Articoli, FattureAcquisto, FattureVendita, DDT, Scontrini, ScontriniMerce, ScontriniSemilavorati, ContenutoVenditaSemilavorati, ContenutoAcquisto]
 
 for i in Data:
     session.add_all(i)
