@@ -4,27 +4,27 @@
 
 
 <h2>Aggiungi merce</h2>
-{% from "sito/_formhelpers.html" import render_field %}
-<form method="POST" action="">
-    {{ form.hidden_tag() }}
-    <div class="row">
-        <div class="col-4">
-            {{ render_field(form.Nome) }}
+    {% from "sito/_formhelpers.html" import render_field %}
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <div class="col-4">
+                {{ render_field(form.Nome) }}
+            </div>
+            <div class="col-4">
+                {{ render_field(form.Prezzo) }}
+            </div>
+            <div class="col-4">
+                {{ render_field(form.IVA) }}
+            </div>
         </div>
-        <div class="col-4">
-            {{ render_field(form.Prezzo) }}
+        <hr>
+        <h4>Eventuale Allergene</h4>
+        <div id="appendi">
+                {{ render_field(form.Allergeni) }}
         </div>
-        <div class="col-4">
-            {{ render_field(form.IVA) }}
-        </div>
-    </div>
-    <hr>
-    <h4>Eventuale Allergene</h4>
-    <div id="appendi">
-            {{ render_field(form.Allergeni) }}
-    </div>
-    {{ render_field(form.Submit) }}
-</form>
+        {{ render_field(form.Submit) }}
+    </form>
 
 <script>
     padre = document.getElementById("Allergeni")
@@ -42,6 +42,7 @@
 
     col2 = document.createElement("col")
     col2.classList.add("col-4");
+    
     while(padre.childNodes.length > 0){
         console.log(padre.childNodes[0])
         col2.appendChild(padre.childNodes[0])

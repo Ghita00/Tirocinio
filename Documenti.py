@@ -8,7 +8,7 @@ from Utility import help
 
 documenti = Blueprint('documenti', __name__)
 
-#TODO Aggiornamento del magazzino a seconda degli insert
+#TODO Aggiornamento del magazzino a seconda degli insert e anche in ecommerce!
 
 @documenti.route('/documentiGestionale', methods=['GET', 'POST'])
 def documentiGestionale():
