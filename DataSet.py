@@ -123,7 +123,9 @@ ContenutoVenditaSemilavorati = [ContenutoVenditaSemilavorati(Id_FatturaVendità=
                                 ContenutoVenditaSemilavorati(Id_FatturaVendità=1, Id_Semilavorato=3, Quantità=10)]
 
 Data = []
-#Data = [Persone, Dipendenti, Clienti, DittaFornitrice, Allergeni, Turni, Semilavorati, Merce, Articoli, FattureAcquisto, FattureVendita, DDT, Scontrini, ScontriniMerce, ScontriniSemilavorati, ContenutoVenditaSemilavorati, ContenutoAcquisto]
+#Data = [Persone, Dipendenti, Clienti, DittaFornitrice, Allergeni, Turni, Semilavorati, Merce, Blog
+# Articoli, FattureAcquisto, FattureVendita, DDT, Scontrini, ScontriniMerce, ScontriniSemilavorati,
+# ContenutoVenditaSemilavorati, ContenutoAcquisto]
 
 for i in Data:
     session.add_all(i)

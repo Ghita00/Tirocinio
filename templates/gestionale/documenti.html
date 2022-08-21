@@ -28,18 +28,25 @@
         {% endfor %}
     </table>
 </div>
-<form action="{{url_for('documenti.documentiGestionale')}}" method="post"><!--TODO CON IL REDIRECT GIUSTO-->
-    <input type="hidden" name="nascosto" value="1">
-    <div class="row g-3">
-        <div class="col-auto">
-            <button type="submit" class="btn btn-secondary" name="fattureAcq" value="-1">Precedenti 10</button>
-        </div>
-        <br>
-        <div class="col-auto">
-            <button type="submit" name="fattureAcq" value="1" class="btn btn-primary">Successivi 10</button>
-        </div>
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <form action="{{url_for('documenti.documentiGestionale')}}" method="post"><!--TODO CON IL REDIRECT GIUSTO-->
+            <input type="hidden" name="nascosto" value="1">
+            <div class="row g-3">
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-secondary" name="fattureAcq" value="-1">Precedenti 10</button>
+                </div>
+                <br>
+                <div class="col-auto">
+                    <button type="submit" name="fattureAcq" value="1" class="btn btn-primary">Successivi 10</button>
+                </div>
+            </div>
+        </form>
     </div>
-</form>
+    <div class="col-4"></div>
+</div>
+
 <br>
 <br>
 <div class="container">
@@ -65,18 +72,25 @@
         {% endfor %}
     </table>
 </div>
-<form action="{{url_for('documenti.documentiGestionale')}}" method="post"><!--TODO CON IL REDIRECT GIUSTO-->
-    <input type="hidden" name="nascosto" value="2">
-    <div class="row g-3">
-        <div class="col-auto">
-            <button type="submit" class="btn btn-secondary" name="fattureVen" value="-1">Precedenti 10</button>
-        </div>
-        <br>
-        <div class="col-auto">
-            <button type="submit" name="fattureVen" value="1" class="btn btn-primary">Successivi 10</button>
-        </div>
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <form action="{{url_for('documenti.documentiGestionale')}}" method="post"><!--TODO CON IL REDIRECT GIUSTO-->
+            <input type="hidden" name="nascosto" value="2">
+            <div class="row g-3">
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-secondary" name="fattureVen" value="-1">Precedenti 10</button>
+                </div>
+                <br>
+                <div class="col-auto">
+                    <button type="submit" name="fattureVen" value="1" class="btn btn-primary">Successivi 10</button>
+                </div>
+            </div>
+        </form>
     </div>
-</form>
+    <div class="col-4"></div>
+</div>
+
 <br>
 <br>
 <div class="container">
@@ -107,18 +121,24 @@
         {% endfor %}
     </table>
 </div>
-<form action="{{url_for('documenti.documentiGestionale')}}" method="post"><!--TODO CON IL REDIRECT GIUSTO-->
-    <input type="hidden" name="nascosto" value="3">
-    <div class="row g-3">
-        <div class="col-auto">
-            <button type="submit" class="btn btn-secondary" name="DDT" value="-1">Precedenti 10</button>
-        </div>
-        <br>
-        <div class="col-auto">
-            <button type="submit" name="DDT" value="1" class="btn btn-primary">Successivi 10</button>
-        </div>
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <form action="{{url_for('documenti.documentiGestionale')}}" method="post"><!--TODO CON IL REDIRECT GIUSTO-->
+            <input type="hidden" name="nascosto" value="3">
+            <div class="row g-3">
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-secondary" name="DDT" value="-1">Precedenti 10</button>
+                </div>
+                <br>
+                <div class="col-auto">
+                    <button type="submit" name="DDT" value="1" class="btn btn-primary">Successivi 10</button>
+                </div>
+            </div>
+        </form>
     </div>
-</form>
+    <div class="col-4"></div>
+</div>
 <br>
 <br>
 <div class="container">
@@ -139,16 +159,23 @@
         {% endfor %}
     </table>
 </div>
-<form action="{{url_for('documenti.documentiGestionale')}}" method="post"><!--TODO CON IL REDIRECT GIUSTO-->
-    <input type="hidden" name="nascosto" value="4">
-    <div class="row g-3">
-        <div class="col-auto">
-            <button type="submit" class="btn btn-secondary" name="scontrini" value="-1">Precedenti 10</button>
-        </div>
-        <br>
-        <div class="col-auto">
-            <button type="submit" name="scontrini" value="1" class="btn btn-primary">Successivi 10</button>
-        </div>
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <form action="{{url_for('documenti.documentiGestionale')}}" method="post" >
+            <input type="hidden" name="nascosto" value="4">
+            <div class="row g-3">
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-secondary" name="scontrini" value="-1">Precedenti 10</button>
+                </div>
+                <br>
+                <div class="col-auto">
+                    <button type="submit" name="scontrini" value="1" class="btn btn-primary">Successivi 10</button>
+                </div>
+            </div>
+        </form>
     </div>
-</form>
+    <div class="col-4"></div>
+</div>
+
 {% endblock %}
