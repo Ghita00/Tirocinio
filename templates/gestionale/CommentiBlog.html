@@ -1,0 +1,35 @@
+{% extends 'gestionale/base.html' %}
+
+{% block commenti %}
+<h2>Commenti al Blog</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Utente</th>
+      <th scope="col">Testo</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for com in commenti%}
+    <tr>
+      <th scope="row">{{com.Id}}</th>
+      <td>{{com.Utente}}</td>
+      <td>{{com.Testo}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<form action="{{url_for('blog.GCommenti')}}" method="post">
+    <div class="row g-3">
+        <div class="col-auto">
+            <button type="submit" class="btn btn-secondary" name="mex" value="-1">Precedenti 10</button>
+        </div>
+        <br>
+        <div class="col-auto">
+            <button type="submit" name="mex" value="1" class="btn btn-primary">Successivi 10</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,4 +1,34 @@
 {% extends 'gestionale/base.html' %}
 
 {% block ordineS %}
+    <h1>Dettagli ordine nr. {{id}}</h1>
+    {% if categoria == '1' %}
+        <h3>Dati del cliente</h3>
+            <ul>
+                <li>Mail: {{dati[0].Mail}}</li>
+                <li>Telefono: {{dati[0].Telefono}}</li>
+                <li>Data: {{dati[0].Data}}</li>
+            </ul>
+
+        <h3>Prodotti richiesti</h3>
+            <ol>
+                {% for Prodotto in prod %}
+                    <li>Prodotto: {{Prodotto.Nome}} Quantità: {{Prodotto.Quantita}}</li>
+                {% endfor %}
+            </ol>
+    {% else %}
+        <h3>Dati del fornitore</h3>
+            <ul>
+                <li>Nome della Ditta: {{dati[0].Nome}}</li>
+                <li>Partita IVA: {{dati[0].PartitaIVA}}</li>
+                <li>Data del ordine: {{dati[0].Data}}</li>
+            </ul>
+
+        <h3>Prodotti richiesti</h3>
+            <ol>
+                {% for Prodotto in prod %}
+                    <li>Prodotto: {{Prodotto.Nome}} Quantità: {{Prodotto.Quantita}}</li>
+                {% endfor %}
+            </ol>
+    {% endif %}
 {% endblock %}

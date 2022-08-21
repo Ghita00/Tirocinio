@@ -99,3 +99,8 @@ def dropArticolo(id):
     flash('Articolo cancellato con successo')
 
     return redirect(url_for("blog.Gblog"))
+
+@blog.route('/gCommenti')
+def GCommenti():
+    commenti = Commenti.query.all()
+    return render_template("gestionale/CommentiBlog.html", commenti = commenti)

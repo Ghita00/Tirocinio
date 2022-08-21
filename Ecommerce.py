@@ -7,6 +7,7 @@ from Utility import Auxcarrello, pages
 
 ecommerce = Blueprint('ecommerce', __name__)
 
+#TODO aggiornamento magazzino al checkout del carello
 
 @ecommerce.route('/shop', methods=['GET', 'POST'])
 def shop():
@@ -106,6 +107,7 @@ def checkout():
     if Carrello.query.count() > 0:
         delete_cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail)
         delete_cart.delete()
+
         db.session.commit()
 
     Auxcarrello.totale = 0

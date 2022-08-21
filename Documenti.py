@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for
+from flask import Blueprint, render_template, request, url_for, flash
 from sqlalchemy import func, desc
 from werkzeug.utils import redirect
 
@@ -93,7 +93,6 @@ def documentiGestionale():
 @documenti.route('/docSingle/<id>/<categoria>')
 #categoria 0. fatture di acquisto, 1. fatture di vendita, 2. ddt, 3. scontrini
 def docSingle(id, categoria):
-
     if categoria == '0':
         doc = session.query(FattureAcquisto.Data, FattureAcquisto.Status, DittaFornitrice.NomeDitta, DittaFornitrice.PartitaIVA,
                             Merce.Nome, Merce.PrezzoUnitario, ContenutoAcquisto.Quantità).\
@@ -254,47 +253,65 @@ def addDoc():
 
             if tipo == 'Fatturavendita':
                 if sottotipo == 'Merce':
-                    new_fat = FattureVendita(Mail_Cliente=request.form['Mail'],
-                                              NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
-                    db.session.add(new_fat)
-                    db.session.commit()
+                    if FattureVendita.query.filter(FattureVendita.Mail_Cliente == request.form['Mail']).filter(FattureVendita.NumDocumento == request.form['NumDocumento']).first() is None:
+                        new_fat = FattureVendita(Mail_Cliente=request.form['Mail'],
+                                                  NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
+                        db.session.add(new_fat)
+                        db.session.commit()
 
-                    fat = session.query(FattureVendita.Id).filter(
-                        FattureVendita.Mail_Cliente == request.form['Mail']).filter(
-                        FattureVendita.NumDocumento == request.form['NumDocumento']).first()
-                    fat = fat[0]
+                        fat = session.query(FattureVendita.Id).filter(
+                            FattureVendita.Mail_Cliente == request.form['Mail']).filter(
+                            FattureVendita.NumDocumento == request.form['NumDocumento']).first()
 
-                    for i in range(int(request.form['volte'])):
-                        id = int(request.form['Prodotto-' + str(i)])
-                        contenutoFat = ContenutoVenditaMerce(Id_FatturaVendità=fat, Id_Merce=id,
-                                                         Quantità=request.form['q-' + str(i)])
-                        db.session.add(contenutoFat)
+                        fat = fat[0]
 
-                    FattureVendita.query.filter(FattureVendita.Id == fat).update(
-                        {"Status": bool(request.form['Status'])})
+                        for i in range(int(request.form['volte'])):
+                            id = int(request.form['Prodotto-' + str(i)])
+                            quanti = session.query(Merce.Quantità).filter(Merce.Id == id).first()
+                            if quanti[0] > request.form['q-' + str(i)]:
+                                contenutoFat = ContenutoVenditaMerce(Id_FatturaVendità=fat, Id_Merce=id, Quantità=request.form['q-' + str(i)])
+                                Merce.query.filter(Merce.Id == id).update({"Quantità": Merce.Quantità - request.form['q-' + str(i)]})
+                                db.session.add(contenutoFat)
+                            else:
+                                flash('Non hai abbastanza prodotti in magazzino')
 
-                    db.session.commit()
+                        FattureVendita.query.filter(FattureVendita.Id == fat).update(
+                            {"Status": bool(request.form['Status'])})
+
+                        db.session.commit()
+
+                    else:
+                        flash('Esiste già una fattura a nome di questo cliente con questo numero di documento')
                 else:
-                    new_fat = FattureVendita(Mail_Cliente=request.form['Mail'],
-                                             NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
-                    db.session.add(new_fat)
-                    db.session.commit()
+                    if FattureVendita.query.filter(FattureVendita.Mail_Cliente == request.form['Mail']).filter(FattureVendita.NumDocumento == request.form['NumDocumento']).first() is None:
+                        new_fat = FattureVendita(Mail_Cliente=request.form['Mail'],
+                                                 NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
+                        db.session.add(new_fat)
+                        db.session.commit()
 
-                    fat = session.query(FattureVendita.Id).filter(
-                        FattureVendita.Mail_Cliente == request.form['Mail']).filter(
-                        FattureVendita.NumDocumento == request.form['NumDocumento']).first()
-                    fat = fat[0]
+                        fat = session.query(FattureVendita.Id).filter(
+                            FattureVendita.Mail_Cliente == request.form['Mail']).filter(
+                            FattureVendita.NumDocumento == request.form['NumDocumento']).first()
 
-                    for i in range(int(request.form['volte'])):
-                        id = int(request.form['Prodotto-' + str(i)])
-                        contenutoFat = ContenutoVenditaSemilavorati(Id_FatturaVendità=fat, Id_Semilavorato=id,
-                                                             Quantità=request.form['q-' + str(i)])
-                        db.session.add(contenutoFat)
+                        fat = fat[0]
 
-                    FattureVendita.query.filter(FattureVendita.Id == fat).update(
-                        {"Status": bool(request.form['Status'])})
+                        for i in range(int(request.form['volte'])):
+                            id = int(request.form['Prodotto-' + str(i)])
+                            quanti = session.query(Semilavorati.Quantità).filter(Semilavorati.Id == id).first()
+                            if quanti > request.form['q-' + str(i)]:
+                                contenutoFat = ContenutoVenditaSemilavorati(Id_FatturaVendità=fat, Id_Semilavorato=id, Quantità=request.form['q-' + str(i)])
+                                Semilavorati.query.filter(Semilavorati.Id == id).update({"Quantità": Semilavorati.Quantità - request.form['q-' + str(i)]})
+                                db.session.add(contenutoFat)
+                            else:
+                                flash('Non hai abbastanza prodotti in magazzino')
 
-                    db.session.commit()
+                        FattureVendita.query.filter(FattureVendita.Id == fat).update(
+                            {"Status": bool(request.form['Status'])})
+
+                        db.session.commit()
+                    else:
+                        flash('Esiste già una fattura a nome di questo cliente con questo numero di documento')
+
             if tipo == 'Scontrino':
                 if sottotipo == 'Merce':
                     new_sc = Scontrini(Data=request.form['Data'])
@@ -306,9 +323,13 @@ def addDoc():
 
                     for i in range(int(request.form['volte'])):
                         id = int(request.form['Prodotto-' + str(i)])
-                        contenutoSc = ScontriniMerce(Id_Scontrino=sc, Id_Merce=id,
-                                                         Quantità=request.form['q-' + str(i)])
-                        db.session.add(contenutoSc)
+                        quanti = session.query(Merce.Quantità).filter(Merce.Id == id).first()
+                        if quanti[0] > request.form['q-' + str(i)]:
+                            contenutoSc = ScontriniMerce(Id_Scontrino=sc, Id_Merce=id, Quantità=request.form['q-' + str(i)])
+                            Merce.query.filter(Merce.Id == id).update({"Quantità": Merce.Quantità - request.form['q-' + str(i)]})
+                            db.session.add(contenutoSc)
+                        else:
+                            flash('Non hai abbastanza prodotti in magazzino')
 
                     db.session.commit()
                 else:
@@ -322,9 +343,13 @@ def addDoc():
 
                     for i in range(int(request.form['volte'])):
                         id = int(request.form['Prodotto-' + str(i)])
-                        contenutoSc = ScontriniSemilavorati(Id_Scontrino=sc, Id_Semilavorato=id,
-                                                     Quantità=request.form['q-' + str(i)])
-                        db.session.add(contenutoSc)
+                        quanti = session.query(Semilavorati.Quantità).filter(Semilavorati.Id == id).first()
+                        if quanti[0] > request.form['q-' + str(i)]:
+                            contenutoSc = ScontriniSemilavorati(Id_Scontrino=sc, Id_Semilavorato=id, Qantità=request.form['q-' + str(i)])
+                            Semilavorati.query.filter(Semilavorati.Id == id).update({"Quantità": Semilavorati.Quantità - request.form['q-' + str(i)]})
+                            db.session.add(contenutoSc)
+                        else:
+                            flash('Non hai abbastanza prodotti in magazzino')
 
                     db.session.commit()
 
@@ -336,23 +361,28 @@ def addDoc():
                 db.session.commit()
 
             if tipo == 'Fatturaacquisto':
-                new_fat = FattureAcquisto(Id_Fornitore=request.form['PartitaIVA'], NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
-                db.session.add(new_fat)
-                db.session.commit()
+                if FattureAcquisto.query.filter(FattureAcquisto.Id_Fornitore == request.form['PartitaIVA']).filter(FattureAcquisto.NumDocumento == request.form['NumDocumento']).first() is None:
+                    new_fat = FattureAcquisto(Id_Fornitore=request.form['PartitaIVA'], NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
+                    db.session.add(new_fat)
+                    db.session.commit()
 
-                fat = session.query(FattureAcquisto.Id).filter(FattureAcquisto.Id_Fornitore == request.form['PartitaIVA']).filter(FattureAcquisto.NumDocumento == request.form['NumDocumento']).first()
-                fat = fat[0]
+                    fat = session.query(FattureAcquisto.Id).filter(FattureAcquisto.Id_Fornitore == request.form['PartitaIVA']).filter(FattureAcquisto.NumDocumento == request.form['NumDocumento']).first()
+                    fat = fat[0]
 
-                for i in range(int(request.form['volte'])):
-                    id = int(request.form['Prodotto-' + str(i)])
-                    contenutoFat = ContenutoAcquisto(Id_FatturaAcquisto = fat, Id_Merce = id, Quantità = request.form['q-'+str(i)])
-                    db.session.add(contenutoFat)
+                    for i in range(int(request.form['volte'])):
+                        id = int(request.form['Prodotto-' + str(i)])
+                        contenutoFat = ContenutoAcquisto(Id_FatturaAcquisto = fat, Id_Merce = id, Quantità = request.form['q-'+str(i)])
+                        Merce.query.filter(Merce.Id == id).update({"Quantità": Merce.Quantità + request.form['q-' + str(i)]})
+                        db.session.add(contenutoFat)
 
-                FattureAcquisto.query.filter(FattureAcquisto.Id == fat).update({"Status" : bool(request.form['Status'])})
+                    FattureAcquisto.query.filter(FattureAcquisto.Id == fat).update({"Status" : bool(request.form['Status'])})
 
-                db.session.commit()
+                    db.session.commit()
+                else:
+                    print('Sono qui')
+                    flash('Esiste già una fattura a nome di questo fornitore con questo numero di documento')
+
             return redirect(url_for("documenti.documentiGestionale"))
-
 
     return render_template("gestionale/formDocumento.html", volte=0, tipo = None, sottotipo = None, Prod = None)
 

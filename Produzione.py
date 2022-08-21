@@ -60,6 +60,7 @@ def aggiungiProd():
                             filter(Produzione.Id_Semilavorato == id).\
                             update({'Quantità' : Produzione.Quantità + request.form['quantita-'+str(i)]})
 
+                    Semilavorati.query.filter(Semilavorati.Id == id).update({"Quantità": Semilavorati.Quantità + request.form['quantita-'+str(i)]})
                 db.session.commit()
 
                 return redirect(url_for('produzione.produzioneGestionale'))

@@ -91,7 +91,7 @@ def modificaMerce(id):
 def addMerce():
     form = AddMerce()
 
-    form.Allergeni.choices = session.query(Allergeni.Nome).all()
+    form.Allergeni.choices = [Allergeni.Nome for Allergeni in Allergeni.query.all()]
 
     if request.method == "POST":
         nome = request.form['nome']

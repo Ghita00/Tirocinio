@@ -8,21 +8,17 @@
 <table class="table">
     <tr>
         <th scope="col" class="text-center">Numero doc</th>
-        <th scope="col" class="text-center">Nome cliente</th>
-        <th scope="col" class="text-center">Contatto</th>
-        <th scope="col" class="text-center">Importo</th>
+        <th scope="col" class="text-center">Mail cliente</th>
         <th scope="col" class="text-start text-center">Status</th>
         <th scope="col" class="text-start text-center">Data</th>
     </tr>
 
-    {% for i in range(0, 10) %}
+    {% for ricevuto in list_ricevuti %}
     <tr>
-        <th class="text-start text-center">{{i}}</th>
-        <td class="text-start text-center">Mark</td>
-        <td class="text-start text-center">Otto</td>
-        <td class="text-start text-center">@mdo</td>
-        <td class="text-start p-3 mb-2 bg-danger text-white text-center">Otto</td>
-        <td class="text-start text-center">Otto</td>
+        <th class="text-start text-center"><a href="{{url_for('ordini.ordineSingle', id=ricevuto.Id, categoria=1)}}">{{ricevuto.Id}}</a></th>
+        <td class="text-start text-center"><a href="{{url_for('ordini.ordineSingle', id=ricevuto.Id, categoria=1)}}">{{ricevuto.Mail_Cliente}}</a></td>
+        <td class="text-start p-3 mb-2 bg-danger text-white text-center">Da fare</td>
+        <td class="text-start text-center">{{ricevuto.Data}}</td>
     </tr>
     {% endfor %}
 
@@ -51,20 +47,16 @@
     <tr>
       <th scope="col" class="text-center">Numero doc</th>
         <th scope="col" class="text-center">Nome cliente</th>
-        <th scope="col" class="text-center">Contatto</th>
-        <th scope="col" class="text-center">Importo</th>
         <th scope="col" class="text-start text-center">Status</th>
         <th scope="col" class="text-start text-center">Data</th>
     </tr>
 
-    {% for i in range(0, 10) %}
+    {% for emesso in list_emessi %}
     <tr>
-        <th scope="row" class="text-start text-center">1</th>
-        <td class="text-start text-center">Mark</td>
-        <td class="text-start text-center">Otto</td>
-        <td class="text-start text-center">@mdo</td>
-        <td class="text-start text-center p-3 mb-2 bg-danger text-white">@mdo</td>
-        <td class="text-start text-center">@mdo</td>
+        <th scope="row" class="text-start text-center"><a href="{{url_for('ordini.ordineSingle', id=emesso.Id, categoria=2)}}">{{emesso.Id}}</a></th>
+        <td class="text-start text-center"><a href="{{url_for('ordini.ordineSingle', id=emesso.Id, categoria=2)}}">{{emesso.NomeDitta}}</a></td>
+        <td class="text-start text-center p-3 mb-2 bg-danger text-white">Da fara</td>
+        <td class="text-start text-center">{{emesso.Data}}</td>
     </tr>
     {% endfor %}
 
