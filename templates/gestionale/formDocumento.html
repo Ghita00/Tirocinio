@@ -5,28 +5,134 @@
     {% from "sito/_formhelpers.html" import render_field %}
         <form method="POST" action="">
             <dl>
+                <input type="hidden" name="nascosto" value="1">
                 <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="Fattura di acquisto">Fattura di acquisto
-                    </label>
+                    <label class="form-check-label"></label>
+                        <input type="radio" class="form-check-input" value="Fatturaacquisto" name="Documento">Fattura di acquisto
                 </div>
                 <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="Fattura di acquisto">Fattura di vendita
-                    </label>
+                    <label class="form-check-label"></label>
+                        <input type="radio" class="form-check-input" value="Fatturavendita" name="Documento">Fattura di vendita
+                        <select name="TipoFattura">
+                            <option value="Merce">Merce</option>
+                            <option value="Semilavorati">Semilavorati</option>
+                        </select>
                 </div>
                 <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="Fattura di acquisto">DDT
-                    </label>
+                    <label class="form-check-label"></label>
+                        <input type="radio" class="form-check-input" value="DDT" name="Documento">DDT
                 </div>
                 <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="Fattura di acquisto">Scontrino
-                    </label>
+                    <label class="form-check-label"></label>
+                        <input type="radio" class="form-check-input" value="Scontrino" name="Documento">Scontrino
+                        <select name="TipoScontrino">
+                            <option value="Merce">Merce</option>
+                            <option value="Semilavorati">Semilavorati</option>
+                        </select>
                 </div>
-
+                <div>
+                    <label>Quantità</label>
+                    <input type="number" name="Quantita" value=1>
+                </div>
+                <div>
+                    <button type="submit">Invia</button>
+                </div>
             </dl>
-
         </form>
+    {% if tipo != None %}
+        <form method="POST" action="">
+            <input type="hidden" name="nascosto" value="2">
+            <input type="hidden" name="tipo" value={{tipo}}>
+            <input type="hidden" name="sottotipo" value={{sottotipo}}>
+            <input type="hidden" name="volte" value={{volte}}>
+            {% if tipo == 'Fatturaacquisto' %}
+                <h3>Dati fattura di acquisto</h3>
+                <label>Nome fornitore</label>
+                <input type="text" name="NomeFornitore"> </br>
+                <label>Partita IVA</label>
+                <input type="number" name="PartitaIVA"> </br>
+                <label>Numero del documento</label>
+                <input type="number" name="NumDocumento"> </br>
+                 <label>Data</label>
+                <input type="date" name="Data"> </br>
+                <select name="Status">
+                    <option value=False>Non pagato</option>
+                    <option value=True>Pagato</option>
+                </select> </br>
+                {% for i in range(volte) %}
+                    <select name="Prodotto-{{i}}">
+                        {% for x in Prod %}
+                            <option value="{{x.Id}}">{{x.Nome}}</option>
+                        {% endfor %}
+                    </select> </br>
+                    <label>Quantità acquistata</label>
+                        <input type="number" name="q-{{i}}" value=1>
+                    </br>
+                {% endfor %}
+            {% endif %}
+            {% if tipo == 'Fatturavendita' %}
+                <h3>Dati fattura di vendita</h3>
+                <label>Mail del cliente</label>
+                <input type="text" name="Mail"> </br>
+                <label>Numero del documento</label>
+                <input type="number" name="NumDocumento"> </br>
+                 <label>Data</label>
+                <input type="date" name="Data"> </br>
+                <select name="Status">
+                    <option value=False>Non pagato</option>
+                    <option value=True>Pagato</option>
+                </select> </br>
+               {% for i in range(volte) %}
+                    <select name="Prodotto-{{i}}">
+                        {% for x in Prod %}
+                            <option value="{{x.Id}}">{{x.Nome}}</option>
+                        {% endfor %}
+                    </select> </br>
+                    <label>Quantità Venduta</label>
+                        <input type="number" name="q-{{i}}" value=1>
+                    </br>
+                {% endfor %}
+            {% endif %}
+            {% if tipo == 'DDT' %}
+                <h3>Dati DDT</h3>
+                <label>Nome fornitore</label>
+                <input type="text" name="NomeFornitore"> </br>
+                <label>Partita IVA</label>
+                <input type="number" name="PartitaIVA"> </br>
+                <label>Numero del documento</label>
+                <input type="number" name="NumDocumento"> </br>
+                 <label>Data</label>
+                <input type="date" name="Data"> </br>
+                <select name="Status">
+                    <option value=False>Non pagato</option>
+                    <option value=True>Pagato</option>
+                </select> </br>
+                <label>Peso</label>
+                <input type="number" name="Peso">
+                <label>Importo</label>
+                <input type="number" name="Importo">
+                <label>Colli</label>
+                <input type="number" name="Colli">
+                <label>Note</label>
+                <textarea name="Note"></textarea>
+            {% endif %}
+            {% if tipo == 'Scontrino' %}
+                <label>Data</label>
+                <input type="date" name="Data"> </br>
+               {% for i in range(volte) %}
+                    <select name="Prodotto-{{i}}">
+                        {% for x in Prod %}
+                            <option value="{{x.Id}}">{{x.Nome}}</option>
+                        {% endfor %}
+                    </select> </br>
+                    <label>Quantità acquistata</label>
+                        <input type="number" name="q-{{i}}" value=1>
+                    </br>
+                {% endfor %}
+            {% endif %}
+            <div>
+                    <button type="submit">Invia</button>
+            </div>
+        </form>
+    {% endif %}
 {% endblock %}

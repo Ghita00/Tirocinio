@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, url_for
 from sqlalchemy import func, desc
+from werkzeug.utils import redirect
 
 from GenDB import *
 from Utility import help
@@ -7,9 +8,11 @@ from Utility import help
 
 documenti = Blueprint('documenti', __name__)
 
+#TODO Aggiornamento del magazzino a seconda degli insert
+
 @documenti.route('/documentiGestionale', methods=['GET', 'POST'])
 def documentiGestionale():
-    fatturaAcq = session.query(FattureAcquisto.Id, FattureAcquisto.Data, DittaFornitrice.NomeDitta, func.sum(ContenutoAcquisto.Quantità * (Merce.PrezzoUnitario + ((Merce.IVA / 100) * Merce.PrezzoUnitario))).label('Totale')).\
+    fatturaAcq = session.query(FattureAcquisto.Status, FattureAcquisto.Id, FattureAcquisto.Data, DittaFornitrice.NomeDitta, func.sum(ContenutoAcquisto.Quantità * (Merce.PrezzoUnitario + ((Merce.IVA / 100) * Merce.PrezzoUnitario))).label('Totale')).\
         join(DittaFornitrice, DittaFornitrice.PartitaIVA == FattureAcquisto.Id_Fornitore).\
         join(ContenutoAcquisto, ContenutoAcquisto.Id_FatturaAcquisto == FattureAcquisto.Id).\
         join(Merce, Merce.Id == ContenutoAcquisto.Id_Merce).\
@@ -18,16 +21,26 @@ def documentiGestionale():
         all()
 
 
-    fattureVen = session.query(FattureVendita.Id, FattureVendita.Data, FattureVendita.Mail_Cliente, func.sum(ContenutoVenditaSemilavorati.Quantità * (Semilavorati.PrezzoUnitario + ((Semilavorati.IVA / 100) * Semilavorati.PrezzoUnitario))).label('Totale')).\
-        join(ContenutoVenditaSemilavorati, ContenutoVenditaSemilavorati.Id_FatturaVendità == FattureVendita.Id, isouter=True).\
-        join(Semilavorati, Semilavorati.Id == ContenutoVenditaSemilavorati.Id_Semilavorato, isouter=True). \
+    fattureVenSemi = session.query(FattureVendita.Status, FattureVendita.Id, FattureVendita.Data, FattureVendita.Mail_Cliente, func.sum(ContenutoVenditaSemilavorati.Quantità * (Semilavorati.PrezzoUnitario + ((Semilavorati.IVA / 100) * Semilavorati.PrezzoUnitario))).label('Totale')).\
+        join(ContenutoVenditaSemilavorati, ContenutoVenditaSemilavorati.Id_FatturaVendità == FattureVendita.Id).\
+        join(Semilavorati, Semilavorati.Id == ContenutoVenditaSemilavorati.Id_Semilavorato). \
         group_by(FattureVendita.Id, FattureVendita.Data, FattureVendita.Mail_Cliente).\
         order_by(desc(FattureVendita.Data)).\
         all()
 
+    fattureVenMerci = session.query(FattureVendita.Id, FattureVendita.Data, FattureVendita.Mail_Cliente, func.sum(
+        ContenutoVenditaMerce.Quantità * (Merce.PrezzoUnitario + ((Merce.IVA / 100) * Merce.PrezzoUnitario))).label('Totale')). \
+        join(ContenutoVenditaMerce, ContenutoVenditaMerce.Id_FatturaVendità == FattureVendita.Id). \
+        join(Merce, Merce.Id == ContenutoVenditaMerce.Id_Merce). \
+        group_by(FattureVendita.Id, FattureVendita.Data, FattureVendita.Mail_Cliente). \
+        order_by(desc(FattureVendita.Data)). \
+        all()
+
+    fattureVen = fattureVenSemi + fattureVenMerci
+
     ddt = DDT.query.order_by(desc(DDT.DataEmissione)).all()
 
-    scontriniMerce = session.query(Scontrini.Data, Scontrini.Id, func.sum(ScontriniMerce.Quantità * ((Merce.IVA / 100) * Merce.PrezzoUnitario) + Merce.PrezzoUnitario).label('Totale')).\
+    scontriniMerce = session.query(Scontrini.Data, Scontrini.Id, func.sum(ScontriniMerce.Quantità * (((Merce.IVA / 100) * Merce.PrezzoUnitario) + Merce.PrezzoUnitario)).label('Totale')).\
         join(ScontriniMerce, Scontrini.Id == ScontriniMerce.Id_Scontrino).\
         join(Merce, ScontriniMerce.Id_Merce == Merce.Id).\
         group_by(Scontrini.Data, Scontrini.Id).\
@@ -35,7 +48,7 @@ def documentiGestionale():
         all()
 
     scontriniSemi = session.query(Scontrini.Data, Scontrini.Id, func.sum(
-        ScontriniSemilavorati.Quantità * ((Semilavorati.IVA / 100) * Semilavorati.PrezzoUnitario) + Semilavorati.PrezzoUnitario).label('Totale')). \
+        ScontriniSemilavorati.Quantità * (((Semilavorati.IVA / 100) * Semilavorati.PrezzoUnitario) + Semilavorati.PrezzoUnitario)).label('Totale')). \
         join(ScontriniSemilavorati, Scontrini.Id == ScontriniSemilavorati.Id_Scontrino). \
         join(Semilavorati, ScontriniSemilavorati.Id_Semilavorato == Semilavorati.Id). \
         group_by(Scontrini.Data, Scontrini.Id).\
@@ -204,14 +217,144 @@ def docSingle(id, categoria):
             }
             prod.append(p)
 
-
-
     return render_template("gestionale/docSingle.html", doc = dati, prod = prod, id = id, categoria = categoria)
 
 @documenti.route('/addDoc', methods=['GET', 'POST'])
 def addDoc():
+    if request.method == 'POST':
+        if request.form['nascosto'] == '1':
+            tipo = request.form['Documento']
+            sottotipo = None
+            prodotti = []
+            volte = int(request.form['Quantita'])
+            if tipo == 'Fatturavendita':
+                sottotipo = request.form['TipoFattura']
+                if sottotipo == 'Merce':
+                    prodotti = Merce.query.all()
+                else:
+                    prodotti = Semilavorati.query.all()
+            if tipo == 'Scontrino':
+                sottotipo = request.form['TipoScontrino']
+                if sottotipo == 'Merce':
+                    prodotti = Merce.query.all()
+                else:
+                    prodotti = Semilavorati.query.all()
 
-    return render_template("gestionale/formDocumento.html")
+            if tipo == 'DDT':
+                volte = 1
+                prodotti = Merce.query.all()
+            if tipo == 'Fatturaacquisto':
+                prodotti = Merce.query.all()
+
+            return render_template("gestionale/formDocumento.html", volte=volte, tipo = tipo, sottotipo = sottotipo, Prod = prodotti)
+
+        if request.form['nascosto'] == '2':
+            tipo = request.form['tipo']
+            sottotipo = request.form['sottotipo']
+
+            if tipo == 'Fatturavendita':
+                if sottotipo == 'Merce':
+                    new_fat = FattureVendita(Mail_Cliente=request.form['Mail'],
+                                              NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
+                    db.session.add(new_fat)
+                    db.session.commit()
+
+                    fat = session.query(FattureVendita.Id).filter(
+                        FattureVendita.Mail_Cliente == request.form['Mail']).filter(
+                        FattureVendita.NumDocumento == request.form['NumDocumento']).first()
+                    fat = fat[0]
+
+                    for i in range(int(request.form['volte'])):
+                        id = int(request.form['Prodotto-' + str(i)])
+                        contenutoFat = ContenutoVenditaMerce(Id_FatturaVendità=fat, Id_Merce=id,
+                                                         Quantità=request.form['q-' + str(i)])
+                        db.session.add(contenutoFat)
+
+                    FattureVendita.query.filter(FattureVendita.Id == fat).update(
+                        {"Status": bool(request.form['Status'])})
+
+                    db.session.commit()
+                else:
+                    new_fat = FattureVendita(Mail_Cliente=request.form['Mail'],
+                                             NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
+                    db.session.add(new_fat)
+                    db.session.commit()
+
+                    fat = session.query(FattureVendita.Id).filter(
+                        FattureVendita.Mail_Cliente == request.form['Mail']).filter(
+                        FattureVendita.NumDocumento == request.form['NumDocumento']).first()
+                    fat = fat[0]
+
+                    for i in range(int(request.form['volte'])):
+                        id = int(request.form['Prodotto-' + str(i)])
+                        contenutoFat = ContenutoVenditaSemilavorati(Id_FatturaVendità=fat, Id_Semilavorato=id,
+                                                             Quantità=request.form['q-' + str(i)])
+                        db.session.add(contenutoFat)
+
+                    FattureVendita.query.filter(FattureVendita.Id == fat).update(
+                        {"Status": bool(request.form['Status'])})
+
+                    db.session.commit()
+            if tipo == 'Scontrino':
+                if sottotipo == 'Merce':
+                    new_sc = Scontrini(Data=request.form['Data'])
+                    db.session.add(new_sc)
+                    db.session.commit()
+
+                    sc = session.query(Scontrini.Id).filter(Scontrini.Data == request.form['Data']).order_by(desc(Scontrini.Id)).first()
+                    sc = sc[0]
+
+                    for i in range(int(request.form['volte'])):
+                        id = int(request.form['Prodotto-' + str(i)])
+                        contenutoSc = ScontriniMerce(Id_Scontrino=sc, Id_Merce=id,
+                                                         Quantità=request.form['q-' + str(i)])
+                        db.session.add(contenutoSc)
+
+                    db.session.commit()
+                else:
+                    new_sc = Scontrini(Data=request.form['Data'])
+                    db.session.add(new_sc)
+                    db.session.commit()
+
+                    sc = session.query(Scontrini.Id).filter(Scontrini.Data == request.form['Data']).order_by(
+                        desc(Scontrini.Id)).first()
+                    sc = sc[0]
+
+                    for i in range(int(request.form['volte'])):
+                        id = int(request.form['Prodotto-' + str(i)])
+                        contenutoSc = ScontriniSemilavorati(Id_Scontrino=sc, Id_Semilavorato=id,
+                                                     Quantità=request.form['q-' + str(i)])
+                        db.session.add(contenutoSc)
+
+                    db.session.commit()
+
+            if tipo == 'DDT':
+                newDDT = DDT(Id_Fornitore=request.form['PartitaIVA'], DataEmissione=request.form['Data'], Note=request.form['Note'],
+                             Importo=request.form['Importo'], Peso=request.form['Peso'], Colli=request.form['Colli'], NumDocumento=request.form['NumDocumento'])
+
+                db.session.add(newDDT)
+                db.session.commit()
+
+            if tipo == 'Fatturaacquisto':
+                new_fat = FattureAcquisto(Id_Fornitore=request.form['PartitaIVA'], NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
+                db.session.add(new_fat)
+                db.session.commit()
+
+                fat = session.query(FattureAcquisto.Id).filter(FattureAcquisto.Id_Fornitore == request.form['PartitaIVA']).filter(FattureAcquisto.NumDocumento == request.form['NumDocumento']).first()
+                fat = fat[0]
+
+                for i in range(int(request.form['volte'])):
+                    id = int(request.form['Prodotto-' + str(i)])
+                    contenutoFat = ContenutoAcquisto(Id_FatturaAcquisto = fat, Id_Merce = id, Quantità = request.form['q-'+str(i)])
+                    db.session.add(contenutoFat)
+
+                FattureAcquisto.query.filter(FattureAcquisto.Id == fat).update({"Status" : bool(request.form['Status'])})
+
+                db.session.commit()
+            return redirect(url_for("documenti.documentiGestionale"))
+
+
+    return render_template("gestionale/formDocumento.html", volte=0, tipo = None, sottotipo = None, Prod = None)
 
 @documenti.route('/bilancioGestionale')
 def bilancioGestionale():

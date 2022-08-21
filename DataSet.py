@@ -122,7 +122,7 @@ ContenutoVenditaSemilavorati = [ContenutoVenditaSemilavorati(Id_FatturaVendità=
                                 ContenutoVenditaSemilavorati(Id_FatturaVendità=1, Id_Semilavorato=2, Quantità=60),
                                 ContenutoVenditaSemilavorati(Id_FatturaVendità=1, Id_Semilavorato=3, Quantità=10)]
 
-Data = []
+Data = [Blog]
 #Data = [Persone, Dipendenti, Clienti, DittaFornitrice, Allergeni, Turni, Semilavorati, Merce, Articoli, FattureAcquisto, FattureVendita, DDT, Scontrini, ScontriniMerce, ScontriniSemilavorati, ContenutoVenditaSemilavorati, ContenutoAcquisto]
 
 for i in Data:
