@@ -56,7 +56,7 @@ def Gblog():
 
     if artic == None:
         flash("Non ci sono articoli pubblicati fin ora")
-        return render_template("gestionale/blog.html", articoli=0)
+        return render_template("gestionale/blog.html", articoli=[], autore = [])
     else:
         aut = session.query(Blog.Mail_Dipendente).order_by(Blog.Id_Articolo)
         return render_template("gestionale/blog.html", articoli = list(artic), autore = list(aut))
