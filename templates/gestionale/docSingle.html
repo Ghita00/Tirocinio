@@ -5,13 +5,15 @@
 <h1>Dettagli del documento nr. {{id}}</h1>
 
 {% if categoria == '0' %}
-    Nome: {{doc[0].Nome}} </br>
-    PartitaIVA : {{doc[0].Contatto}} </br>
-    Data: {{doc[0].Data}} </br>
-    Status : {% if doc[0].Status == True%} Pagato {% else %} Non pagato {% endif %} </br>
-
+    <div class="row">
+        <div class="col-3">Nome:</br> {{doc[0].Nome}}</div>
+        <div class="col-3">PartitaIVA:</br> {{doc[0].Contatto}}</div>
+        <div class="col-3">Data:</br> {{doc[0].Data}}</div>
+        <div class="col-3">Status:</br> {% if doc[0].Status == True%} Pagato {% else %} Non pagato {% endif %}</div>
+    </div>
+    <br>
     <h3>Prodotti</h3>
-    <table>
+    <table class="table">
         <tr>
             <th>Nome</th>
             <th>Prezzo Unitario</th>
@@ -28,13 +30,15 @@
     </table>
 {% endif %}
 {% if categoria == '1' %}
-    Nome: {{doc[0].Nome}} </br>
-    Telefono : {{doc[0].Contatto}} </br>
-    Data: {{doc[0].Data}} </br>
-    Status : {% if doc[0].Status == True%} Pagato {% else %} Non pagato {% endif %} </br>
-
+     <div class="row">
+        <div class="col-3">Contatto:</br> {{doc[0].Nome}}</div>
+        <div class="col-3">Telefono:</br> {{doc[0].Contatto}}</div>
+        <div class="col-3">Data:</br> {{doc[0].Data}}</div>
+        <div class="col-3">Status:</br> {% if doc[0].Status == True%} Pagato {% else %} Non pagato {% endif %}</div>
+    </div>
+    <br>
     <h3>Prodotti</h3>
-    <table>
+    <table class="table">
         <tr>
             <th>Nome</th>
             <th>Prezzo Unitario</th>
@@ -51,13 +55,15 @@
     </table>
 {% endif %}
 {% if categoria == '2' %}
-    Nome: {{doc[0].Nome}} </br>
-    PartitaIVA : {{doc[0].Contatto}} </br>
-    Data: {{doc[0].Data}} </br>
-    Status : {% if doc[0].Status == True%} Pagato {% else %} Non pagato {% endif %} </br>
-
-    <h3>Prodotti</h3>
-    <table>
+    <div class="row">
+        <div class="col-3">Nome:</br> {{doc[0].Nome}}</div>
+        <div class="col-3">PartitaIVA:</br> {{doc[0].Contatto}}</div>
+        <div class="col-3">Data:</br> {{doc[0].Data}}</div>
+        <div class="col-3">Status:</br> {% if doc[0].Status == True%} Pagato {% else %} Non pagato {% endif %}</div>
+    </div>
+    </br>
+    <h3>Informazioni totali</h3>
+    <table class="table">
         <tr>
             <th>Peso</th>
             <th>Importo</th>
@@ -74,10 +80,15 @@
     </table>
 {% endif %}
 {% if categoria == '3' %}
-    Data: {{doc[0].Data}} </br>
+    <div class="row">
+        <div class="col">
+            Data: {{doc[0].Data}}
+        </div>
+    </div>
+    </br>
 
-    <h3>Prodotti</h3>
-    <table>
+    <h3>Prodotti venduti</h3>
+    <table class="table">
         <tr>
             <th>Nome</th>
             <th>Prezzo Unitario</th>

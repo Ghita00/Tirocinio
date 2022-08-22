@@ -23,6 +23,7 @@
 
 <form action="{{url_for('blog.GCommenti')}}" method="post">
     <div class="row g-3">
+        <div class="col-4"></div>
         <div class="col-auto">
             <button type="submit" class="btn btn-secondary" name="mex" value="-1">Precedenti 10</button>
         </div>
@@ -30,6 +31,7 @@
         <div class="col-auto">
             <button type="submit" name="mex" value="1" class="btn btn-primary">Successivi 10</button>
         </div>
+        <div class="col-4"></div>
     </div>
 </form>
 {% endblock %}
