@@ -20,7 +20,6 @@ def produzioneGestionale():
             'Quando' : x.Data,
         })
 
-    print(events)
     return render_template("gestionale/produzioneGiornaliera.html", events = events)
 
 @produzione.route('/addProduzione', methods=['GET', 'POST'])
@@ -46,7 +45,7 @@ def aggiungiProd():
                     db.session.add(newProdGio)
                     db.session.commit()
 
-                semi_daProdurre = list(session.query(Produzione.Id_Semilavorato))
+                semi_daProdurre = list(session.query(Produzione.Id_Semilavorato).filter(Produzione.Data_Produzione == request.form['data']))
                 semi_daProdurre = [semi.Id_Semilavorato for semi in semi_daProdurre]
 
                 for i in range(0, quanti):

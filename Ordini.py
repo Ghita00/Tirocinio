@@ -13,9 +13,6 @@ def ordiniGestionale():
         join(DittaFornitrice, DittaFornitrice.PartitaIVA == FattureAcquisto.Id_Fornitore).\
         group_by(FattureAcquisto.Id, DittaFornitrice.NomeDitta, FattureAcquisto.Data).all()
 
-    print(list_emessi)
-    print(list_ricevuti)
-
     if request.method == "POST":
         lista_slider = []
         for i in range(1, 3):
@@ -45,24 +42,26 @@ def ordiniGestionale():
 @ordini.route('/ordineSingle/<id>/<categoria>', methods=['GET', 'POST'])
 #categoria 0. Ricevuto, 1. Emesso
 def ordineSingle(id, categoria):
-
     if request.method == 'POST':
         data = request.form['dataProd']
         volte = request.form['volte']
 
+        if ProduzioneGiornaliera.query.filter(ProduzioneGiornaliera.Data == data).first() is None:
+            newProdGio = ProduzioneGiornaliera(Data=data, Note="nessuna")
+            db.session.add(newProdGio)
+            db.session.commit()
+
+        semi_daProdurre = list(session.query(Produzione.Id_Semilavorato).filter(Produzione.Data_Produzione == data))
+        semi_daProdurre = [semi.Id_Semilavorato for semi in semi_daProdurre]
+
         for i in range(0, int(volte)):
-            if ProduzioneGiornaliera.query.filter(ProduzioneGiornaliera.Data == data).first() is None:
-                newProdGio = ProduzioneGiornaliera(Data=data, Note="nessuna")
-                db.session.add(newProdGio)
-                db.session.commit()
 
             prod = request.form["prod-"+str(i)]
             q = request.form["q-"+str(i)]
-            semi_daProdurre = list(session.query(Produzione.Id_Semilavorato))
-            semi_daProdurre = [semi.Id_Semilavorato for semi in semi_daProdurre]
-            if int(id) not in semi_daProdurre:
-                newProd = Produzione(Data_Produzione=data, Id_Semilavorato=prod,
-                                     Quantità=q)
+
+            if int(prod) not in semi_daProdurre:
+                newProd = Produzione(Data_Produzione=data, Id_Semilavorato=int(prod),
+                                     Quantità=int(q))
                 db.session.add(newProd)
             else:
                 Produzione.query.filter(Produzione.Data_Produzione == data). \
@@ -73,19 +72,16 @@ def ordineSingle(id, categoria):
                 {"Quantità": Semilavorati.Quantità + q})
         db.session.commit()
 
-
-
         return redirect(url_for("produzione.produzioneGestionale"))
     else:
-        ord = []
         if categoria == '1':
             if ContenutoVenditaMerce.query.filter(ContenutoVenditaMerce.Id_FatturaVendità == id).first() is not None:
-                ord = session.query(FattureVendita.Mail_Cliente, Persone.Telefono, Merce.Nome, ContenutoVenditaMerce.Quantità, FattureVendita.Data).\
+                ord = session.query(FattureVendita.Mail_Cliente, Persone.Telefono, Merce.Nome, ContenutoVenditaMerce.Quantità, FattureVendita.Data, Merce.Id).\
                     join(ContenutoVenditaMerce, ContenutoVenditaMerce.Id_FatturaVendità == FattureVendita.Id).\
                     join(Merce, ContenutoVenditaMerce.Id_Merce == Merce.Id).\
                     join(Clienti, Clienti.Mail == FattureVendita.Mail_Cliente).\
                     join(Persone, Clienti.Mail == Persone.Mail).\
-                    group_by(FattureVendita.Mail_Cliente, Persone.Telefono, Persone.Nome, Persone.Cognome, Merce.Nome, ContenutoVenditaMerce.Quantità, FattureVendita.Data).all()
+                    filter(FattureVendita.Id == id).all()
             else:
                 ord = session.query(FattureVendita.Mail_Cliente, Persone.Telefono, Semilavorati.Id,
                                     Semilavorati.Nome, ContenutoVenditaSemilavorati.Quantità, FattureVendita.Data). \
@@ -93,8 +89,7 @@ def ordineSingle(id, categoria):
                     join(Semilavorati, ContenutoVenditaSemilavorati.Id_Semilavorato == Semilavorati.Id). \
                     join(Clienti, Clienti.Mail == FattureVendita.Mail_Cliente). \
                     join(Persone, Clienti.Mail == Persone.Mail). \
-                    group_by(FattureVendita.Mail_Cliente, Persone.Telefono, Persone.Nome, Persone.Cognome, Semilavorati.Id,
-                                    Semilavorati.Nome, ContenutoVenditaSemilavorati.Quantità, FattureVendita.Data).all()
+                    filter(FattureVendita.Id == id).all()
 
             dati = []
             prod = []
@@ -111,20 +106,17 @@ def ordineSingle(id, categoria):
                 p = {
                     'Nome': ordine.Nome,
                     'Quantita': ordine.Quantità,
-                    'Id': ordine.Id
+                    'Id' : ordine.Id,
                 }
                 prod.append(p)
 
-            #print(dati)
-            #print(prod)
         else:
             ord = session.query(FattureAcquisto.Id_Fornitore, DittaFornitrice.NomeDitta,
                                     Merce.Nome, ContenutoAcquisto.Quantità, FattureAcquisto.Data). \
                     join(ContenutoAcquisto, ContenutoAcquisto.Id_FatturaAcquisto == FattureAcquisto.Id). \
                     join(Merce, ContenutoAcquisto.Id_Merce == Merce.Id). \
                     join(DittaFornitrice, DittaFornitrice.PartitaIVA == FattureAcquisto.Id_Fornitore). \
-                    group_by(FattureAcquisto.Id_Fornitore, DittaFornitrice.NomeDitta,
-                                    Merce.Nome, ContenutoAcquisto.Quantità, FattureAcquisto.Data).all()
+                    filter(FattureAcquisto.Id == id).all()
 
             dati = []
             prod = []

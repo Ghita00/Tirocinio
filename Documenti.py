@@ -268,12 +268,13 @@ def addDoc():
                         for i in range(int(request.form['volte'])):
                             id = int(request.form['Prodotto-' + str(i)])
                             quanti = session.query(Merce.Quantità).filter(Merce.Id == id).first()
-                            if quanti[0] > request.form['q-' + str(i)]:
+                            if int(quanti[0]) > int(request.form['q-' + str(i)]):
                                 contenutoFat = ContenutoVenditaMerce(Id_FatturaVendità=fat, Id_Merce=id, Quantità=request.form['q-' + str(i)])
                                 Merce.query.filter(Merce.Id == id).update({"Quantità": Merce.Quantità - request.form['q-' + str(i)]})
                                 db.session.add(contenutoFat)
                             else:
                                 flash('Non hai abbastanza prodotti in magazzino')
+                                print('Non hai abbastanza prodotti in magazzino')
 
                         FattureVendita.query.filter(FattureVendita.Id == fat).update(
                             {"Status": bool(request.form['Status'])})
@@ -282,6 +283,8 @@ def addDoc():
 
                     else:
                         flash('Esiste già una fattura a nome di questo cliente con questo numero di documento')
+                        print('Esiste già una fattura a nome di questo cliente con questo numero di documento')
+
                 else:
                     if FattureVendita.query.filter(FattureVendita.Mail_Cliente == request.form['Mail']).filter(FattureVendita.NumDocumento == request.form['NumDocumento']).first() is None:
                         new_fat = FattureVendita(Mail_Cliente=request.form['Mail'],
@@ -298,19 +301,20 @@ def addDoc():
                         for i in range(int(request.form['volte'])):
                             id = int(request.form['Prodotto-' + str(i)])
                             quanti = session.query(Semilavorati.Quantità).filter(Semilavorati.Id == id).first()
-                            if quanti > request.form['q-' + str(i)]:
+                            if int(quanti[0]) > int(request.form['q-' + str(i)]):
                                 contenutoFat = ContenutoVenditaSemilavorati(Id_FatturaVendità=fat, Id_Semilavorato=id, Quantità=request.form['q-' + str(i)])
                                 Semilavorati.query.filter(Semilavorati.Id == id).update({"Quantità": Semilavorati.Quantità - request.form['q-' + str(i)]})
                                 db.session.add(contenutoFat)
                             else:
                                 flash('Non hai abbastanza prodotti in magazzino')
-
+                                print('Non hai abbastanza prodotti in magazzino')
                         FattureVendita.query.filter(FattureVendita.Id == fat).update(
                             {"Status": bool(request.form['Status'])})
 
                         db.session.commit()
                     else:
                         flash('Esiste già una fattura a nome di questo cliente con questo numero di documento')
+                        print('Esiste già una fattura a nome di questo cliente con questo numero di documento')
 
             if tipo == 'Scontrino':
                 if sottotipo == 'Merce':
@@ -330,6 +334,7 @@ def addDoc():
                             db.session.add(contenutoSc)
                         else:
                             flash('Non hai abbastanza prodotti in magazzino')
+                            print('Non hai abbastanza prodotti in magazzino')
 
                     db.session.commit()
                 else:
@@ -350,6 +355,7 @@ def addDoc():
                             db.session.add(contenutoSc)
                         else:
                             flash('Non hai abbastanza prodotti in magazzino')
+                            print('Non hai abbastanza prodotti in magazzino')
 
                     db.session.commit()
 
@@ -379,7 +385,7 @@ def addDoc():
 
                     db.session.commit()
                 else:
-                    print('Sono qui')
+                    print('Esiste già una fattura a nome di questo fornitore con questo numero di documento')
                     flash('Esiste già una fattura a nome di questo fornitore con questo numero di documento')
 
             return redirect(url_for("documenti.documentiGestionale"))
