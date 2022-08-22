@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 from GenDB import *
 from Utility import help
 
@@ -42,73 +42,105 @@ def ordiniGestionale():
         return render_template("gestionale/ordini.html", list_ricevuti = list_ricevuti[0:10], list_emessi = list_emessi[0:10])
 
 
-@ordini.route('/ordineSingle/<id>/<categoria>')
+@ordini.route('/ordineSingle/<id>/<categoria>', methods=['GET', 'POST'])
 #categoria 0. Ricevuto, 1. Emesso
 def ordineSingle(id, categoria):
-    ord = []
-    if categoria == '1':
-        if ContenutoVenditaMerce.query.filter(ContenutoVenditaMerce.Id_FatturaVendità == id).first() is not None:
-            ord = session.query(FattureVendita.Mail_Cliente, Persone.Telefono, Merce.Nome, ContenutoVenditaMerce.Quantità, FattureVendita.Data).\
-                join(ContenutoVenditaMerce, ContenutoVenditaMerce.Id_FatturaVendità == FattureVendita.Id).\
-                join(Merce, ContenutoVenditaMerce.Id_Merce == Merce.Id).\
-                join(Clienti, Clienti.Mail == FattureVendita.Mail_Cliente).\
-                join(Persone, Clienti.Mail == Persone.Mail).\
-                group_by(FattureVendita.Mail_Cliente, Persone.Telefono, Persone.Nome, Persone.Cognome, Merce.Nome, ContenutoVenditaMerce.Quantità, FattureVendita.Data).all()
-        else:
-            ord = session.query(FattureVendita.Mail_Cliente, Persone.Telefono,
-                                Semilavorati.Nome, ContenutoVenditaSemilavorati.Quantità, FattureVendita.Data). \
-                join(ContenutoVenditaSemilavorati, ContenutoVenditaSemilavorati.Id_FatturaVendità == FattureVendita.Id). \
-                join(Semilavorati, ContenutoVenditaSemilavorati.Id_Semilavorato == Semilavorati.Id). \
-                join(Clienti, Clienti.Mail == FattureVendita.Mail_Cliente). \
-                join(Persone, Clienti.Mail == Persone.Mail). \
-                group_by(FattureVendita.Mail_Cliente, Persone.Telefono, Persone.Nome, Persone.Cognome,
-                                Semilavorati.Nome, ContenutoVenditaSemilavorati.Quantità, FattureVendita.Data).all()
 
-        dati = []
-        prod = []
+    if request.method == 'POST':
+        data = request.form['dataProd']
+        volte = request.form['volte']
 
-        for ordine in range(1):
-            d = {
-                'Telefono': ord[ordine].Telefono,
-                'Mail' : ord[ordine].Mail_Cliente,
-                'Data': ord[ordine].Data,
-            }
-            dati.append(d)
+        for i in range(0, int(volte)):
+            if ProduzioneGiornaliera.query.filter(ProduzioneGiornaliera.Data == data).first() is None:
+                newProdGio = ProduzioneGiornaliera(Data=data, Note="nessuna")
+                db.session.add(newProdGio)
+                db.session.commit()
 
-        for ordine in ord:
-            p = {
-                'Nome': ordine.Nome,
-                'Quantita': ordine.Quantità,
-            }
-            prod.append(p)
+            prod = request.form["prod-"+str(i)]
+            q = request.form["q-"+str(i)]
+            semi_daProdurre = list(session.query(Produzione.Id_Semilavorato))
+            semi_daProdurre = [semi.Id_Semilavorato for semi in semi_daProdurre]
+            if int(id) not in semi_daProdurre:
+                newProd = Produzione(Data_Produzione=data, Id_Semilavorato=prod,
+                                     Quantità=q)
+                db.session.add(newProd)
+            else:
+                Produzione.query.filter(Produzione.Data_Produzione == data). \
+                    filter(Produzione.Id_Semilavorato == prod). \
+                    update({'Quantità': Produzione.Quantità + q})
 
-        print(dati)
-        print(prod)
+            Semilavorati.query.filter(Semilavorati.Id == prod).update(
+                {"Quantità": Semilavorati.Quantità + q})
+        db.session.commit()
+
+
+
+        return redirect(url_for("produzione.produzioneGestionale"))
     else:
-        ord = session.query(FattureAcquisto.Id_Fornitore, DittaFornitrice.NomeDitta,
-                                Merce.Nome, ContenutoAcquisto.Quantità, FattureAcquisto.Data). \
-                join(ContenutoAcquisto, ContenutoAcquisto.Id_FatturaAcquisto == FattureAcquisto.Id). \
-                join(Merce, ContenutoAcquisto.Id_Merce == Merce.Id). \
-                join(DittaFornitrice, DittaFornitrice.PartitaIVA == FattureAcquisto.Id_Fornitore). \
-                group_by(FattureAcquisto.Id_Fornitore, DittaFornitrice.NomeDitta,
-                                Merce.Nome, ContenutoAcquisto.Quantità, FattureAcquisto.Data).all()
+        ord = []
+        if categoria == '1':
+            if ContenutoVenditaMerce.query.filter(ContenutoVenditaMerce.Id_FatturaVendità == id).first() is not None:
+                ord = session.query(FattureVendita.Mail_Cliente, Persone.Telefono, Merce.Nome, ContenutoVenditaMerce.Quantità, FattureVendita.Data).\
+                    join(ContenutoVenditaMerce, ContenutoVenditaMerce.Id_FatturaVendità == FattureVendita.Id).\
+                    join(Merce, ContenutoVenditaMerce.Id_Merce == Merce.Id).\
+                    join(Clienti, Clienti.Mail == FattureVendita.Mail_Cliente).\
+                    join(Persone, Clienti.Mail == Persone.Mail).\
+                    group_by(FattureVendita.Mail_Cliente, Persone.Telefono, Persone.Nome, Persone.Cognome, Merce.Nome, ContenutoVenditaMerce.Quantità, FattureVendita.Data).all()
+            else:
+                ord = session.query(FattureVendita.Mail_Cliente, Persone.Telefono, Semilavorati.Id,
+                                    Semilavorati.Nome, ContenutoVenditaSemilavorati.Quantità, FattureVendita.Data). \
+                    join(ContenutoVenditaSemilavorati, ContenutoVenditaSemilavorati.Id_FatturaVendità == FattureVendita.Id). \
+                    join(Semilavorati, ContenutoVenditaSemilavorati.Id_Semilavorato == Semilavorati.Id). \
+                    join(Clienti, Clienti.Mail == FattureVendita.Mail_Cliente). \
+                    join(Persone, Clienti.Mail == Persone.Mail). \
+                    group_by(FattureVendita.Mail_Cliente, Persone.Telefono, Persone.Nome, Persone.Cognome, Semilavorati.Id,
+                                    Semilavorati.Nome, ContenutoVenditaSemilavorati.Quantità, FattureVendita.Data).all()
 
-        dati = []
-        prod = []
+            dati = []
+            prod = []
 
-        for ordine in range(1):
-            d = {
-                'PartitaIVA': ord[ordine].Id_Fornitore,
-                'Nome': ord[ordine].NomeDitta,
-                'Data': ord[ordine].Data,
-            }
-            dati.append(d)
+            for ordine in range(1):
+                d = {
+                    'Telefono': ord[ordine].Telefono,
+                    'Mail' : ord[ordine].Mail_Cliente,
+                    'Data': ord[ordine].Data,
+                }
+                dati.append(d)
 
-        for ordine in ord:
-            p = {
-                'Nome': ordine.Nome,
-                'Quantita': ordine.Quantità,
-            }
-            prod.append(p)
+            for ordine in ord:
+                p = {
+                    'Nome': ordine.Nome,
+                    'Quantita': ordine.Quantità,
+                    'Id': ordine.Id
+                }
+                prod.append(p)
 
-    return render_template("gestionale/ordineSingle.html", id = id, categoria = categoria, dati = dati, prod = prod)
+            #print(dati)
+            #print(prod)
+        else:
+            ord = session.query(FattureAcquisto.Id_Fornitore, DittaFornitrice.NomeDitta,
+                                    Merce.Nome, ContenutoAcquisto.Quantità, FattureAcquisto.Data). \
+                    join(ContenutoAcquisto, ContenutoAcquisto.Id_FatturaAcquisto == FattureAcquisto.Id). \
+                    join(Merce, ContenutoAcquisto.Id_Merce == Merce.Id). \
+                    join(DittaFornitrice, DittaFornitrice.PartitaIVA == FattureAcquisto.Id_Fornitore). \
+                    group_by(FattureAcquisto.Id_Fornitore, DittaFornitrice.NomeDitta,
+                                    Merce.Nome, ContenutoAcquisto.Quantità, FattureAcquisto.Data).all()
+
+            dati = []
+            prod = []
+
+            for ordine in range(1):
+                d = {
+                    'PartitaIVA': ord[ordine].Id_Fornitore,
+                    'Nome': ord[ordine].NomeDitta,
+                    'Data': ord[ordine].Data,
+                }
+                dati.append(d)
+
+            for ordine in ord:
+                p = {
+                    'Nome': ordine.Nome,
+                    'Quantita': ordine.Quantità,
+                }
+                prod.append(p)
+        return render_template("gestionale/ordineSingle.html", id = id, categoria = categoria, dati = dati, prod = prod)
