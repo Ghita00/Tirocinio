@@ -14,15 +14,27 @@
     <tr>
       <th scope="col" class="text-center">Voce</th>
         <th scope="col" class="text-center">Descrizione</th>
-        <th scope="col" class="text-center">Importo</th>
+        <th scope="col" class="text-center">Importo Netto</th>
+        <th scope="col" class="text-center">Importo Lordo</th>
     </tr>
-    {% for i in range(0, 4)%}
     <tr>
       <th scope="row" class="text-start text-center">Ecommerce</th>
       <td class="text-start text-center">Guadagni lordi provenenti dal sito</td>
       <td class="text-start text-center">27000</td>
+      <td class="text-start text-center">27000</td>
     </tr>
-    {% endfor %}
+    <tr>
+      <th scope="row" class="text-start text-center">In loco</th>
+      <td class="text-start text-center">Guadagni lordi provenenti dalla pasticceria</td>
+      <td class="text-start text-center">{{scontriniNetto}}</td>
+      <td class="text-start text-center">{{scontriniLordo}}</td>
+    </tr>
+    <tr>
+      <th scope="row" class="text-start text-center">Extra</th>
+      <td class="text-start text-center">Guadagni lordi provenenti da catering o altro</td>
+      <td class="text-start text-center">27000</td>
+      <td class="text-start text-center">27000</td>
+    </tr>
     <tr>
         <th scope="row" class="text-start text-center"></th>
         <td class="text-start text-center"></td>
@@ -37,13 +49,17 @@
         <th scope="col" class="text-center">Descrizione</th>
         <th scope="col" class="text-center">Importo</th>
     </tr>
-    {% for i in range(0, 4)%}
     <tr>
       <th scope="row" class="text-start text-center">Fornitori</th>
       <td class="text-start text-center">Spese legate ai fornitori</td>
       <td class="text-start text-center">-27000</td>
     </tr>
-    {% endfor %}
+    <tr>
+      <th scope="row" class="text-start text-center">Personale</th>
+      <td class="text-start text-center">Spese legate al dipendente</td>
+      <td class="text-start text-center">-27000</td>
+    </tr>
+
     <tr>
         <th scope="row" class="text-start text-center"></th>
         <td class="text-center"></td>

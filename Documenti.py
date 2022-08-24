@@ -5,10 +5,7 @@ from werkzeug.utils import redirect
 from GenDB import *
 from Utility import help
 
-
 documenti = Blueprint('documenti', __name__)
-
-#TODO Aggiornamento del magazzino a seconda degli insert e anche in ecommerce!
 
 @documenti.route('/documentiGestionale', methods=['GET', 'POST'])
 def documentiGestionale():
@@ -394,7 +391,19 @@ def addDoc():
 
 @documenti.route('/bilancioGestionale')
 def bilancioGestionale():
-    return render_template("gestionale/bilancio.html")
+    incassi_scontriniMerceNetto = session.query(func.sum(ScontriniMerce.Quantità * Merce.PrezzoUnitario).label('totale')).\
+        join(Merce, Merce.Id == ScontriniMerce.Id_Merce).all()
+    incassi_scontriniSemiNetto = session.query(func.sum(ScontriniSemilavorati.Quantità * Semilavorati.PrezzoUnitario).label('totale')). \
+        join(Semilavorati, Semilavorati.Id == ScontriniSemilavorati.Id_Semilavorato).all()
+    incasso_ScontriniNetto = int(incassi_scontriniMerceNetto[0][0]) + int(incassi_scontriniSemiNetto[0][0])
+
+    incassi_scontriniMerceLordo = session.query(func.sum(ScontriniMerce.Quantità * (((Merce.PrezzoUnitario * Merce.IVA)/100) + Merce.PrezzoUnitario).label('totale'))).\
+        join(Merce, Merce.Id == ScontriniMerce.Id_Merce).all()
+    incassi_scontriniSemiLordo = session.query(func.sum(ScontriniSemilavorati.Quantità * (((Semilavorati.PrezzoUnitario * Semilavorati.IVA)/100) + Semilavorati.PrezzoUnitario).label('totale'))). \
+        join(Semilavorati, Semilavorati.Id == ScontriniSemilavorati.Id_Semilavorato).all()
+    incasso_ScontriniLordo = int(incassi_scontriniMerceLordo[0][0]) + int(incassi_scontriniSemiLordo[0][0])
+
+    return render_template("gestionale/bilancio.html", scontriniNetto = incasso_ScontriniNetto, scontriniLordo = incasso_ScontriniLordo)
 
 @documenti.route('/bilancioCosti')
 def bilancioCosti():
