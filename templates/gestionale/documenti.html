@@ -3,6 +3,9 @@
 {% block documenti %}
 <h2>Documenti</h2>
 <a href="{{url_for('documenti.addDoc')}}" class="btn btn-primary">Inserisci nuovo documento ricevuto</a>
+{% if stip %}
+<a href="{{url_for('personale.stipendi')}}" class="btn btn-primary">Emmissione stipendi</a>
+{% endif %}
 <br>
 <br>
 <div class="container">

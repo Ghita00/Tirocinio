@@ -20,8 +20,8 @@
     <tr>
       <th scope="row" class="text-start text-center">Ecommerce</th>
       <td class="text-start text-center">Guadagni lordi provenenti dal sito</td>
-      <td class="text-start text-center">27000</td>
-      <td class="text-start text-center">27000</td>
+      <td class="text-start text-center">{{EcommerceNetto}}</td>
+      <td class="text-start text-center">{{EcommerceLordo}}</td>
     </tr>
     <tr>
       <th scope="row" class="text-start text-center">In loco</th>
@@ -32,13 +32,14 @@
     <tr>
       <th scope="row" class="text-start text-center">Extra</th>
       <td class="text-start text-center">Guadagni lordi provenenti da catering o altro</td>
-      <td class="text-start text-center">27000</td>
-      <td class="text-start text-center">27000</td>
+      <td class="text-start text-center">{{ExtraNetto}}</td>
+      <td class="text-start text-center">{{ExtraLordo}}</td>
     </tr>
     <tr>
         <th scope="row" class="text-start text-center"></th>
         <td class="text-start text-center"></td>
-        <th class="text-start text-center">Totale:</br> 5000000</th>
+        <th class="text-start text-center">TotaleNetto:</br> {{EcommerceNetto + scontriniNetto + ExtraNetto}}</th>
+        <th class="text-start text-center">TotaleLordo:</br> {{EcommerceLordo + scontriniLordo + ExtraLordo}}</th>
     </tr>
 </table>
 <br>
@@ -52,18 +53,18 @@
     <tr>
       <th scope="row" class="text-start text-center">Fornitori</th>
       <td class="text-start text-center">Spese legate ai fornitori</td>
-      <td class="text-start text-center">-27000</td>
+      <td class="text-start text-center">{{CostiFornitori}}</td>
     </tr>
     <tr>
       <th scope="row" class="text-start text-center">Personale</th>
       <td class="text-start text-center">Spese legate al dipendente</td>
-      <td class="text-start text-center">-27000</td>
+      <td class="text-start text-center">{{CostiPersonale}}</td>
     </tr>
 
     <tr>
         <th scope="row" class="text-start text-center"></th>
         <td class="text-center"></td>
-        <th class="text-center">Totale:</br> -5000000</th>
+        <th class="text-center">Totale:</br> -{{CostiFornitori + CostiPersonale}}</th>
     </tr>
 </table>
 

@@ -1,5 +1,6 @@
 from datetime import date
 from datetime import datetime
+
 from werkzeug.utils import redirect
 from flask import Blueprint, render_template, url_for, request, flash
 from flask_wtf import FlaskForm
@@ -11,6 +12,7 @@ from GenDB import *
 
 personale = Blueprint('personale', __name__)
 
+#TODO registrazione stipendi
 
 class RegistrazioneDipendente(FlaskForm):
     nome = StringField(validators=[InputRequired()], render_kw={"placeholder": "Nome"})
@@ -110,7 +112,8 @@ def addDipendenteTurno():
 
 @personale.route('/turni/<id>')
 def tabellaTurni(id):
-    turni = list(session.query(Turni.Nome, Turni.CompensoOrario, Turni.OraInizioTurno, Turni.OraFineTurno, PersonaleTurni.OraInizio, PersonaleTurni.OraFine).join(PersonaleTurni).filter(PersonaleTurni.Mail_Dipendente == id).filter(PersonaleTurni.Id_Turno == Turni.Id).order_by(PersonaleTurni.Id_Turno))
+    turni = list(session.query(Turni.Nome, Turni.CompensoOrario, Turni.OraInizioTurno, Turni.OraFineTurno, PersonaleTurni.OraInizio, PersonaleTurni.OraFine).
+                 join(PersonaleTurni).filter(PersonaleTurni.Mail_Dipendente == id).filter(PersonaleTurni.Id_Turno == Turni.Id).order_by(PersonaleTurni.Id_Turno))
     dip = Persone.query.filter(Persone.Mail == id).first()
 
     differenze = []
@@ -139,8 +142,57 @@ def tabellaTurni(id):
     if len(turni) > 0:
         stipendio = (tot * turni[0].CompensoOrario) + (totStra * (turni[0].CompensoOrario + 1.5))
     else:
-        stipendio =0
+        stipendio = 0
+
     data = str(datetime.now().month) + "/" + str(datetime.now().year)
 
     return render_template("gestionale/turniSingle.html", Dip=dip, meseACT=data, Turni = turni, Differenze = differenze, TotOre=tot, TotOreStra=totStra, Stip=round(stipendio, 2))
 
+@personale.route('/stipendi')
+def stipendi():
+    print('sono al 26')
+    dipendenti = Dipendenti.query.all()
+
+    for dip in dipendenti:
+        turni = list(session.query(Turni.Nome, Turni.CompensoOrario, Turni.OraInizioTurno, Turni.OraFineTurno,
+                                   PersonaleTurni.OraInizio, PersonaleTurni.OraFine).
+                     join(PersonaleTurni).filter(PersonaleTurni.Mail_Dipendente == dip.Mail).filter(
+            PersonaleTurni.Id_Turno == Turni.Id).order_by(PersonaleTurni.Id_Turno))
+        dip = Persone.query.filter(Persone.Mail == dip.Mail).first()
+
+        differenze = []
+
+        for x in turni:
+            dateTimeA = datetime.combine(date.today(), x.OraInizio)
+            dateTimeB = datetime.combine(date.today(), x.OraFine)
+            # Get the difference between datetimes (as timedelta)
+            dateTimeDifferenceAll = dateTimeB - dateTimeA
+
+            dateTimeA = datetime.combine(date.today(), x.OraInizioTurno)
+            dateTimeB = datetime.combine(date.today(), x.OraFineTurno)
+            dateTimeDifference = dateTimeB - dateTimeA
+
+            y = (dateTimeDifference.total_seconds() / 3600,
+                 (dateTimeDifferenceAll - dateTimeDifference).total_seconds() / 3600)
+
+            differenze.append(y)
+
+        tot = 0
+        totStra = 0
+        importo = 0
+
+        for x in differenze:
+            tot += x[0]
+            totStra += x[1]
+
+        if len(turni) > 0:
+            importo = (tot * turni[0].CompensoOrario) + (totStra * (turni[0].CompensoOrario + 1.5))
+        else:
+            importo = 0
+
+        newStip = Stipendi(Mail_Dipedendente=dip.Mail, DataEmissione=date.today(), ImportoNetto=importo)
+        db.session.add(newStip)
+
+
+    db.session.commit()
+    return redirect(url_for("documenti.documentiGestionale"))

@@ -1,3 +1,6 @@
+from datetime import date
+from datetime import datetime
+
 from flask import Blueprint, render_template, request, url_for, flash
 from sqlalchemy import func, desc
 from werkzeug.utils import redirect
@@ -54,6 +57,15 @@ def documentiGestionale():
 
     scontrini = scontriniMerce + scontriniSemi
 
+    stipendio = True
+
+    if datetime.now().day == 26:
+        if Stipendi.query.filter(Stipendi.DataEmissione == date.today()).first() is not None:
+            stipendio = False
+    else:
+        stipendio = False
+
+
     if request.method == "POST":
         lista_slider = []
         for i in range(3,7):
@@ -83,9 +95,10 @@ def documentiGestionale():
             lista_slider[3][1] = help.endSlied(6)
             lista_slider[3][0] = lista_slider[3][1] - 10
 
-        return render_template("gestionale/documenti.html", FAcquisto = fatturaAcq[lista_slider[0][0]:lista_slider[0][1]], FVendita = fattureVen[lista_slider[1][0]:lista_slider[1][1]], listDDT = ddt[lista_slider[2][0]:lista_slider[2][1]], listScontrini = scontrini[lista_slider[3][0]:lista_slider[3][1]])
+        return render_template("gestionale/documenti.html", FAcquisto = fatturaAcq[lista_slider[0][0]:lista_slider[0][1]], FVendita = fattureVen[lista_slider[1][0]:lista_slider[1][1]],
+                               listDDT = ddt[lista_slider[2][0]:lista_slider[2][1]], listScontrini = scontrini[lista_slider[3][0]:lista_slider[3][1]], stip = stipendio)
     else:
-        return render_template("gestionale/documenti.html", FAcquisto = fatturaAcq[0:10], FVendita = fattureVen[0:10], listDDT = ddt[0:10], listScontrini = scontrini[0:10])
+        return render_template("gestionale/documenti.html", FAcquisto = fatturaAcq[0:10], FVendita = fattureVen[0:10], listDDT = ddt[0:10], listScontrini = scontrini[0:10], stip = stipendio)
 
 @documenti.route('/docSingle/<id>/<categoria>')
 #categoria 0. fatture di acquisto, 1. fatture di vendita, 2. ddt, 3. scontrini
@@ -403,7 +416,21 @@ def bilancioGestionale():
         join(Semilavorati, Semilavorati.Id == ScontriniSemilavorati.Id_Semilavorato).all()
     incasso_ScontriniLordo = int(incassi_scontriniMerceLordo[0][0]) + int(incassi_scontriniSemiLordo[0][0])
 
-    return render_template("gestionale/bilancio.html", scontriniNetto = incasso_ScontriniNetto, scontriniLordo = incasso_ScontriniLordo)
+    incasso_EcommerceNetto = []
+
+    incasso_EcommerceLordo = []
+
+    incasso_ExtraNetto = []
+
+    incasso_ExtraLordo = []
+
+    costiFornitori = session.query(func.sum(ContenutoAcquisto.Quantità * Merce.PrezzoUnitario).label('totale')).\
+        join(Merce, Merce.Id == ContenutoAcquisto.Id_Merce).all()
+
+    costiPersonale = session.query(func.sum(Stipendi.ImportoNetto)).all()
+
+    return render_template("gestionale/bilancio.html", scontriniNetto = incasso_ScontriniNetto, scontriniLordo = incasso_ScontriniLordo,
+                           EcommerceNetto = 0, EcommerceLordo=0, ExtraNetto=0, ExtraLordo=0, CostiFornitori=int(costiFornitori[0][0]), CostiPersonale=int(costiPersonale[0][0]))
 
 @documenti.route('/bilancioCosti')
 def bilancioCosti():

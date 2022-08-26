@@ -4,10 +4,9 @@ from sqlalchemy import func
 from werkzeug.utils import redirect
 from GenDB import *
 from Utility import Auxcarrello, pages
+from datetime import date
 
 ecommerce = Blueprint('ecommerce', __name__)
-
-#TODO aggiornamento magazzino al checkout del carello
 
 @ecommerce.route('/shop', methods=['GET', 'POST'])
 def shop():
@@ -105,6 +104,26 @@ def checkout():
         utente = ''
 
     if Carrello.query.count() > 0:
+        Cart = session.query(Semilavorati.Id, Carrello.QuantitàCarrello).\
+            join(Semilavorati, Semilavorati.Id == Carrello.Id_Semilavorato).\
+            filter(Carrello.Mail_Cliente == current_user.Mail).all()
+
+        #emmissione fattura di vendita
+        num = FattureVendita.query.count()
+        newFat = FattureVendita(Mail_Cliente=current_user.Mail, NumDocumento=num+1, Data=date.today())
+        db.session.add(newFat)
+        db.session.commit()
+
+        id = session.query(FattureVendita.Id).filter(FattureVendita.Mail_Cliente == current_user.Mail).filter(FattureVendita.Data == date.today()).first()
+
+        for prod in Cart:
+            newCont = ContenutoVenditaSemilavorati(Id_FatturaVendità=id[0], Id_Semilavorato=prod[0], Quantità=prod[1])
+            db.session.add(newCont)
+
+            Semilavorati.query.filter(Semilavorati.Id == prod[0]).update({'Quantità': Semilavorati.Quantità - prod[1]})
+
+        db.session.commit()
+
         delete_cart = Carrello.query.filter(Carrello.Mail_Cliente == current_user.Mail)
         delete_cart.delete()
 
@@ -112,8 +131,6 @@ def checkout():
 
     Auxcarrello.totale = 0
     Auxcarrello.quantità = 0
-
-    print('esplodo')
 
     flash("Pagamento avvenuto con successo")
 
