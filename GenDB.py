@@ -379,17 +379,19 @@ class FattureVendita(db.Model):
     NumDocumento = db.Column(db.Integer(), nullable=False)
     Data = db.Column(db.Date(), nullable=False)
     Status = db.Column(db.Boolean())
+    Categoria = db.Column(db.String())
 
     NotaVariazioneEmesse = relationship("NoteVariazioneEmesse", back_populates = "FatturaVendita")
 
     Merce = relationship("ContenutoVenditaMerce", back_populates='FatturaVendita', cascade="all, delete-orphan")
     Semilavorato = relationship("ContenutoVenditaSemilavorati", back_populates='FatturaVendita',  cascade="all, delete-orphan")
 
-    def __init__(self, Mail_Cliente, NumDocumento, Data):
+    def __init__(self, Mail_Cliente, NumDocumento, Data, Categoria):
         self.Mail_Cliente = Mail_Cliente
         self.NumDocumento = NumDocumento
         self.Data = Data
         self.Status = False
+        self.Categoria = Categoria
 
     def __repr__(self):
         return f"<FattureVendita {self.Id}>"

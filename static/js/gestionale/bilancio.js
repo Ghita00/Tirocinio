@@ -1,11 +1,14 @@
 const ctx = document.getElementById('myChart').getContext('2d');
+let ricavi = document.getElementById('ricavi').innerHTML;
+let costi = document.getElementById('costi').innerHTML;
+
 const myChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ['Red', 'Green'],
+        labels: ['Costi', 'Ricavi'],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19],
+            data: [costi, ricavi],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(75, 192, 192, 0.2)',

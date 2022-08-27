@@ -59,7 +59,7 @@ def documentiGestionale():
 
     stipendio = True
 
-    if datetime.now().day == 26:
+    if datetime.now().day == 27:
         if Stipendi.query.filter(Stipendi.DataEmissione == date.today()).first() is not None:
             stipendio = False
     else:
@@ -264,8 +264,7 @@ def addDoc():
             if tipo == 'Fatturavendita':
                 if sottotipo == 'Merce':
                     if FattureVendita.query.filter(FattureVendita.Mail_Cliente == request.form['Mail']).filter(FattureVendita.NumDocumento == request.form['NumDocumento']).first() is None:
-                        new_fat = FattureVendita(Mail_Cliente=request.form['Mail'],
-                                                  NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
+                        new_fat = FattureVendita(Mail_Cliente=request.form['Mail'], NumDocumento=request.form['NumDocumento'], Data=request.form['Data'], Categoria=request.form['Categoria'])
                         db.session.add(new_fat)
                         db.session.commit()
 
@@ -297,8 +296,7 @@ def addDoc():
 
                 else:
                     if FattureVendita.query.filter(FattureVendita.Mail_Cliente == request.form['Mail']).filter(FattureVendita.NumDocumento == request.form['NumDocumento']).first() is None:
-                        new_fat = FattureVendita(Mail_Cliente=request.form['Mail'],
-                                                 NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
+                        new_fat = FattureVendita(Mail_Cliente=request.form['Mail'], NumDocumento=request.form['NumDocumento'], Data=request.form['Data'], Categoria=request.form['Categoria'])
                         db.session.add(new_fat)
                         db.session.commit()
 
@@ -416,13 +414,25 @@ def bilancioGestionale():
         join(Semilavorati, Semilavorati.Id == ScontriniSemilavorati.Id_Semilavorato).all()
     incasso_ScontriniLordo = int(incassi_scontriniMerceLordo[0][0]) + int(incassi_scontriniSemiLordo[0][0])
 
-    incasso_EcommerceNetto = []
+    incasso_EcommerceNetto = session.query(func.sum(ContenutoVenditaSemilavorati.Quantità * Semilavorati.PrezzoUnitario).label('totale')).\
+        join(FattureVendita, ContenutoVenditaSemilavorati.Id_FatturaVendità == FattureVendita.Id).\
+        join(Semilavorati, ContenutoVenditaSemilavorati.Id_Semilavorato == Semilavorati.Id).\
+        filter(FattureVendita.Categoria == 'Ecommerce').all()
 
-    incasso_EcommerceLordo = []
+    incasso_EcommerceLordo = session.query(func.sum(ContenutoVenditaSemilavorati.Quantità * (((Semilavorati.PrezzoUnitario * Semilavorati.IVA)/100) + Semilavorati.PrezzoUnitario)).label('totale')).\
+        join(FattureVendita, ContenutoVenditaSemilavorati.Id_FatturaVendità == FattureVendita.Id).\
+        join(Semilavorati, ContenutoVenditaSemilavorati.Id_Semilavorato == Semilavorati.Id).\
+        filter(FattureVendita.Categoria == 'Ecommerce').all()
 
-    incasso_ExtraNetto = []
+    incasso_ExtraNetto = session.query(func.sum(ContenutoVenditaSemilavorati.Quantità * Semilavorati.PrezzoUnitario).label('totale')).\
+        join(FattureVendita, ContenutoVenditaSemilavorati.Id_FatturaVendità == FattureVendita.Id).\
+        join(Semilavorati, ContenutoVenditaSemilavorati.Id_Semilavorato == Semilavorati.Id).\
+        filter(FattureVendita.Categoria == 'Extra').all()
 
-    incasso_ExtraLordo = []
+    incasso_ExtraLordo = session.query(func.sum(ContenutoVenditaSemilavorati.Quantità * (((Semilavorati.PrezzoUnitario * Semilavorati.IVA)/100) + Semilavorati.PrezzoUnitario)).label('totale')).\
+        join(FattureVendita, ContenutoVenditaSemilavorati.Id_FatturaVendità == FattureVendita.Id).\
+        join(Semilavorati, ContenutoVenditaSemilavorati.Id_Semilavorato == Semilavorati.Id).\
+        filter(FattureVendita.Categoria == 'Extra').all()
 
     costiFornitori = session.query(func.sum(ContenutoAcquisto.Quantità * Merce.PrezzoUnitario).label('totale')).\
         join(Merce, Merce.Id == ContenutoAcquisto.Id_Merce).all()
@@ -430,7 +440,8 @@ def bilancioGestionale():
     costiPersonale = session.query(func.sum(Stipendi.ImportoNetto)).all()
 
     return render_template("gestionale/bilancio.html", scontriniNetto = incasso_ScontriniNetto, scontriniLordo = incasso_ScontriniLordo,
-                           EcommerceNetto = 0, EcommerceLordo=0, ExtraNetto=0, ExtraLordo=0, CostiFornitori=int(costiFornitori[0][0]), CostiPersonale=int(costiPersonale[0][0]))
+                           EcommerceNetto = int(incasso_EcommerceNetto[0][0]), EcommerceLordo=int(incasso_EcommerceLordo[0][0]), ExtraNetto=int(incasso_ExtraNetto[0][0]),
+                           ExtraLordo=int(incasso_ExtraLordo[0][0]), CostiFornitori=int(costiFornitori[0][0]), CostiPersonale=int(costiPersonale[0][0]))
 
 @documenti.route('/bilancioCosti')
 def bilancioCosti():

@@ -75,7 +75,7 @@ WishList = [WishList(Mail_Cliente='rominadanci@gmail.com', Id_Semilavorato=1),
 
 FattureAcquisto = [FattureAcquisto(Id_Fornitore='86334519757', NumDocumento=1, Data='11-07-2022')]
 
-FattureVendita = [FattureVendita(Mail_Cliente='prova@gmail.com', NumDocumento=1,Data='11-01-2022')]
+FattureVendita = [FattureVendita(Mail_Cliente='prova@gmail.com', NumDocumento=1,Data='11-01-2022', Categoria='Ecommerce')]
 
 DDT = [DDT(Id_Fornitore='86334519757', NumDocumento=1, DataEmissione='11-01-2022', Note='Urgenza', Importo=50, Peso=10, Colli=7),
        DDT(Id_Fornitore='86334519757', NumDocumento=2, DataEmissione='11-03-2022', Note='Fragile', Importo=100, Peso=50, Colli=8),
@@ -121,6 +121,8 @@ ContenutoAcquisto = [ContenutoAcquisto(Id_FatturaAcquisto=1, Id_Merce=1, Quantit
 ContenutoVenditaSemilavorati = [ContenutoVenditaSemilavorati(Id_FatturaVendità=1, Id_Semilavorato=1, Quantità=50),
                                 ContenutoVenditaSemilavorati(Id_FatturaVendità=1, Id_Semilavorato=2, Quantità=60),
                                 ContenutoVenditaSemilavorati(Id_FatturaVendità=1, Id_Semilavorato=3, Quantità=10)]
+
+#TODO aggiungi stipendi
 
 
 Data = []

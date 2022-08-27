@@ -38,7 +38,7 @@
     <tr>
         <th scope="row" class="text-start text-center"></th>
         <td class="text-start text-center"></td>
-        <th class="text-start text-center">TotaleNetto:</br> {{EcommerceNetto + scontriniNetto + ExtraNetto}}</th>
+        <th class="text-start text-center">TotaleNetto:</br> <div id="ricavi">{{EcommerceNetto + scontriniNetto + ExtraNetto}}</div></th>
         <th class="text-start text-center">TotaleLordo:</br> {{EcommerceLordo + scontriniLordo + ExtraLordo}}</th>
     </tr>
 </table>
@@ -64,7 +64,7 @@
     <tr>
         <th scope="row" class="text-start text-center"></th>
         <td class="text-center"></td>
-        <th class="text-center">Totale:</br> -{{CostiFornitori + CostiPersonale}}</th>
+        <th class="text-center">Totale:</br> -<div id="costi">{{CostiFornitori + CostiPersonale}}</div></th>
     </tr>
 </table>
 
