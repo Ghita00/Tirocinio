@@ -38,7 +38,7 @@ class newRecipe(FlaskForm):
 def ricettarioGestionale():
     recipes = session.query(Ingredienti.Id_Semilavorato).group_by(Ingredienti.Id_Semilavorato).count()
 
-    if recipes == None:
+    if recipes == 0:
         flash("Non hai ricette.")
         return render_template("gestionale/ricettario.html", len_ricette=0)
     else:

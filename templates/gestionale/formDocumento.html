@@ -1,6 +1,17 @@
 {% extends 'gestionale/base.html' %}
 
 {% block formdocumenti %}
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="center">
+        {% for message in messages %}
+          <h2 class="text-center">{{ message }}</h2>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
     <h2>Aggiungi nuovo documento</h2>
     {% from "sito/_formhelpers.html" import render_field %}
         <form method="POST" action="">

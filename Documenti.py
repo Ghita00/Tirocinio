@@ -58,13 +58,10 @@ def documentiGestionale():
     scontrini = scontriniMerce + scontriniSemi
 
     stipendio = True
-
-    if datetime.now().day == 27:
-        if Stipendi.query.filter(Stipendi.DataEmissione == date.today()).first() is not None:
-            stipendio = False
+    if datetime.now().day == 28 and Stipendi.query.filter(Stipendi.DataEmissione == date.today()).first() is None:
+        stipendio = True
     else:
         stipendio = False
-
 
     if request.method == "POST":
         lista_slider = []

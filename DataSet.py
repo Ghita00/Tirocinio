@@ -125,10 +125,10 @@ ContenutoVenditaSemilavorati = [ContenutoVenditaSemilavorati(Id_FatturaVendità=
 #TODO aggiungi stipendi
 
 
-Data = []
-#Data = [Persone, Dipendenti, Clienti, DittaFornitrice, Allergeni, Turni, Semilavorati, Merce, Blog
-# Articoli, FattureAcquisto, FattureVendita, DDT, Scontrini, ScontriniMerce, ScontriniSemilavorati,
-# ContenutoVenditaSemilavorati, ContenutoAcquisto]
+
+#Data = [Persone, Dipendenti, Clienti, DittaFornitrice, Allergeni, Turni, Semilavorati, Merce, Articoli]
+Data = [Blog, FattureAcquisto, FattureVendita, DDT, Scontrini, ScontriniMerce, ScontriniSemilavorati,
+ContenutoVenditaSemilavorati, ContenutoAcquisto]
 
 
 for i in Data:

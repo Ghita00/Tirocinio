@@ -54,7 +54,7 @@ def blogDetailsRoute(id):
 def Gblog():
     artic = Articoli.query.all()
 
-    if artic == None:
+    if artic == []:
         flash("Non ci sono articoli pubblicati fin ora")
         return render_template("gestionale/blog.html", articoli=[], autore = [])
     else:
@@ -81,6 +81,8 @@ def addArticolo():
 @blog.route('/Messaggi', methods=['GET', 'POST'])
 def messaggi():
     mes = list(Messaggi.query.all())
+    if mes == []:
+        flash('Non ci sono messaggi')
     if request.method == "POST":
         help.aggiorna(0, request.form["mex"])
         end = help.endSlied(0)
@@ -96,11 +98,11 @@ def dropArticolo(id):
     artic.delete()
     db.session.commit()
 
-    flash('Articolo cancellato con successo')
-
     return redirect(url_for("blog.Gblog"))
 
 @blog.route('/gCommenti')
 def GCommenti():
     commenti = Commenti.query.all()
+    if commenti == []:
+        flash('Non hai abbastanza prodotti in magazzino')
     return render_template("gestionale/CommentiBlog.html", commenti = commenti)
