@@ -194,7 +194,7 @@ class Articoli(db.Model):
     __tablename__ = 'articoli'
 
     Id = db.Column(db.Integer(), primary_key=True)
-    Titolo = db.Column(db.String(60))
+    Titolo = db.Column(db.String(60), unique=True)
     Contenuto = db.Column(db.String(500))
     DataPubblicazione = db.Column(db.Date())
     Categoria = db.Column(db.String())
@@ -215,7 +215,7 @@ class Turni(db.Model):
     __tablename__ = 'turni'
 
     Id = db.Column(db.Integer(), primary_key=True)
-    Nome = db.Column(db.String(60), nullable=False)
+    Nome = db.Column(db.String(60), nullable=False, unique=True)
     OraInizioTurno = db.Column(db.Time(), nullable=False)
     OraFineTurno = db.Column(db.Time(), nullable=False)
     CompensoOrario = db.Column(db.Float(), nullable=False)
@@ -306,7 +306,7 @@ class Merce(db.Model):
     __tablename__ = 'merce'
 
     Id = db.Column(db.Integer(), primary_key=True)
-    Nome = db.Column(db.String(60), nullable=False)
+    Nome = db.Column(db.String(60), nullable=False, unique=True)
     Quantità = db.Column(db.Integer())
     PrezzoUnitario = db.Column(db.Float())
     IVA = db.Column(db.Float())
