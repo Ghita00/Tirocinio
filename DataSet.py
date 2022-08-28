@@ -456,6 +456,7 @@ ImmaginiMerce = [ImmaginiMerce(Id_Merce='34', Id_Img='1'),
 #Data = [Dipendenti, Clienti, Commenti, Messaggi, PersonaleTurni, Stipendi, Merce, Ingredienti, Produzione, Blog, FattureAcquisto,
 #        ContenutoAcquisto, FattureVendita, ContenutoVenditaSemilavorati, ScontriniMerce, ScontriniSemilavorati, ImmaginiSemilavorati, ImmaginiMerce]
 
+
 for i in Data:
     session.add_all(i)
 

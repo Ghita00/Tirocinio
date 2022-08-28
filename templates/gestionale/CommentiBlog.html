@@ -2,7 +2,15 @@
 
 {% block commenti %}
 <h2>Commenti al Blog</h2>
-<table class="table">
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="center">
+    {% for message in messages %}
+      <h2 class="text-center">{{ message }}</h2>
+    {% endfor %}
+    </div>
+  {% esle %}
+    <table class="table">
   <thead>
     <tr>
       <th scope="col">Id</th>
@@ -34,4 +42,7 @@
         <div class="col-4"></div>
     </div>
 </form>
+  {% endif %}
+{% endwith %}
+
 {% endblock %}

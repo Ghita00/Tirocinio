@@ -58,13 +58,10 @@ def documentiGestionale():
     scontrini = scontriniMerce + scontriniSemi
 
     stipendio = True
-
-    if datetime.now().day == 27:
-        if Stipendi.query.filter(Stipendi.DataEmissione == date.today()).first() is not None:
-            stipendio = False
+    if datetime.now().day == 28 and Stipendi.query.filter(Stipendi.DataEmissione == date.today()).first() is None:
+        stipendio = True
     else:
         stipendio = False
-
 
     if request.method == "POST":
         lista_slider = []
@@ -438,6 +435,39 @@ def bilancioGestionale():
         join(Merce, Merce.Id == ContenutoAcquisto.Id_Merce).all()
 
     costiPersonale = session.query(func.sum(Stipendi.ImportoNetto)).all()
+
+
+
+    if incasso_ExtraNetto[0][0] == None:
+        print(1)
+        incasso_ExtraNetto = [(0,)]
+    if incasso_ExtraLordo[0][0] == None:
+        print(2)
+        incasso_ExtraLordo = [(0,)]
+    if incasso_EcommerceLordo[0][0] == None:
+        print(3)
+        incasso_EcommerceLordo = [(0,)]
+    if incasso_EcommerceNetto[0][0] == None:
+        print(5)
+        incasso_EcommerceNetto = [(0,)]
+    if incassi_scontriniMerceLordo[0][0] == None:
+        print(6)
+        incassi_scontriniMerceLordo = [(0,)]
+    if incassi_scontriniMerceNetto[0][0] == None:
+        print(7)
+        incassi_scontriniMerceNetto = [(0,)]
+    if incasso_ScontriniNetto == None: ###
+        print(8)
+        incasso_ScontriniNetto = 0
+    if incasso_ScontriniLordo == None: ###
+        print(9)
+        incassi_scontriniMerceLordo = 0
+    if incassi_scontriniSemiLordo[0][0] == None:
+        print(10)
+        incassi_scontriniMerceLordo = [(0,)]
+    if incassi_scontriniSemiNetto[0][0] == None:
+        print(11)
+        incassi_scontriniMerceNetto = [(0,)]
 
     return render_template("gestionale/bilancio.html", scontriniNetto = incasso_ScontriniNetto, scontriniLordo = incasso_ScontriniLordo,
                            EcommerceNetto = int(incasso_EcommerceNetto[0][0]), EcommerceLordo=int(incasso_EcommerceLordo[0][0]), ExtraNetto=int(incasso_ExtraNetto[0][0]),

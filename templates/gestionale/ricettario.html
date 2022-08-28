@@ -5,17 +5,15 @@
 <a href="{{url_for('ricettario.addSemi')}}" class="btn btn-primary">Aggiungi prodotto</a>
 <br>
 <br>
-{% if len_ricette == 0 %}
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <div class="center">
-        {% for message in messages %}
-          <h2 class="text-center">{{ message }}</h2>
-        {% endfor %}
-        </div>
-      {% endif %}
-    {% endwith %}
-{% else %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="center">
+    {% for message in messages %}
+      <h2 class="text-center">{{ message }}</h2>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
     <div class="row">
         {% for i in range(0, len_ricette)%}
             <a href="{{url_for('ricettario.ricetta', id=Prod[i].Id)}}">
@@ -37,5 +35,5 @@
             </a>
         {% endfor %}
     </div>
-{%endif%}
+
 {% endblock %}

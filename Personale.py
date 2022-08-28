@@ -35,7 +35,7 @@ def personaleGestionale():
     dip_data = session.query(Dipendenti.DataAssunzione).all()
     dip = Persone.query.join(Dipendenti).filter(Dipendenti.Mail == Persone.Mail).all()
 
-    if dip == None:
+    if dip == []:
         flash("Non hai dipendenti")
         return render_template("gestionale/dipendenti.html", len_Dip=0)
 

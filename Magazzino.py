@@ -2,7 +2,7 @@ from datetime import date
 from datetime import datetime
 from sqlalchemy import func
 from werkzeug.utils import redirect
-from flask import Blueprint, render_template, url_for, request, flash
+from flask import Blueprint, render_template, url_for, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerRangeField, \
     validators, TimeField, TextAreaField, FloatField, FieldList, Form, FormField, IntegerField, DateField, \
