@@ -42,7 +42,7 @@
                             <form action="{{url_for('ecommerce.shop')}}" method="post">
                                 <select name="cat">
                                     <option value="all">Categories</option>
-                                    <option value="Brioche">Brioche</option>
+                                    <option value="Brioche">Brioche</option> <!--TODO da sistemare con le categorie che abbiamo-->
                                 </select>
                                 <input type="text" placeholder="Search">
                                 <input type="hidden" value="1" name="hidden" class="">
@@ -70,19 +70,19 @@
     <section class="shop">
         <div class="container">
             <div class="row">
-                {% for i in range(0, lenProd) %}
+                {% for prod in Prod %}
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <a class="product__item space" href="{{url_for('ecommerce.shop_details', id=Prod[i].Id)}}">
-                        <div class="product__item__pic set-bg" data-setbg="{{url_for('static', filename='img/sito/shop/product-1.jpg')}}">
+                    <a class="product__item space" href="{{url_for('ecommerce.shop_details', id=prod.Id)}}">
+                        <div class="product__item__pic set-bg" data-setbg="{{url_for('static', filename=prod.img)}}">
                             <div class="product__label">
-                                <span>{{Prod[i].Categoria}}</span>
+                                <span>{{prod.Categoria}}</span>
                             </div>
                         </div>
                         <div class="product__item__text">
-                            <h6><a href="{{url_for('ecommerce.shop_details', id=Prod[i].Id)}}">{{Prod[i].Nome}}</a></h6>
-                            <div class="product__item__price">{{Prod[i].PrezzoUnitario}}€</div>
+                            <h6><a href="{{url_for('ecommerce.shop_details', id=prod.Id)}}">{{prod.Nome}}</a></h6>
+                            <div class="product__item__price">{{prod.PrezzoUnitario}}€</div>
                             <div class="cart_add">
-                                <a href="{{url_for('ecommerce.shop_details', id=Prod[i].Id)}}">Add to cart</a>
+                                <a href="{{url_for('ecommerce.shop_details', id=prod.Id)}}">Add to cart</a>
                             </div>
                         </div>
                     </a>

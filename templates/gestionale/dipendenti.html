@@ -15,7 +15,7 @@
 <a href="{{url_for('personale.addDipendente')}}" class="btn btn-primary">Aggiungi dipendente</a>
 <br>
 <br>
-{% if len_Dip == 0 %}
+{% if Dipendenti|length == 0 %}
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <div class="center">
@@ -27,20 +27,20 @@
     {% endwith %}
 {% else %}
     <div class="row">
-        {% for i in range(0, len_Dip)%}
+        {% for dip in Dipendenti%}
             <div class="col-4">
                 <div class="card" style="width: 20rem;">
-                <img src="{{url_for('static', filename='img/sito/shop/details/product-big-1.jpg')}}" class="card-img-top" alt="...">
+                <img src="{{url_for('static', filename=dip.img)}}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{Dip[i].Nome}} {{Dip[i].Cognome}}</h5>
+                        <h5 class="card-title">{{dip.Nome}} {{dip.Cognome}}</h5>
                         <li>
-                            <ul>Data di nascita: {{Dip[i].DataNascita}}</ul>
-                            <ul>Mail: {{Dip[i].Mail}}</ul>
-                            <ul>Telefono: +39 {{Dip[i].Telefono}}</ul>
-                            <ul>Data di assunzione: {{Dip_Data[i].DataAssunzione}}</ul>
+                            <ul>Data di nascita: {{dip.DataNascita}}</ul>
+                            <ul>Mail: {{dip.Mail}}</ul>
+                            <ul>Telefono: +39 {{dip.Telefono}}</ul>
+                            <ul>Data di assunzione: {{dip.DataAssunzione}}</ul>
                         </li>
-                            <a href="{{url_for('personale.tabellaTurni', id=Dip[i].Mail)}}" class="btn btn-outline-success  ">Visualizza turni</a>
-                            <a href="{{url_for('personale.dropDipendente', id=Dip[i].Mail)}}" class="btn btn-outline-danger">Licenzia</a>
+                            <a href="{{url_for('personale.tabellaTurni', id=dip.Mail)}}" class="btn btn-outline-success  ">Visualizza turni</a>
+                            <a href="{{url_for('personale.dropDipendente', id=dip.Mail)}}" class="btn btn-outline-danger">Licenzia</a>
                     </div>
                 </div>
             </div>

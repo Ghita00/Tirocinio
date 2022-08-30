@@ -19,7 +19,7 @@
             <a href="{{url_for('ricettario.ricetta', id=Prod[i].Id)}}">
             <div class="col-5">
                 <div class="card" style="width: 18rem;">
-                <img src="{{url_for('static', filename='img/sito/shop/details/product-big-1.jpg')}}" class="card-img-top" alt="...">
+                <img src="{{url_for('static', filename=Prod[i].img)}}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h3 class="card-title">{{Prod[i].Nome}}</h3>
                         <p class="card-text">{{Prod[i].Incipit}}</p>

@@ -24,7 +24,7 @@
 
 {% block wish %}
     <!-- Wishlist Section Begin -->
-    {%if len_product == 0%}
+    {%if product|length == 0%}
         {% with messages = get_flashed_messages() %}
             {% if messages %}
             <div class="container spad">
@@ -59,23 +59,27 @@
                                     <th>Unit Price</th>
                                 </tr>
                             </thead>
-                            {% for i in range(0, len_product) %}
+                            {% for prod in product %}
                             <tbody>
                                 <tr>
                                     <td class="product__cart__item">
                                         <div class="product__cart__item__pic">
-                                            <img src="{{url_for('static', filename='img/sito/shop/cart/cart-1.jpg')}}" alt="">
+                                            <img src="{{url_for('static', filename=prod.img)}}" alt="">
                                         </div>
                                         <div class="product__cart__item__text">
-                                            <h6>{{ product[i].Nome }}</h6>
+                                            <h6>{{ prod.Nome }}</h6>
                                             <!--<h6>Vanilla Salted Caramel</h6>-->
                                         </div>
                                     </td>
-                                    <td class="cart__price">${{ product[i].PrezzoUnitario }}</td>
+                                    <td class="cart__price">{{ prod.PrezzoUnitario }}€</td>
                                     <!--<td class="cart__price">$ 15.00</td>-->
-                                    <!--<td class="cart__stock">In stock</td>-->
-                                    <td class="cart__btn"><a href="{{url_for('ecommerce.modifyWishlist', id=product[i].Id)}}" class="primary-btn">Aggiungi al carrelo</a></td>
-                                    <td class="cart__btn"><a href="{{url_for('ecommerce.deleteWishlist', id=product[i].Id)}}" class="secondary-btn">Togli dalla wishlist</a></td>
+                                    {% if prod.Quantità > 0 %}
+                                        <td class="cart__price">In stock</td>
+                                    {% else %}
+                                        <td class="cart__price">Not in stock</td>
+                                    {% endif %}
+                                    <td class="cart__btn"><a href="{{url_for('ecommerce.modifyWishlist', id=prod.Id)}}" class="primary-btn">Aggiungi al carrelo</a></td>
+                                    <td class="cart__btn"><a href="{{url_for('ecommerce.deleteWishlist', id=prod.Id)}}" class="secondary-btn">Togli dalla wishlist</a></td>
                                 </tr>
                             </tbody>
                             {% endfor %}

@@ -42,7 +42,11 @@ def ricettarioGestionale():
         flash("Non hai ricette.")
         return render_template("gestionale/ricettario.html", len_ricette=0)
     else:
-        prod = Semilavorati.query.join(Ingredienti).filter(Ingredienti.Id_Semilavorato == Semilavorati.Id)  #campi semi con ricette
+        prod = session.query(Semilavorati.Nome, Semilavorati.Incipit, Immagini.img).\
+            join(ImmaginiSemilavorati, ImmaginiSemilavorati.Id_Semilavorato == Semilavorati.Id).\
+            join(Immagini, Immagini.Id == ImmaginiSemilavorati.Id_Img).\
+            all()
+
         ing = list(session.query(Ingredienti, Merce).join(Merce).filter(Merce.Id == Ingredienti.Id_MateriaPrima))
 
         list_ric = []
@@ -62,7 +66,7 @@ def ricettarioGestionale():
 
         list_ric.append(lista_aux)
 
-        return render_template("gestionale/ricettario.html", len_ricette = recipes, Prod=list(prod), Ing=list_ric, len_Ing=len(list_ric))
+        return render_template("gestionale/ricettario.html", len_ricette = recipes, Prod=prod, Ing=list_ric, len_Ing=len(list_ric))
 
 @ricettario.route('/addSemilavorato', methods=['GET', 'POST'])
 def addSemi():

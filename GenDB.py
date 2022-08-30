@@ -58,7 +58,7 @@ class Persone(db.Model, UserMixin):
     Dipendente = relationship("Dipendenti", back_populates = "Persona")
     Cliente = relationship("Clienti", back_populates = "Persona")
 
-    def __init__(self, Mail, Nome, Cognome, Username, Password, DataNascita, Telefono, Rating):
+    def __init__(self, Mail, Nome, Cognome, Username, Password, DataNascita, Telefono, Rating, Img):
         self.Mail = Mail
         self.Nome = Nome
         self.Cognome = Cognome
@@ -67,6 +67,7 @@ class Persone(db.Model, UserMixin):
         self.DataNascita = DataNascita
         self.Telefono = Telefono
         self.Rating = Rating
+        self.Img = Img
 
     def get_id(self):
         return (self.Mail)

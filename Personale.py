@@ -12,7 +12,6 @@ from GenDB import *
 
 personale = Blueprint('personale', __name__)
 
-#TODO registrazione stipendi
 
 class RegistrazioneDipendente(FlaskForm):
     nome = StringField(validators=[InputRequired()], render_kw={"placeholder": "Nome"})
@@ -32,15 +31,16 @@ class addTurno(FlaskForm):
 
 @personale.route('/personaleGestionale')
 def personaleGestionale():
-    dip_data = session.query(Dipendenti.DataAssunzione).all()
-    dip = Persone.query.join(Dipendenti).filter(Dipendenti.Mail == Persone.Mail).all()
+    dip = session.query(Persone.Nome, Persone.Cognome, Persone.DataNascita, Persone.Mail, Persone.Telefono, Dipendenti.DataAssunzione, Immagini.img).\
+        join(Dipendenti, Dipendenti.Mail == Persone.Mail).\
+        join(Immagini, Immagini.Id == Persone.Img).all()
 
     if dip == []:
         flash("Non hai dipendenti")
-        return render_template("gestionale/dipendenti.html", len_Dip=0)
+        return render_template("gestionale/dipendenti.html", Dipendenti=dip)
 
 
-    return render_template("gestionale/dipendenti.html", Dip=list(dip), len_Dip=len(list(dip)), Dip_Data=list(dip_data), len_Dip_Data=len(list(dip_data)))
+    return render_template("gestionale/dipendenti.html", Dipendenti=dip)
 
 @personale.route('/aggiungiDipendente', methods=['GET', 'POST'])
 def addDipendente():
