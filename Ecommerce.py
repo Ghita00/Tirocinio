@@ -86,6 +86,14 @@ def shop_details(id):
             join(ImmaginiSemilavorati, ImmaginiSemilavorati.Id_Semilavorato == Semilavorati.Id). \
             join(Immagini, Immagini.Id == ImmaginiSemilavorati.Id_Img). \
             filter(Semilavorati.Id == id).first()
+
+        AllProd = session.query(Semilavorati.Id, Semilavorati.Nome, Semilavorati.Categoria, Semilavorati.Incipit,
+                                 Semilavorati.Descrizione, Semilavorati.PrezzoUnitario, Immagini.img). \
+            join(ImmaginiSemilavorati, ImmaginiSemilavorati.Id_Semilavorato == Semilavorati.Id). \
+            join(Immagini, Immagini.Id == ImmaginiSemilavorati.Id_Img).\
+            all()
+
+
     else:
         utente = ''
         Prodotto = session.query(Semilavorati.Id, Semilavorati.Nome, Semilavorati.Categoria, Semilavorati.Incipit,
@@ -93,6 +101,12 @@ def shop_details(id):
             join(ImmaginiSemilavorati, ImmaginiSemilavorati.Id_Semilavorato == Semilavorati.Id). \
             join(Immagini, Immagini.Id == ImmaginiSemilavorati.Id_Img). \
             filter(Semilavorati.Id == id).first()
+
+        AllProd = session.query(Semilavorati.Id, Semilavorati.Nome, Semilavorati.Categoria, Semilavorati.Incipit,
+                                 Semilavorati.Descrizione, Semilavorati.PrezzoUnitario, Immagini.img). \
+            join(ImmaginiSemilavorati, ImmaginiSemilavorati.Id_Semilavorato == Semilavorati.Id). \
+            join(Immagini, Immagini.Id == ImmaginiSemilavorati.Id_Img).\
+            all()
 
     if request.method == "POST":
         if current_user.is_authenticated:
@@ -118,8 +132,9 @@ def shop_details(id):
             flash('Devi prima autenticarti')
             return redirect(url_for('profile.login'))
     else:
+        print(AllProd)
         return render_template("sito/shop-details.html", total=Auxcarrello.quantità, totalMoney=Auxcarrello.totale,
-                               prod=Prodotto, user=utente, pages=list(pages.pagine), id=id)
+                               prod=Prodotto, user=utente, pages=list(pages.pagine), id=id, AllProd=AllProd)
 
 
 @ecommerce.route('/shoping-cart', methods=['GET', 'POST'])

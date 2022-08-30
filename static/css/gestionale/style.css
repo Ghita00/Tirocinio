@@ -4552,3 +4552,13 @@ h6.h1 {
 .BlogTitolo{
     width:350px;
 }
+
+.MagImg{
+    height: 250px;
+    width: 250px;
+}
+
+.DipImg{
+    height: 350px;
+    width: 250px;
+}

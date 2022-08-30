@@ -485,7 +485,6 @@ ImmaginiMerce = [ImmaginiMerce(Id_Merce='34', Id_Img='1'),
                 ImmaginiMerce(Id_Merce='17', Id_Img='6') ]
 
 #Note di variazione
-
 #Data = [Persone, DittaFornitrice, Allergeni, Turni, Semilavorati, ProduzioneGiornaliera, Articoli, Scontrini, Immagini, DDT]
 #Data = [Dipendenti, Clienti, Commenti, Messaggi, PersonaleTurni, Stipendi, Merce, Ingredienti, Produzione, Blog, FattureAcquisto,
 #        ContenutoAcquisto, FattureVendita, ContenutoVenditaSemilavorati, ScontriniMerce, ScontriniSemilavorati, ImmaginiSemilavorati, ImmaginiMerce]

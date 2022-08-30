@@ -4,43 +4,67 @@
     <h1>Dettagli ordine nr. {{id}}</h1>
     <br>
     {% if categoria == '1' %}
-        <h3>Dati del cliente</h3>
-        <ul>
-            <p><li>Mail: {{dati[0].Mail}}</li></p>
-            <p><li>Telefono: {{dati[0].Telefono}}</li></p>
-            <p><li>Data: {{dati[0].Data}}</li></p>
-        </ul>
-
-        <h5>Prodotti richiesti dal cliente</h5>
-        <ul>
-        {% for Prodotto in prod %}
-            <p><li>{{Prodotto.Quantita}}x{{Prodotto.Nome}}</li></p>
-        {% endfor %}
-        </ul>
-        <hr>
-        <form action="" method="post">
-            {% for i in range(0, prod|length) %}
-                <input type="hidden" name="prod-{{i}}" value = {{prod[i].Id}}>
-                <input type="hidden" name="q-{{i}}" value = {{prod[i].Quantita}}>
-            {% endfor %}
-            <input type="hidden" name="volte" value="{{prod|length}}">
-            <h6>Seleziona la data di produzione per aggiungerlo alla produzione giornaliera</h6>
-            <input type="date" name="dataProd"><br><br>
-            <button type="submit">Invia alla produzione</button>
-        </form>
+    <div class="row">
+        <div class="col">
+            <h3>Prodotti richiesti dal cliente</h3>
+            <table class="table">
+                <tr>
+                    <td>Quantità</td>
+                    <td>Prodotto</td>
+                </tr>
+                {% for Prodotto in prod %}
+                <tr>
+                    <td>{{Prodotto.Quantita}}</td>
+                    <td>{{Prodotto.Nome}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col">
+            <h3>Dati del cliente</h3>
+            <ul>
+                <p><li>Mail: {{dati[0].Mail}}</li></p>
+                <p><li>Telefono: {{dati[0].Telefono}}</li></p>
+                <p><li>Data: {{dati[0].Data}}</li></p>
+            </ul>
+            <hr>
+            <form action="" method="post">
+                {% for i in range(0, prod|length) %}
+                    <input type="hidden" name="prod-{{i}}" value = {{prod[i].Id}}>
+                    <input type="hidden" name="q-{{i}}" value = {{prod[i].Quantita}}>
+                {% endfor %}
+                <input type="hidden" name="volte" value="{{prod|length}}">
+                <h6>Seleziona la data di produzione per aggiungerlo alla produzione giornaliera</h6>
+                <input type="date" name="dataProd"><br><br>
+                <button type="submit">Invia alla produzione</button>
+            </form>
+        </div>
+    </div>
     {% else %}
-    <h3>Dati del fornitore</h3>
-        <ul>
-            <p><li>Nome della Ditta: {{dati[0].Nome}}</li></p>
-            <p><li>Partita IVA: {{dati[0].PartitaIVA}}</li></p>
-            <p><li>Data del ordine: {{dati[0].Data}}</li></p>
-        </ul>
-
-    <h5>Prodotti richiesti al fornitore</h5>
-    <ul>
-    {% for Prodotto in prod %}
-        <p><li>{{Prodotto.Quantita}}x{{Prodotto.Nome}}</li></p>
-    {% endfor %}
-    </ul>
+    <div class="row">
+        <div class="col">
+            <h3>Prodotti richiesti al fornitore</h3>
+            <table class="table">
+                <tr>
+                    <td>Quantità</td>
+                    <td>Prodotto</td>
+                </tr>
+                {% for Prodotto in prod %}
+                <tr>
+                    <td>{{Prodotto.Quantita}}</td>
+                    <td>{{Prodotto.Nome}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col">
+            <h3>Dati del fornitore</h3>
+            <ul>
+                <p><li>Nome della Ditta: {{dati[0].Nome}}</li></p>
+                <p><li>Partita IVA: {{dati[0].PartitaIVA}}</li></p>
+                <p><li>Data del ordine: {{dati[0].Data}}</li></p>
+            </ul>
+        </div>
+    </div>
     {% endif %}
 {% endblock %}

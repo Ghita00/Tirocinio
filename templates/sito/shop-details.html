@@ -73,7 +73,7 @@
                                         <input type="text" value="1" name="quantita">
                                     </div>
                                 </div>
-                                <input type="submit" class="primary-btn"/>
+                                <input type="submit" class="primary-btn" value="Inserisci"/>
                             </div>
                         </form>
                     </div>
@@ -87,7 +87,6 @@
 {% endblock %}
 
 
-<!--TODO da sistemare-->
 {% block similar %}
     <!-- Related Products Section Begin -->
     <section class="related-products spad">
@@ -101,22 +100,24 @@
             </div>
             <div class="row">
                 <div class="related__products__slider owl-carousel">
-                    <div class="col-lg-3">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="{{url_for('static', filename='img/sito/shop/product-1.jpg')}}">
-                                <div class="product__label">
-                                    <span>Cupcake</span>
+                    {% for x in AllProd %}
+                        <div class="col-lg-3">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="{{url_for('static', filename=x.img)}}">
+                                    <div class="product__label">
+                                        <span>{{x.Categoria}}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="product__item__text">
-                                <h6><a href="#">Dozen Cupcakes</a></h6>
-                                <div class="product__item__price">$32.00</div>
-                                <div class="cart_add">
-                                    <a href="#">Add to cart</a>
+                                <div class="product__item__text">
+                                    <h6><a href="{{url_for('ecommerce.shop_details', id=x.Id)}}">{{x.Nome}}</a></h6>
+                                    <div class="product__item__price">{{x.PrezzoUnitario}}</div>
+                                    <div class="cart_add">
+                                        <a href="{{url_for('ecommerce.shop_details', id=x.Id)}}">Add to cart</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

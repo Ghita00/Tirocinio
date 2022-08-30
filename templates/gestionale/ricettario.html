@@ -16,10 +16,11 @@
 {% endwith %}
     <div class="row">
         {% for i in range(0, len_ricette)%}
+
             <a href="{{url_for('ricettario.ricetta', id=Prod[i].Id)}}">
             <div class="col-5">
                 <div class="card" style="width: 18rem;">
-                <img src="{{url_for('static', filename=Prod[i].img)}}" class="card-img-top" alt="...">
+                <img src="{{url_for('static', filename=Prod[i].img)}}" class="card-img-top MagImg" alt="...">
                     <div class="card-body">
                         <h3 class="card-title">{{Prod[i].Nome}}</h3>
                         <p class="card-text">{{Prod[i].Incipit}}</p>

@@ -17,7 +17,11 @@
     <tr>
         <th class="text-start text-center"><a href="{{url_for('ordini.ordineSingle', id=ricevuto.Id, categoria=1)}}">{{ricevuto.Id}}</a></th>
         <td class="text-start text-center"><a href="{{url_for('ordini.ordineSingle', id=ricevuto.Id, categoria=1)}}">{{ricevuto.Mail_Cliente}}</a></td>
-        <td class="text-start p-3 mb-2 bg-danger text-white text-center">Da fare</td>
+        {% if ricevuto.Status == False%}
+            <td class="text-start text-center p-3 mb-2 bg-danger text-white">Da fara</td>
+        {% else %}
+            <td class="text-start text-center p-3 mb-2 bg-success text-white">Fatto</td>
+        {% endif %}
         <td class="text-start text-center">{{ricevuto.Data}}</td>
     </tr>
     {% endfor %}
@@ -62,7 +66,11 @@
     <tr>
         <th scope="row" class="text-start text-center"><a href="{{url_for('ordini.ordineSingle', id=emesso.Id, categoria=2)}}">{{emesso.Id}}</a></th>
         <td class="text-start text-center"><a href="{{url_for('ordini.ordineSingle', id=emesso.Id, categoria=2)}}">{{emesso.NomeDitta}}</a></td>
-        <td class="text-start text-center p-3 mb-2 bg-danger text-white">Da fara</td>
+        {% if emesso.Status == False%}
+            <td class="text-start text-center p-3 mb-2 bg-danger text-white">Da fara</td>
+        {% else %}
+            <td class="text-start text-center p-3 mb-2 bg-success text-white">Fatto</td>
+        {% endif %}
         <td class="text-start text-center">{{emesso.Data}}</td>
     </tr>
     {% endfor %}

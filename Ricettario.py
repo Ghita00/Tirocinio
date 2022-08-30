@@ -42,7 +42,7 @@ def ricettarioGestionale():
         flash("Non hai ricette.")
         return render_template("gestionale/ricettario.html", len_ricette=0)
     else:
-        prod = session.query(Semilavorati.Nome, Semilavorati.Incipit, Immagini.img).\
+        prod = session.query(Semilavorati.Id, Semilavorati.Nome, Semilavorati.Incipit, Immagini.img).\
             join(ImmaginiSemilavorati, ImmaginiSemilavorati.Id_Semilavorato == Semilavorati.Id).\
             join(Immagini, Immagini.Id == ImmaginiSemilavorati.Id_Img).\
             all()

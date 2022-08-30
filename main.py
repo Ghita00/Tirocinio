@@ -52,8 +52,14 @@ def home():
     #ATTENZIONE PER NELLA VARIABILE IMG VA MESSO "{{url_for('static', filename='X')}}" DOVE X E IL RISULTATO QUERY
     favorite = list(Semilavorati.query.filter(Semilavorati.Preferito == True))
 
+    personale = session.query(Persone.Mail, Persone.Nome, Persone.Cognome, Immagini.img).\
+                join(Immagini, Immagini.Id == Persone.Img).\
+                join(Dipendenti, Dipendenti.Mail == Persone.Mail).\
+                all()
+
     post = Articoli.query.order_by(Articoli.DataPubblicazione).first()
-    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, img = "immagine", testo = post, pages = list(pages.pagine), user = utente, prod_fav = favorite, len_prod_fav = len(favorite))
+    return render_template("sito/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, img = "immagine", testo = post,
+                           pages = list(pages.pagine), user = utente, prod_fav = favorite, len_prod_fav = len(favorite), personale = personale)
 
 @app.route('/about')
 def about():
