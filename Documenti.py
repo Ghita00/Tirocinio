@@ -436,8 +436,6 @@ def bilancioGestionale():
 
     costiPersonale = session.query(func.sum(Stipendi.ImportoNetto)).all()
 
-
-
     if incasso_ExtraNetto[0][0] == None:
         print(1)
         incasso_ExtraNetto = [(0,)]

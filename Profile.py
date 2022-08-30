@@ -40,7 +40,7 @@ def login():
                 login_user(user)
                 if (Persone.query.join(Dipendenti).filter(Persone.Mail == Dipendenti.Mail).filter(Persone.Username == user.Username).first() != None) :
                     print("Dipendente")
-                    return render_template('gestionale/index.html')
+                    return redirect(url_for('Ghome'))
                 else:
                     print("Cliente")
                     cart = session.query(func.sum(Carrello.QuantitàCarrello)).filter(Carrello.Mail_Cliente == current_user.Mail).first()

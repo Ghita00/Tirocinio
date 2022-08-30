@@ -16,7 +16,7 @@
             <div class="stat-widget-two card-body">
                 <div class="stat-content">
                     <div class="stat-text">Profitto lordo mensile</div>
-                    <div class="stat-digit"><b><i class="fa fa-usd"></i>6500</b></div>
+                    <div class="stat-digit"><b><i class="fa fa-usd"></i>{{incassoTotale}}</b></div>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <div class="stat-widget-two card-body">
                 <div class="stat-content">
                     <div class="stat-text">Costi <br>lordi</div>
-                    <div class="stat-digit"> <i class="fa fa-usd"></i><b>650</b></div>
+                    <div class="stat-digit"> <i class="fa fa-usd"></i><b>{{costiTotale}}</b></div>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
             <div class="stat-widget-two card-body">
                 <div class="stat-content">
                     <div class="stat-text">Clienti<br> registrati</div>
-                    <div class="stat-digit"> <i class="fa fa-usd"></i><b>7800</b></div>
+                    <div class="stat-digit"> <i class="fa fa-usd"></i><b>{{clientiTot}}</b></div>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
             <div class="stat-widget-two card-body">
                 <div class="stat-content">
                     <div class="stat-text">Prootti<br> da produrre</div>
-                    <div class="stat-digit"> <i class="fa fa-usd"></i><b>500</b></div>
+                    <div class="stat-digit"> <i class="fa fa-usd"></i><b>{{produzione}}</b></div>
                 </div>
             </div>
         </div>
@@ -79,7 +79,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Expense Type</th>
+                                <th>Fornitore</th>
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>Email</th>
@@ -87,24 +87,27 @@
                             </tr>
                         </thead>
                         <tbody>
+                        {% for x in fattureAcq%}
+
                             <tr>
-                                <td>#2901</td>
+                                <td>{{x.Id}}</td>
                                 <td>
-                                    Salary
+                                    {{x.NomeDitta}}
                                 </td>
                                 <td>
-                                    $2000
+                                    {{'%0.2f'|format(x.Totale)}}
                                 </td>
                                 <td>
-                                    <span class="badge badge-primary">Paid</span>
+                                    <span class="badge badge-primary">{{x.Status}}</span>
                                 </td>
                                 <td>
-                                    edumin@gmail.com
+                                    {{x.Mail}}
                                 </td>
                                 <td>
-                                    10/05/2017
+                                    {{x.Data}}
                                 </td>
                             </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -129,23 +132,17 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Product</th>
-                                <th>quantity</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div class="round-img">
-                                        <a href=""><img width="35" src="./images/avatar/1.png" alt=""></a>
-                                    </div>
-                                </td>
-                                <td>Lew Shawon</td>
-                                <td><span>Dell-985</span></td>
-                                <td><span>456 pcs</span></td>
-                                <td><span class="badge badge-success">Done</span></td>
-                            </tr>
+                            {% for x in list_ricevuti %}
+                                <tr>
+                                    <td><a href="{{url_for('ordini.ordineSingle', id=x.Id, categoria=0)}}">{{x.Id}}</a></td>
+                                    <td><a href="{{url_for('ordini.ordineSingle', id=x.Id, categoria=0)}}">{{x.Mail_Cliente}}</a></td>
+                                    <td><span class="badge badge-success">{{x.Status}}</span></td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -190,15 +187,30 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.css">
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!--script per il calendario-->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth'
-    });
-    calendar.render();
-    });
+    let calendarEl = document.getElementById('calendar');
+
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridWeek',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events : [
+            {% for event in events %}
+                {
+                    title : '{{event.Cosa}} {{event.Quanto}} ',
+                    start : '{{event.Quando}}',
+                },
+            {% endfor %}
+        ],
+        });
+
+        calendar.render();
 </script>
+<!-- script per il grafico -->
 <script>
 const ctx = document.getElementById('myChart').getContext('2d');
 const myChart = new Chart(ctx, {

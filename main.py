@@ -1,5 +1,9 @@
+from datetime import datetime
+
 from flask import Flask, render_template, session
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from sqlalchemy import func, extract, desc
+
 from GenDB import *
 from flask_fontawesome import FontAwesome
 from Utility import Auxcarrello, pages
@@ -83,7 +87,99 @@ def contact():
 #gestionale
 @app.route('/gestionale/home')
 def Ghome():
-    return render_template("gestionale/index.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale)
+
+    #4 quadrati
+    incassi_scontriniMerceLordo = session.query(func.sum(
+                                ScontriniMerce.Quantità * (((Merce.PrezzoUnitario * Merce.IVA) / 100) + Merce.PrezzoUnitario).label('totale'))). \
+                                join(Merce, Merce.Id == ScontriniMerce.Id_Merce).\
+                                join(Scontrini, Scontrini.Id == ScontriniMerce.Id_Scontrino).\
+                                filter(extract('month', Scontrini.Data)==datetime.now().month).\
+                                all()
+
+    incassi_scontriniSemiLordo = session.query(func.sum(ScontriniSemilavorati.Quantità * (
+                                ((Semilavorati.PrezzoUnitario * Semilavorati.IVA) / 100) + Semilavorati.PrezzoUnitario).label('totale'))). \
+                                join(Semilavorati, Semilavorati.Id == ScontriniSemilavorati.Id_Semilavorato). \
+                                join(Scontrini, Scontrini.Id == ScontriniSemilavorati.Id_Scontrino). \
+                                filter(extract('month', Scontrini.Data) == datetime.now().month). \
+                                all()
+
+    incasso_EcommerceLordo = session.query(func.sum(ContenutoVenditaSemilavorati.Quantità * (
+                            ((Semilavorati.PrezzoUnitario * Semilavorati.IVA) / 100) + Semilavorati.PrezzoUnitario)).label('totale')). \
+                            join(FattureVendita, ContenutoVenditaSemilavorati.Id_FatturaVendità == FattureVendita.Id). \
+                            join(Semilavorati, ContenutoVenditaSemilavorati.Id_Semilavorato == Semilavorati.Id). \
+                            filter(FattureVendita.Categoria == 'Ecommerce').\
+                            filter(extract('month', FattureVendita.Data) == datetime.now().month).\
+                            all()
+
+    incasso_ExtraLordo = session.query(func.sum(ContenutoVenditaSemilavorati.Quantità * (
+                            ((Semilavorati.PrezzoUnitario * Semilavorati.IVA) / 100) + Semilavorati.PrezzoUnitario)).label('totale')). \
+                            join(FattureVendita, ContenutoVenditaSemilavorati.Id_FatturaVendità == FattureVendita.Id). \
+                            join(Semilavorati, ContenutoVenditaSemilavorati.Id_Semilavorato == Semilavorati.Id). \
+                            filter(FattureVendita.Categoria == 'Extra'). \
+                            filter(extract('month', FattureVendita.Data) == datetime.now().month). \
+                            all()
+    incassiTotale = 0
+    if incassi_scontriniMerceLordo[0][0] != None:
+        incassiTotale += incassi_scontriniMerceLordo[0][0]
+    if incassi_scontriniSemiLordo[0][0] != None:
+        incassiTotale += incassi_scontriniSemiLordo[0][0]
+    if incasso_EcommerceLordo[0][0] != None:
+        incassiTotale += incasso_EcommerceLordo[0][0]
+    if incasso_ExtraLordo[0][0] != None:
+        incassiTotale += incasso_ExtraLordo[0][0]
+
+    costiFornitori = session.query(func.sum(ContenutoAcquisto.Quantità * Merce.PrezzoUnitario).label('totale')). \
+                    join(Merce, Merce.Id == ContenutoAcquisto.Id_Merce).\
+                    join(FattureAcquisto, FattureAcquisto.Id == ContenutoAcquisto.Id_FatturaAcquisto).\
+                    filter(extract('month', FattureAcquisto.Data) == datetime.now().month).\
+                    all()
+
+    costiPersonale = session.query(func.sum(Stipendi.ImportoNetto)).\
+                    filter(extract('month', Stipendi.DataEmissione) == datetime.now().month).\
+                    all()
+
+    costiTotale = 0
+    if costiFornitori[0][0] != None:
+        costiTotale += costiFornitori[0][0]
+    if costiPersonale[0][0] != None:
+        costiTotale += costiPersonale[0][0]
+
+    clientiTot = Clienti.query.count()
+
+    produzione = Produzione.query.filter(Produzione.Data_Produzione == datetime.now()).count()
+
+    #grafico
+
+    #fatture fornitori
+    fatturaAcq = session.query(FattureAcquisto.Status, FattureAcquisto.Id, FattureAcquisto.Data, DittaFornitrice.Mail,
+                               DittaFornitrice.NomeDitta, func.sum(ContenutoAcquisto.Quantità * (Merce.PrezzoUnitario + ((Merce.IVA / 100) * Merce.PrezzoUnitario))).label('Totale')). \
+        join(DittaFornitrice, DittaFornitrice.PartitaIVA == FattureAcquisto.Id_Fornitore). \
+        join(ContenutoAcquisto, ContenutoAcquisto.Id_FatturaAcquisto == FattureAcquisto.Id). \
+        join(Merce, Merce.Id == ContenutoAcquisto.Id_Merce). \
+        group_by(FattureAcquisto.Id, FattureAcquisto.Data, DittaFornitrice.NomeDitta, DittaFornitrice.Mail). \
+        order_by(desc(FattureAcquisto.Data)). \
+        all()
+
+    #ordini ricevuti
+    list_ricevuti = session.query(FattureVendita.Id, FattureVendita.Mail_Cliente, FattureVendita.Data, FattureVendita.Status). \
+                    group_by(FattureVendita.Id, FattureVendita.Mail_Cliente, FattureVendita.Data, FattureVendita.Status).all()
+
+    #planner produzione
+    prod = session.query(Semilavorati.Nome, ProduzioneGiornaliera.Data, Produzione.Quantità). \
+        join(ProduzioneGiornaliera, Produzione.Data_Produzione == ProduzioneGiornaliera.Data). \
+        join(Semilavorati, Semilavorati.Id == Produzione.Id_Semilavorato).all()
+    events = []
+    for x in prod:
+        events.append({
+            'Cosa': x.Nome,
+            'Quanto': x.Quantità,
+            'Quando': x.Data,
+        })
+
+    return render_template("gestionale/index.html", incassoTotale=incassiTotale, costiTotale=costiTotale, clientiTot=clientiTot, produzione=produzione,
+                           fattureAcq = fatturaAcq,
+                           list_ricevuti = list_ricevuti,
+                           events = events)
 
 if __name__ == "__main__":
     app.run(debug=True)
