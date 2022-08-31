@@ -40,6 +40,15 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
+def presente(x, lista):
+    ret = [False, -1]
+    for i in range(0, len(lista)):
+        if lista[i][0] == x[0]:
+            ret[0] = True
+            ret[1] = i
+    return ret
+
 #sito
 @login_manager.user_loader
 def load_user(user_id):
@@ -146,9 +155,42 @@ def Ghome():
 
     clientiTot = Clienti.query.count()
 
-    produzione = Produzione.query.filter(Produzione.Data_Produzione == datetime.now()).count()
+    produzione = Produzione.query.filter(Produzione.Data_Produzione == datetime.now().date()).count()
 
     #grafico
+    quantita_CategoriaFatture = session.query(Semilavorati.Categoria, func.count(Semilavorati.Id).label('quanti')).\
+        join(ContenutoVenditaSemilavorati, ContenutoVenditaSemilavorati.Id_Semilavorato == Semilavorati.Id).\
+        join(FattureVendita, FattureVendita.Id == ContenutoVenditaSemilavorati.Id_FatturaVendità).\
+        filter(extract('month', FattureVendita.Data) == datetime.now().month). \
+        group_by(Semilavorati.Categoria).all()
+
+    quantita_CategoriaScontrini = session.query(Semilavorati.Categoria, func.count(Semilavorati.Id).label('quanti')). \
+        join(ScontriniSemilavorati, ScontriniSemilavorati.Id_Semilavorato == Semilavorati.Id). \
+        join(Scontrini, Scontrini.Id == ScontriniSemilavorati.Id_Scontrino). \
+        filter(extract('month', Scontrini.Data) == datetime.now().month). \
+        group_by(Semilavorati.Categoria).all()
+
+    categorie = []
+    for quanti in quantita_CategoriaFatture:
+        lista = []
+        lista.append(quanti[0])
+        lista.append(quanti[1])
+        categorie.append(lista)
+
+    for quanti in quantita_CategoriaScontrini:
+        lista = []
+        lista.append(quanti[0])
+        lista.append(quanti[1])
+        categorie.append(lista)
+
+    totale = []
+
+    for cat in categorie:
+        coppia = presente(cat, totale)
+        if coppia[0] == False :
+            totale.append(cat)
+        else:
+            totale[coppia[1]][1] += cat[1]
 
     #fatture fornitori
     fatturaAcq = session.query(FattureAcquisto.Status, FattureAcquisto.Id, FattureAcquisto.Data, DittaFornitrice.Mail,
@@ -177,6 +219,7 @@ def Ghome():
         })
 
     return render_template("gestionale/index.html", incassoTotale=incassiTotale, costiTotale=costiTotale, clientiTot=clientiTot, produzione=produzione,
+                           categorie = totale,
                            fattureAcq = fatturaAcq,
                            list_ricevuti = list_ricevuti,
                            events = events)

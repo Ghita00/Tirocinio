@@ -333,7 +333,7 @@ def addDoc():
                     for i in range(int(request.form['volte'])):
                         id = int(request.form['Prodotto-' + str(i)])
                         quanti = session.query(Merce.Quantità).filter(Merce.Id == id).first()
-                        if quanti[0] > request.form['q-' + str(i)]:
+                        if quanti[0] > int(request.form['q-' + str(i)]):
                             contenutoSc = ScontriniMerce(Id_Scontrino=sc, Id_Merce=id, Quantità=request.form['q-' + str(i)])
                             Merce.query.filter(Merce.Id == id).update({"Quantità": Merce.Quantità - request.form['q-' + str(i)]})
                             db.session.add(contenutoSc)
@@ -354,8 +354,8 @@ def addDoc():
                     for i in range(int(request.form['volte'])):
                         id = int(request.form['Prodotto-' + str(i)])
                         quanti = session.query(Semilavorati.Quantità).filter(Semilavorati.Id == id).first()
-                        if quanti[0] > request.form['q-' + str(i)]:
-                            contenutoSc = ScontriniSemilavorati(Id_Scontrino=sc, Id_Semilavorato=id, Qantità=request.form['q-' + str(i)])
+                        if quanti[0] > int(request.form['q-' + str(i)]):
+                            contenutoSc = ScontriniSemilavorati(Id_Scontrino=sc, Id_Semilavorato=id, Quantità=request.form['q-' + str(i)])
                             Semilavorati.query.filter(Semilavorati.Id == id).update({"Quantità": Semilavorati.Quantità - request.form['q-' + str(i)]})
                             db.session.add(contenutoSc)
                         else:
