@@ -2,32 +2,40 @@
 
 {% block formMerce %}
 
-
 <h2>Aggiungi merce</h2>
     {% from "sito/_formhelpers.html" import render_field %}
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <div class="row">
-            <div class="col-4">
+            <div class="col-3">
                 {{ render_field(form.Nome) }}
             </div>
-            <div class="col-4">
+            <div class="col-3">
+                {{ render_field(form.Quantità) }}
+            </div>
+            <div class="col-3">
                 {{ render_field(form.Prezzo) }}
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 {{ render_field(form.IVA) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-5">
+                <label>La merce inserita risulta essere una materia prima?</label>
+                {{ render_field(form.MateriaPrima) }}
             </div>
         </div>
         <hr>
         <h4>Eventuale Allergene</h4>
         <div id="appendi">
-                {{ render_field(form.Allergeni) }}
+                {{ render_field(form.Allergene) }}
         </div>
         {{ render_field(form.Submit) }}
     </form>
 
 <script>
-    padre = document.getElementById("Allergeni")
+    padre = document.getElementById("Allergene")
     figli = padre.childNodes
     row = document.createElement("div")
     row.classList.add("row");

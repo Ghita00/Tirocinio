@@ -13,7 +13,8 @@ class newSemi(FlaskForm):
     PrezzoUnitario = FloatField(validators=[InputRequired()], default=0.0)
     IVA = IntegerField(validators=[InputRequired()], default=0)
     Categoria = StringField(validators=[InputRequired()], render_kw={"placeholder": "Categoria"})
-    Descrizione = TextAreaField('Inserire una piccola decrizione del nuovo prodotto', validators=[InputRequired()])
+    Incipit = TextAreaField('Descrivi in poche parole il prodotto', validators=[InputRequired()])
+    Descrizione = TextAreaField('Inserire una decrizione accattivante del nuovo prodotto', validators=[InputRequired()])
 
     submit = SubmitField('Prosegui')
 
@@ -68,20 +69,27 @@ def ricettarioGestionale():
 
         return render_template("gestionale/ricettario.html", len_ricette = recipes, Prod=prod, Ing=list_ric, len_Ing=len(list_ric))
 
+#img 61 semi generico
 @ricettario.route('/addSemilavorato', methods=['GET', 'POST'])
 def addSemi():
     form = newSemi()
     if form.validate_on_submit():
-        new_Semi = Semilavorati(Nome=form.Nome.data, Preparazione='', IVA=form.IVA.data, Categoria=form.Categoria.data, Descrizione=form.Descrizione.data, PrezzoUnitario=form.PrezzoUnitario.data, Quantità=0, Incipit='', TempoPreparazione=0, Porzioni=1)
+        new_Semi = Semilavorati(Nome=form.Nome.data, Preparazione='', IVA=form.IVA.data, Categoria=form.Categoria.data,
+                                Descrizione=form.Descrizione.data, PrezzoUnitario=form.PrezzoUnitario.data, Quantità=0,
+                                Incipit=form.Incipit.data, TempoPreparazione=0, Porzioni=1)
         db.session.add(new_Semi)
         db.session.commit()
 
-        semi = session.query(Semilavorati.Id).filter(Semilavorati.Nome == form.Nome.data).first()
+        semi = Semilavorati.query.filter(Semilavorati.Nome == form.Nome.data).first()
+        new_ImgSemi = ImmaginiSemilavorati(Id_Semilavorato = semi.Id, Id_Img = 61)
+        db.session.add(new_ImgSemi)
+        db.session.commit()
+
         form2 = newRecipe()
 
-        return redirect(url_for("ricettario.aggiungiRicetta", id=semi[0], nome = form.Nome.data, form=form2, ing = materiePrime.matPrime, len_ing = len(materiePrime.matPrime)))
+        return redirect(url_for("ricettario.aggiungiRicetta", id=semi.Id, nome = semi.Nome, form=form2, ing = materiePrime.matPrime, len_ing = len(materiePrime.matPrime)))
 
-    return render_template("gestionale/addSemilavorato.html", form = form)
+    return render_template("gestionale/formSemi.html", form = form)
 
 
 @ricettario.route('/addRicetta/<id>', methods=['GET', 'POST'])
@@ -93,7 +101,7 @@ def aggiungiRicetta(id):
     for i in range(0, len(data)):
         ingrediente.append((data[i]['Quantità']))
 
-    if(form.validate_on_submit()):
+    if form.validate_on_submit():
         for i in range(0, len(ingrediente)):
             if ingrediente[i] > 0 :
                 new_Rec = Ingredienti(Id_Semilavorato = id, Id_MateriaPrima = materiePrime.matPrime[i][1], Quantita = ingrediente[i])

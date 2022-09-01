@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from flask_login import login_user, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from sqlalchemy import func
-from wtforms import StringField, PasswordField, SubmitField, DateField, FileField, TelField
-from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
+from wtforms import StringField, PasswordField, SubmitField, DateField, TelField
+from wtforms.validators import InputRequired, Length, EqualTo
 from datetime import date
 
 from GenDB import *
@@ -74,7 +74,11 @@ def user():
     else:
         Auxcarrello.totale = round(float(tot[0].totcar), 2)
         Auxcarrello.quantità = cart[0]
-    return render_template('sito/user.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, nome = current_user.Nome, cognome=current_user.Cognome, mail=current_user.Mail, datanascita=current_user.DataNascita, user = current_user.Nome, pages = list(pages.pagine))
+    user = session.query(Persone.Nome, Persone.Cognome, Persone.DataNascita, Persone.Mail, Immagini.img).\
+        join(Immagini, Immagini.Id == Persone.Img).\
+        filter(Persone.Mail == current_user.Mail).first()
+    print(user)
+    return render_template('sito/user.html', total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, user=user, pages = list(pages.pagine))
 
 @profile.route('/userModify', methods=['GET', 'POST'])
 @login_required
@@ -113,12 +117,13 @@ def logout():
     Auxcarrello.quantità = 0
     return redirect(url_for('home'))
 
+#img 59 avatr generico
 @profile.route('/register', methods=['GET', 'POST'])
 def register():
     pages.disattiva(0)
     form = RegisterForm()
     if form.validate_on_submit():
-        new_user = Persone(Mail=form.mail.data, Nome=form.nome.data, Cognome=form.cognome.data, Username=form.username.data, Password=form.password.data, DataNascita=form.datanascita.data, Telefono=form.telefono.data, Rating=0)
+        new_user = Persone(Mail=form.mail.data, Nome=form.nome.data, Cognome=form.cognome.data, Username=form.username.data, Password=form.password.data, DataNascita=form.datanascita.data, Telefono=form.telefono.data, Rating=0, Img=59)
         new_client = Clienti(Mail=form.mail.data, DataRegistrazione=date.today())
         db.session.add(new_user)
         db.session.add(new_client)
@@ -160,9 +165,3 @@ def commento():
 
     return render_template("sito/commento.html", total = Auxcarrello.quantità, totalMoney = Auxcarrello.totale, pages = list(pages.pagine))
 
-#def sendComment():
-#    pages.disattiva(0)
-#    if current_user.is_authenticated:
-#        return redirect(url_for('profile.commento'))
-#    else:
-#        return redirect(url_for('profile.login'))

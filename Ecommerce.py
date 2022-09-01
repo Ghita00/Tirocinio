@@ -179,7 +179,7 @@ def checkout():
 
         # emmissione fattura di vendita
         num = FattureVendita.query.count()
-        newFat = FattureVendita(Mail_Cliente=current_user.Mail, NumDocumento=num + 1, Data=date.today())
+        newFat = FattureVendita(Mail_Cliente=current_user.Mail, NumDocumento=num + 1, Data=date.today(), Categoria='Ecommerce')
         db.session.add(newFat)
         db.session.commit()
 

@@ -17,7 +17,7 @@ def ordiniGestionale():
         lista_slider = []
         for i in range(1, 3):
             end = help.endSlied(i)
-            start = end - 10
+            start = end - 5
             lista_slider.append([start, end])
 
         if request.form["nascosto"] == '1':
@@ -25,18 +25,18 @@ def ordiniGestionale():
             print(request.form["ricevuti"])
             help.aggiorna(1, request.form["ricevuti"])
             lista_slider[0][1] = help.endSlied(1)
-            lista_slider[0][0] = lista_slider[0][1] - 10
+            lista_slider[0][0] = lista_slider[0][1] - 5
         else:
             emessi = request.form["emessi"]
             print(request.form["emessi"])
             help.aggiorna(2, request.form["emessi"])
             lista_slider[1][1] = help.endSlied(2)
-            lista_slider[1][0] = lista_slider[1][1] - 10
+            lista_slider[1][0] = lista_slider[1][1] - 5
 
         return render_template("gestionale/ordini.html", list_ricevuti = list_ricevuti[lista_slider[0][0]:lista_slider[0][1]], list_emessi = list_emessi[lista_slider[1][0]:lista_slider[1][1]])
     else:
         #passare sempre i primi 10 elementi delle liste
-        return render_template("gestionale/ordini.html", list_ricevuti = list_ricevuti[0:10], list_emessi = list_emessi[0:10])
+        return render_template("gestionale/ordini.html", list_ricevuti = list_ricevuti[0:5], list_emessi = list_emessi[0:5])
 
 
 @ordini.route('/ordineSingle/<id>/<categoria>', methods=['GET', 'POST'])

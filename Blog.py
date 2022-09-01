@@ -86,11 +86,11 @@ def messaggi():
     if request.method == "POST":
         help.aggiorna(0, request.form["mex"])
         end = help.endSlied(0)
-        start = end - 10
+        start = end - 5
 
         return render_template("gestionale/messaggi.html", messaggi=mes[start:end])
     else:
-        return render_template("gestionale/messaggi.html", messaggi=mes[0:10])
+        return render_template("gestionale/messaggi.html", messaggi=mes[0:5])
 
 @blog.route('/dropArtic/<id>', methods=['GET', 'POST'])
 def dropArticolo(id):
@@ -100,9 +100,16 @@ def dropArticolo(id):
 
     return redirect(url_for("blog.Gblog"))
 
-@blog.route('/gCommenti')
+@blog.route('/gCommenti', methods=['GET', 'POST'])
 def GCommenti():
     commenti = Commenti.query.all()
     if commenti == []:
-        flash('Non hai abbastanza prodotti in magazzino')
-    return render_template("gestionale/CommentiBlog.html", commenti = commenti)
+        flash('Non ci sono commeenti')
+    if request.method == "POST":
+        help.aggiorna(7, request.form["commenti"])
+        end = help.endSlied(7)
+        start = end - 5
+
+        return render_template("gestionale/commentiBlog.html", commenti = commenti[start:end])
+    else:
+        return render_template("gestionale/commentiBlog.html", commenti=commenti[0:5])

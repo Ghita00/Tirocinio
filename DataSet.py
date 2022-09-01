@@ -1,5 +1,7 @@
 from GenDB import *
 
+#aggiungi foto segna posto
+
 Immagini = [Immagini(img='img/Generali/aranciata.jfif'),
             Immagini(img='img/Generali/biscotti.jfif'),
             Immagini(img='img/Generali/brioceCrema.jfif'),
@@ -62,19 +64,20 @@ Immagini = [Immagini(img='img/Generali/aranciata.jfif'),
             Immagini(img='img/Generali/burro.jfif'),
             Immagini(img='img/Generali/pastinefrutta.jfif'),
             Immagini(img='img/Generali/cannella.jfif'),
+
+            Immagini(img='img/Generali/avatar.jfif'),
+            Immagini(img='img/Generali/merce.jfif'),
+            Immagini(img='img/Generali/semilavorato.jfif')
             ]
 
 Persone = [Persone(Mail='vioricadanci@gmail.com', Nome='Viorica', Cognome='Danci', Username='vioricadanci', Password='Viorica79', DataNascita='1979-07-12', Telefono='3283187029', Rating='0', Img='44'),
            Persone(Mail='larissadanci@gmail.com', Nome='Larissa', Cognome='Danci', Username='larissadanci', Password='Larissa03', DataNascita='2003-03-01', Telefono='3205608445', Rating='0', Img='45'),
-
            Persone(Mail='rominadanci@gmail.com', Nome='Romina', Cognome='Danci', Username='rominadanci', Password='Romina00', DataNascita='2000-01-20', Telefono='3290301407', Rating='0', Img='51'),
            Persone(Mail='prova@gmail.com', Nome='Prova', Cognome='ProvaCognome', Username='prova', Password='Prova000', DataNascita='2003-03-01', Telefono='123456789', Rating='0', Img='53'),
-
            Persone(Mail='annarossi@gmail.com', Nome='Anna', Cognome='Rossi', Username='annarossi', Password='Anna00', DataNascita='2000-07-12', Telefono='3283187029', Rating='0', Img='46'),
            Persone(Mail='saragialli@gmail.com', Nome='Sara', Cognome='Gialli', Username='saragialli', Password='Sara00', DataNascita='2000-03-01', Telefono='3205608445', Rating='0', Img='47'),
            Persone(Mail='chiarabianchi@gmail.com', Nome='Chiara', Cognome='Bianchi', Username='chiarabianchi', Password='Chiara00', DataNascita='2000-01-20', Telefono='3290301407', Rating='0', Img='48'),
            Persone(Mail='albertorossi@gmail.com', Nome='Alberto', Cognome='Rossi', Username='albertorossi', Password='Alberto00', DataNascita='2000-03-01', Telefono='123456789', Rating='0', Img='49'),
-
            Persone(Mail='giacomogrigi@gmail.com', Nome='Giacomo', Cognome='Grigi', Username='giacomogrigi', Password='Giacomo00', DataNascita='2000-07-12', Telefono='3283187029', Rating='0', Img='54'),
            Persone(Mail='cristianbianchi@gmail.com', Nome='Cristian', Cognome='Bianchi', Username='cristianbianchi', Password='Cristian00', DataNascita='2000-03-01', Telefono='3205608445', Rating='0', Img='55'),
            Persone(Mail='mararossi@gmail.com', Nome='Mara', Cognome='Rossi', Username='mararossi', Password='Mara00', DataNascita='2000-01-20', Telefono='3290301407', Rating='0', Img='50'),
@@ -144,43 +147,43 @@ Turni = [Turni(Nome='Mattiniero', OraInizioTurno='05:00:00', OraFineTurno='13:00
          Turni(Nome='Serale', OraInizioTurno='18:00:00', OraFineTurno='23:00:00', CompensoOrario='8.90'),
          Turni(Nome='Giornaliero', OraInizioTurno='05:00:00', OraFineTurno='17:00:00', CompensoOrario='8.90')]
 
-PersonaleTurni = [PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='11-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='12-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='13-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='14-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='15-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='16-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='17-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='18-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='19-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='20-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='21-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='22-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='23-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='24-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='25-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='26-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='27-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='28-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='29-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='30-07-2022', OraInizio='05:00:00', OraFine='17:00:00'),
-                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='1', Data='20-07-2022', OraInizio='05:00:00', OraFine='13:00:00'),
-                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='2', Data='21-07-2022', OraInizio='13:00:00', OraFine='18:00:00'),
-                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='3', Data='22-07-2022', OraInizio='18:00:00', OraFine='23:00:00'),
-                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='1', Data='23-07-2022', OraInizio='05:00:00', OraFine='13:00:00'),
-                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='2', Data='24-07-2022', OraInizio='13:00:00', OraFine='18:00:00'),
-                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='3', Data='25-07-2022', OraInizio='18:00:00', OraFine='23:00:00'),
-                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='1', Data='26-07-2022', OraInizio='05:00:00', OraFine='13:00:00'),
-                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='2', Data='27-07-2022', OraInizio='13:00:00', OraFine='18:00:00'),
-                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='3', Data='28-07-2022', OraInizio='18:00:00', OraFine='23:00:00'),
-                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='1', Data='29-07-2022', OraInizio='05:00:00', OraFine='13:00:00'),
-                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='2', Data='30-07-2022', OraInizio='13:00:00', OraFine='18:00:00'),
-                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='1', Data='23-07-2022', OraInizio='05:00:00', OraFine='13:00:00'),
-                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='2', Data='24-07-2022', OraInizio='13:00:00', OraFine='18:00:00'),
-                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='3', Data='25-07-2022', OraInizio='18:00:00', OraFine='23:00:00'),
-                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='1', Data='26-07-2022', OraInizio='05:00:00', OraFine='13:00:00'),
-                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='2', Data='27-07-2022', OraInizio='13:00:00', OraFine='18:00:00'),
-                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='3', Data='28-07-2022', OraInizio='18:00:00', OraFine='23:00:00')]
+PersonaleTurni = [PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='11-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='12-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='13-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='14-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='15-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='16-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='17-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='18-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='19-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='20-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='21-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='22-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='23-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='24-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='25-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='26-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='27-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='28-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='29-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='vioricadanci@gmail.com', Id_Turno='4', Data='30-08-2022', OraInizio='05:00:00', OraFine='17:00:00'),
+                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='1', Data='20-08-2022', OraInizio='05:00:00', OraFine='13:00:00'),
+                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='2', Data='21-08-2022', OraInizio='13:00:00', OraFine='18:00:00'),
+                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='3', Data='22-08-2022', OraInizio='18:00:00', OraFine='23:00:00'),
+                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='1', Data='23-08-2022', OraInizio='05:00:00', OraFine='13:00:00'),
+                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='2', Data='24-08-2022', OraInizio='13:00:00', OraFine='18:00:00'),
+                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='3', Data='25-08-2022', OraInizio='18:00:00', OraFine='23:00:00'),
+                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='1', Data='26-08-2022', OraInizio='05:00:00', OraFine='13:00:00'),
+                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='2', Data='27-08-2022', OraInizio='13:00:00', OraFine='18:00:00'),
+                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='3', Data='28-08-2022', OraInizio='18:00:00', OraFine='23:00:00'),
+                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='1', Data='29-08-2022', OraInizio='05:00:00', OraFine='13:00:00'),
+                  PersonaleTurni(Mail_Dipendente='larissadanci@gmail.com', Id_Turno='2', Data='30-08-2022', OraInizio='13:00:00', OraFine='18:00:00'),
+                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='1', Data='23-08-2022', OraInizio='05:00:00', OraFine='13:00:00'),
+                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='2', Data='24-08-2022', OraInizio='13:00:00', OraFine='18:00:00'),
+                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='3', Data='25-08-2022', OraInizio='18:00:00', OraFine='23:00:00'),
+                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='1', Data='26-08-2022', OraInizio='05:00:00', OraFine='13:00:00'),
+                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='2', Data='27-08-2022', OraInizio='13:00:00', OraFine='18:00:00'),
+                  PersonaleTurni(Mail_Dipendente='annarossi@gmail.com', Id_Turno='3', Data='28-08-2022', OraInizio='18:00:00', OraFine='23:00:00')]
 
 Stipendi = [Stipendi(Mail_Dipedendente='vioricadanci@gmail.com', DataEmissione='15-08-2022', ImportoNetto=1000),
             Stipendi(Mail_Dipedendente='larissadanci@gmail.com', DataEmissione='15-08-2022', ImportoNetto=1000),
@@ -300,7 +303,6 @@ ProduzioneGiornaliera = [ProduzioneGiornaliera(Data='29-08-2022', Note='Urgente 
                          ProduzioneGiornaliera(Data='30-08-2022', Note='Prenotazione 100 brioche per panificio gatto'),
                          ProduzioneGiornaliera(Data='31-08-2022', Note='Fortnitura cheescake'),
                          ProduzioneGiornaliera(Data='01-09-2022', Note='Ordinaria amministrazione'),
-                         ProduzioneGiornaliera(Data='02-09-2022', Note='Preparazione torta di compleanno'),
                          ProduzioneGiornaliera(Data='03-09-2022', Note='Prenotazione 70 pastine alla frutta'),
                          ProduzioneGiornaliera(Data='04-09-2022', Note='Fornitura pastine al cioccolato bianco')]
 
@@ -319,10 +321,6 @@ Produzione = [Produzione(Data_Produzione='29-08-2022', Id_Semilavorato='1', Quan
               Produzione(Data_Produzione='01-09-2022', Id_Semilavorato='4', Quantità='20'),
               Produzione(Data_Produzione='01-09-2022', Id_Semilavorato='9', Quantità='30'),
               Produzione(Data_Produzione='01-09-2022', Id_Semilavorato='10', Quantità='25'),
-              Produzione(Data_Produzione='02-09-2022', Id_Semilavorato='7', Quantità='3'),
-              Produzione(Data_Produzione='02-09-2022', Id_Semilavorato='5', Quantità='30'),
-              Produzione(Data_Produzione='02-09-2022', Id_Semilavorato='9', Quantità='30'),
-              Produzione(Data_Produzione='02-09-2022', Id_Semilavorato='10', Quantità='10'),
               Produzione(Data_Produzione='03-09-2022', Id_Semilavorato='9', Quantità='15'),
               Produzione(Data_Produzione='03-09-2022', Id_Semilavorato='3', Quantità='5'),
               Produzione(Data_Produzione='03-09-2022', Id_Semilavorato='4', Quantità='5'),
@@ -344,13 +342,13 @@ Blog = [Blog(Mail_Dipendente='larissadanci@gmail.com', Id_Articolo=1),
         Blog(Mail_Dipendente='larissadanci@gmail.com', Id_Articolo=5),
         Blog(Mail_Dipendente='larissadanci@gmail.com', Id_Articolo=6)]
 
-FattureAcquisto = [FattureAcquisto(Id_Fornitore='86334519757', NumDocumento=1, Data='11-07-2022'),
-                   FattureAcquisto(Id_Fornitore='89881230699', NumDocumento=1, Data='11-07-2022'),
-                   FattureAcquisto(Id_Fornitore='86884510057', NumDocumento=1, Data='11-07-2022'),
-                   FattureAcquisto(Id_Fornitore='89671233099', NumDocumento=1, Data='11-07-2022'),
-                   FattureAcquisto(Id_Fornitore='88924578120', NumDocumento=1, Data='11-07-2022'),
-                   FattureAcquisto(Id_Fornitore='89671233099', NumDocumento=2, Data='11-08-2022'),
-                   FattureAcquisto(Id_Fornitore='89671233099', NumDocumento=3, Data='30-08-2022')]
+FattureAcquisto = [FattureAcquisto(Id_Fornitore='86334519757', NumDocumento=1, Data='11-08-2022'),
+                   FattureAcquisto(Id_Fornitore='89881230699', NumDocumento=1, Data='10-08-2022'),
+                   FattureAcquisto(Id_Fornitore='86884510057', NumDocumento=1, Data='09-08-2022'),
+                   FattureAcquisto(Id_Fornitore='89671233099', NumDocumento=1, Data='07-08-2022'),
+                   FattureAcquisto(Id_Fornitore='88924578120', NumDocumento=1, Data='06-08-2022'),
+                   FattureAcquisto(Id_Fornitore='89671233099', NumDocumento=2, Data='05-08-2022'),
+                   FattureAcquisto(Id_Fornitore='89671233099', NumDocumento=3, Data='01-09-2022')]
 
 ContenutoAcquisto = [ContenutoAcquisto(Id_FatturaAcquisto=1, Id_Merce=1, Quantità=50),
                      ContenutoAcquisto(Id_FatturaAcquisto=1, Id_Merce=2, Quantità=70),
@@ -374,13 +372,13 @@ ContenutoAcquisto = [ContenutoAcquisto(Id_FatturaAcquisto=1, Id_Merce=1, Quantit
                      ContenutoAcquisto(Id_FatturaAcquisto=7, Id_Merce=22, Quantità=70),
                      ContenutoAcquisto(Id_FatturaAcquisto=7, Id_Merce=32, Quantità=90)]
 
-FattureVendita = [FattureVendita(Mail_Cliente='prova@gmail.com', NumDocumento=1,Data='11-01-2022', Categoria='Ecommerce'),
-                  FattureVendita(Mail_Cliente='mararossi@gmail.com', NumDocumento=1,Data='11-01-2022', Categoria='Ecommerce'),
-                  FattureVendita(Mail_Cliente='cristianbianchi@gmail.com', NumDocumento=1,Data='11-01-2022', Categoria='Extra'),
-                  FattureVendita(Mail_Cliente='giacomogrigi@gmail.com', NumDocumento=1,Data='11-01-2022', Categoria='Extra'),
-                  FattureVendita(Mail_Cliente='mariaverdi@gmail.com', NumDocumento=1,Data='11-01-2022', Categoria='Extra'),
-                  FattureVendita(Mail_Cliente='rominadanci@gmail.com', NumDocumento=1,Data='11-01-2022', Categoria='Ecommerce'),
-                  FattureVendita(Mail_Cliente='giacomogrigi@gmail.com', NumDocumento=2,Data='11-05-2022', Categoria='Ecommerce')]
+FattureVendita = [FattureVendita(Mail_Cliente='prova@gmail.com', NumDocumento=1,Data='11-08-2022', Categoria='Ecommerce'),
+                  FattureVendita(Mail_Cliente='mararossi@gmail.com', NumDocumento=1,Data='10-08-2022', Categoria='Ecommerce'),
+                  FattureVendita(Mail_Cliente='cristianbianchi@gmail.com', NumDocumento=1,Data='09-08-2022', Categoria='Extra'),
+                  FattureVendita(Mail_Cliente='giacomogrigi@gmail.com', NumDocumento=1,Data='08-08-2022', Categoria='Extra'),
+                  FattureVendita(Mail_Cliente='mariaverdi@gmail.com', NumDocumento=1,Data='07-08-2022', Categoria='Extra'),
+                  FattureVendita(Mail_Cliente='rominadanci@gmail.com', NumDocumento=1,Data='31-08-2022', Categoria='Ecommerce'),
+                  FattureVendita(Mail_Cliente='giacomogrigi@gmail.com', NumDocumento=2,Data='01-09-2022', Categoria='Ecommerce')]
 
 ContenutoVenditaSemilavorati = [ContenutoVenditaSemilavorati(Id_FatturaVendità=1, Id_Semilavorato=1, Quantità=10),
                                 ContenutoVenditaSemilavorati(Id_FatturaVendità=1, Id_Semilavorato=2, Quantità=5),
@@ -402,8 +400,8 @@ ContenutoVenditaSemilavorati = [ContenutoVenditaSemilavorati(Id_FatturaVendità=
 
 #Contenurovenditamerce
 
-DDT = [DDT(Id_Fornitore='86334519757', NumDocumento=1, DataEmissione='11-01-2022', Note='Urgenza', Importo=50, Peso=10, Colli=7),
-       DDT(Id_Fornitore='86334519757', NumDocumento=2, DataEmissione='11-03-2022', Note='Fragile', Importo=100, Peso=50, Colli=8),
+DDT = [DDT(Id_Fornitore='86334519757', NumDocumento=1, DataEmissione='11-08-2022', Note='Urgenza', Importo=50, Peso=10, Colli=7),
+       DDT(Id_Fornitore='86334519757', NumDocumento=2, DataEmissione='11-07-2022', Note='Fragile', Importo=100, Peso=50, Colli=8),
        DDT(Id_Fornitore='86334519757', NumDocumento=3, DataEmissione='11-02-2022', Note='Importante', Importo=300, Peso=80, Colli=10),
        DDT(Id_Fornitore='86334519757', NumDocumento=4, DataEmissione='11-04-2022', Note='Trattare con cura', Importo=500, Peso=100, Colli=90),
        DDT(Id_Fornitore='86334519757', NumDocumento=5, DataEmissione='11-05-2022', Note='Collo n 5 difettoso', Importo=70, Peso=40, Colli=80),
@@ -415,22 +413,24 @@ DDT = [DDT(Id_Fornitore='86334519757', NumDocumento=1, DataEmissione='11-01-2022
        DDT(Id_Fornitore='88924578120', NumDocumento=6, DataEmissione='11-02-2022', Note='Da mettere in frigo', Importo=15, Peso=8, Colli=10)]
 
 Scontrini = [Scontrini(Data='10-08-2022'),
-             Scontrini(Data='09-07-2022'),
-             Scontrini(Data='06-02-2022'),
-             Scontrini(Data='12-04-2022'),
-             Scontrini(Data='19-05-2022'),
-             Scontrini(Data='19-04-2022'),
-             Scontrini(Data='29-06-2022'),
-             Scontrini(Data='30-05-2022'),
-             Scontrini(Data='11-01-2022'),
-             Scontrini(Data='03-02-2022'),
-             Scontrini(Data='03-03-2022')]
+             Scontrini(Data='09-08-2022'),
+             Scontrini(Data='06-08-2022'),
+             Scontrini(Data='12-08-2022'),
+             Scontrini(Data='19-08-2022'),
+             Scontrini(Data='20-08-2022'),
+             Scontrini(Data='29-08-2022'),
+             Scontrini(Data='30-08-2022'),
+             Scontrini(Data='11-08-2022'),
+             Scontrini(Data='03-08-2022'),
+             Scontrini(Data='01-09-2022')]
 
-ScontriniMerce = [ScontriniMerce(Id_Scontrino=1, Id_Merce=1, Quantità=4),
-                  ScontriniMerce(Id_Scontrino=2, Id_Merce=2, Quantità=3),
-                  ScontriniMerce(Id_Scontrino=3, Id_Merce=3, Quantità=2),
-                  ScontriniMerce(Id_Scontrino=4, Id_Merce=1, Quantità=1),
-                  ScontriniMerce(Id_Scontrino=5, Id_Merce=2, Quantità=6)]
+#metti solo scontrini di prodotti
+
+ScontriniMerce = [ScontriniMerce(Id_Scontrino=1, Id_Merce=27, Quantità=4),
+                  ScontriniMerce(Id_Scontrino=2, Id_Merce=28, Quantità=3),
+                  ScontriniMerce(Id_Scontrino=3, Id_Merce=29, Quantità=2),
+                  ScontriniMerce(Id_Scontrino=4, Id_Merce=26, Quantità=1),
+                  ScontriniMerce(Id_Scontrino=5, Id_Merce=30, Quantità=6)]
 
 ScontriniSemilavorati = [ScontriniSemilavorati(Id_Scontrino=6, Id_Semilavorato=1, Quantità=1),
                          ScontriniSemilavorati(Id_Scontrino=7, Id_Semilavorato=2, Quantità=5),
@@ -487,7 +487,7 @@ ImmaginiMerce = [ImmaginiMerce(Id_Merce='34', Id_Img='1'),
 #Note di variazione
 #Data = [Persone, DittaFornitrice, Allergeni, Turni, Semilavorati, ProduzioneGiornaliera, Articoli, Scontrini, Immagini, DDT]
 #Data = [Dipendenti, Clienti, Commenti, Messaggi, PersonaleTurni, Stipendi, Merce, Ingredienti, Produzione, Blog, FattureAcquisto,
-#        ContenutoAcquisto, FattureVendita, ContenutoVenditaSemilavorati, ScontriniMerce, ScontriniSemilavorati, ImmaginiSemilavorati, ImmaginiMerce]
+#      ContenutoAcquisto, FattureVendita, ContenutoVenditaSemilavorati, ScontriniMerce, ScontriniSemilavorati, ImmaginiSemilavorati, ImmaginiMerce]
 
 
 for i in Data:

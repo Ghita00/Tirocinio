@@ -4,10 +4,8 @@ from datetime import datetime
 from werkzeug.utils import redirect
 from flask import Blueprint, render_template, url_for, request, flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerRangeField, \
-    validators, TimeField, TextAreaField, FloatField, FieldList, Form, FormField, IntegerField, DateField, \
-    PasswordField, TelField, SelectField
-from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
+from wtforms import StringField, SubmitField, TelField, SelectField, DateField
+from wtforms.validators import InputRequired
 from GenDB import *
 
 personale = Blueprint('personale', __name__)
@@ -42,12 +40,13 @@ def personaleGestionale():
 
     return render_template("gestionale/dipendenti.html", Dipendenti=dip)
 
+#img 59 avatr generico
 @personale.route('/aggiungiDipendente', methods=['GET', 'POST'])
 def addDipendente():
     form = RegistrazioneDipendente()
 
     if form.validate_on_submit():
-        new_Person = Persone(Nome=form.nome.data, Cognome=form.cognome.data, DataNascita=form.datanascita.data, Mail=form.mail.data, Telefono=form.telefono.data, Username=form.mail.data, Password='password', Rating=0)
+        new_Person = Persone(Nome=form.nome.data, Cognome=form.cognome.data, DataNascita=form.datanascita.data, Mail=form.mail.data, Telefono=form.telefono.data, Username=form.mail.data, Password='password', Rating=0, Img=59)
         new_Dip = Dipendenti(Mail=form.mail.data, DataAssunzione=date.today())
         db.session.add(new_Person)
         db.session.add(new_Dip)

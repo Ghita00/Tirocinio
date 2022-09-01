@@ -23,6 +23,7 @@
                 </div>
             </div>
             <br>
+            {{ render_field(form.Incipit,class='semi'+form.Incipit.name) }}
             {{ render_field(form.Descrizione,class='semi'+form.Descrizione.name) }}
             {{ form.submit }}
       </form>

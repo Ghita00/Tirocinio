@@ -20,20 +20,20 @@
     <tr>
       <th scope="row" class="text-start text-center">Ecommerce</th>
       <td class="text-start text-center">Guadagni lordi provenenti dal sito</td>
-      <td class="text-start text-center">{{EcommerceNetto}}</td>
-      <td class="text-start text-center">{{EcommerceLordo}}</td>
+      <td class="text-start text-center">{{EcommerceNetto}}€</td>
+      <td class="text-start text-center">{{EcommerceLordo}}€</td>
     </tr>
     <tr>
       <th scope="row" class="text-start text-center">In loco</th>
       <td class="text-start text-center">Guadagni lordi provenenti dalla pasticceria</td>
-      <td class="text-start text-center">{{scontriniNetto}}</td>
-      <td class="text-start text-center">{{scontriniLordo}}</td>
+      <td class="text-start text-center">{{scontriniNetto}}€</td>
+      <td class="text-start text-center">{{scontriniLordo}}€</td>
     </tr>
     <tr>
       <th scope="row" class="text-start text-center">Extra</th>
       <td class="text-start text-center">Guadagni lordi provenenti da catering o altro</td>
-      <td class="text-start text-center">{{ExtraNetto}}</td>
-      <td class="text-start text-center">{{ExtraLordo}}</td>
+      <td class="text-start text-center">{{ExtraNetto}}€</td>
+      <td class="text-start text-center">{{ExtraLordo}}€</td>
     </tr>
     <tr>
         <th scope="row" class="text-start text-center"></th>
@@ -53,18 +53,18 @@
     <tr>
       <th scope="row" class="text-start text-center">Fornitori</th>
       <td class="text-start text-center">Spese legate ai fornitori</td>
-      <td class="text-start text-center">{{CostiFornitori}}</td>
+      <td class="text-start text-center">{{CostiFornitori}}€</td>
     </tr>
     <tr>
       <th scope="row" class="text-start text-center">Personale</th>
       <td class="text-start text-center">Spese legate al dipendente</td>
-      <td class="text-start text-center">{{CostiPersonale}}</td>
+      <td class="text-start text-center">{{CostiPersonale}}€</td>
     </tr>
 
     <tr>
         <th scope="row" class="text-start text-center"></th>
         <td class="text-center"></td>
-        <th class="text-center">Totale:</br> -<div id="costi">{{CostiFornitori + CostiPersonale}}</div></th>
+        <th class="text-center">Totale:</br> <div id="costi">-{{CostiFornitori + CostiPersonale}}</div></th>
     </tr>
 </table>
 
@@ -79,27 +79,27 @@
     <tr>
       <th scope="row" class="text-start text-center">Utile/Perdita</th>
       <td class="text-start">Rapporto tra i guadagni e le spese</td>
-      <td class="text-start">-27000</td>
+      <td class="text-start">{{indici[0]}}€</td>
     </tr>
     <tr>
       <th scope="row" class="text-start text-center">% Spese</th>
       <td class="text-start">Quanto incidono le spese nel quadro complessivo</td>
-      <td class="text-start">60%</td>
+      <td class="text-start">{{'%0.2f'|format(indici[1])}}%</td>
     </tr>
     <tr>
       <th scope="row" class="text-start text-center">% Ricavi</th>
       <td class="text-start">Quanto incidono gli incassi nel quadro complessivo</td>
-      <td class="text-start">40%</td>
+      <td class="text-start">{{'%0.2f'|format(indici[2])}}%</td>
     </tr>
     <tr>
       <th scope="row" class="text-start text-center">Spesa più<br>significativa</th>
       <td class="text-start">La spesa che incide di più nella situazione globale</td>
-      <td class="text-start">Fornitori</td>
+      <td class="text-start">{{indici[3]}}€</td>
     </tr>
     <tr>
       <th scope="row" class="text-start text-center">Ricavo più<br>significativo</th>
       <td class="text-start">Il ricavo che incide di più nella situazione globale</td>
-      <td class="text-start">Ecommerce</td>
+      <td class="text-start">{{indici[4]}}€</td>
     </tr>
 </table>
 {% endblock %}

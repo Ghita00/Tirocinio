@@ -13,8 +13,8 @@ class Active():
 pages = Active()
 
 class SliderHelp():
-    #mex(0), ordini_r(1), ordini_e(2), fatture_a(3), fatture_v(4), ddt(5), scontrini(6)
-    sliders = [0,0,0,0,0,0,0]
+    #mex(0), ordini_r(1), ordini_e(2), fatture_a(3), fatture_v(4), ddt(5), scontrini(6), commenti(7)
+    sliders = [0,0,0,0,0,0,0,0]
 
     def aggiorna(self, i, value):
         self.sliders[i] += int(value)
@@ -22,5 +22,5 @@ class SliderHelp():
             self.sliders[i] = 0
 
     def endSlied(self, i):
-        return 10*(self.sliders[i] + 1)
+        return 5*(self.sliders[i] + 1)
 help = SliderHelp()

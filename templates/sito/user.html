@@ -10,16 +10,16 @@
                 <div class="blog__details__recipe__details">
                     <div class="row">
                         <div class="col-lg-6 center">
-                            <img class="pic avatar" src="{{url_for('static', filename='img/sito/blog/details/blog-details.jpg')}}">
+                            <img class="pic avatar" src="{{url_for('static', filename=user[4])}}">
                         </div>
                         <div class="col-lg-6">
                             <div class="blog__details__ingredients center size-user">
-                                <h6>Benvenuto {{nome}}!</h6>
+                                <h6>Benvenuto {{user[0]}}!</h6>
                                 <h5>I tuoi dati:</h5>
-                                    Nome: {{nome}}<br>
-                                    Cognome: {{cognome}}<br>
-                                    Data di nascita: {{datanascita}}<br>
-                                    Mail: {{mail}}<br>
+                                    Nome: {{user[0]}}<br>
+                                    Cognome: {{user[1]}}<br>
+                                    Data di nascita: {{user[2]}}<br>
+                                    Mail: {{user[3]}}<br>
                             </div>
                             <br>
                             <div class="product__details__option">
