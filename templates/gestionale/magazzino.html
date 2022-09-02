@@ -1,6 +1,17 @@
 {% extends 'gestionale/base.html' %}
 
 {% block magazzino %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="card spad center margin-top" style="width: 18rem;">
+        <div class="card-body orange">
+            {% for message in messages %}
+            <h2 class="black">{{ message }}</h2>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endwith %}
 <h2>Magazzino</h2>
 <a href="{{url_for('ricettario.addSemi')}}" class="btn btn-outline-secondary">Add Semilavorato</a>
 <a href="{{url_for('magazzino.addMerce')}}" class="btn btn-primary">Add Merce</a>

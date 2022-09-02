@@ -1,6 +1,17 @@
 {% extends 'gestionale/base.html' %}
 
 {% block documenti %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="card spad center margin-top" style="width: 18rem;">
+        <div class="card-body orange">
+            {% for message in messages %}
+            <h2 class="black">{{ message }}</h2>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endwith %}
 <h2>Documenti</h2>
 <a href="{{url_for('documenti.addDoc')}}" class="btn btn-primary">Inserisci nuovo documento ricevuto</a>
 {% if stip %}
