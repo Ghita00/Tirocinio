@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-3">
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" value="Fatturavendita" name="Documento">Fattura di vendita
+                        <input type="radio" class="form-check-input" value="Fatturavendita" name="Documento">Fattura di vendita<br>
                         <select name="TipoFattura">
                             <option value="Merce">Merce</option>
                             <option value="Semilavorati">Semilavorati</option>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-2">
                     <div class="form-check">
-                        <input type="radio" class="form-check-input" value="Scontrino" name="Documento">Scontrino
+                        <input type="radio" class="form-check-input" value="Scontrino" name="Documento">Scontrino<br>
                         <select name="TipoScontrino">
                             <option value="Merce">Merce</option>
                             <option value="Semilavorati">Semilavorati</option>
@@ -49,7 +49,7 @@
             </div>
             <br>
             <div>
-                <label>Quantità:</label>
+                <label>Numero di elementi che compongono il documento:</label>
                 <input type="number" name="Quantita" value=1>
             </div>
 
@@ -67,15 +67,15 @@
                 <h3>Dati fattura di acquisto</h3>
                 <div class="row">
                     <div class="col-3">
-                        <label>Nome fornitore</label>
-                        <input type="text" name="NomeFornitore"> </br>
+                        <label>Nome fornitore</label><br>
+                        <input type="text" name="NomeFornitore">
                     </div>
                     <div class="col-3">
                         <label>Partita IVA</label> </br>
                         <input type="number" name="PartitaIVA">
                     </div>
                     <div class="col-3">
-                        <label>Numero del documento</label>
+                        <label>Numero del documento</label><br>
                         <input type="number" name="NumDocumento">
                     </div>
                 </div>
@@ -118,15 +118,15 @@
                 <h3>Dati fattura di vendita</h3>
                 <div class="row">
                     <div class="col-3">
-                        <label>Mail del cliente</label>
+                        <label>Mail del cliente</label><br>
                         <input type="text" name="Mail">
                     </div>
                     <div class="col-4">
-                        <label>Numero del documento</label>
+                        <label>Numero del documento</label><br>
                         <input type="number" name="NumDocumento">
                     </div>
                     <div class="col-4">
-                        <label>Categoria</label>
+                        <label>Categoria</label><br>
                         <select name="categoria">
                             <option value="Ecommerce">Ecommerce</option>
                             <option value="Extra">Extra</option>
@@ -171,15 +171,15 @@
                 <h3>Dati DDT</h3>
                 <div class="row">
                     <div class="col-3">
-                        <label>Nome fornitore</label>
+                        <label>Nome fornitore</label><br>
                         <input type="text" name="NomeFornitore">
                     </div>
                     <div class="col-3">
-                        <label>Partita IVA</label>
+                        <label>Partita IVA</label><br>
                         <input type="number" name="PartitaIVA">
                     </div>
                     <div class="col-3">
-                        <label>Numero del documento</label>
+                        <label>Numero del documento</label><br>
                         <input type="number" name="NumDocumento">
                     </div>
                 </div>
@@ -225,7 +225,7 @@
                 <div class="row">
                     {% for i in range(volte) %}
                         <div class="col-4">
-                            <label>Prodotto:</label>
+                            <label>Prodotto</label>
                             <select name="Prodotto-{{i}}">
                             {% for x in Prod %}
                                 <option value="{{x.Id}}">{{x.Nome}}</option>
@@ -233,7 +233,7 @@
                         </select>
                         </div>
                         <div class="col-5">
-                            <label>Quantità acquistata</label>
+                            <label>Quantità venduta</label>
                             <input type="number" name="q-{{i}}" value=1>
                         </div>
                     {% endfor %}

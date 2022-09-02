@@ -4540,8 +4540,8 @@ h6.h1 {
 }
 
 .resize{
-    height:auto;
-    width:1000px;
+    height: 50px;
+    width: 300px;
 }
 
 .Bigtext{
@@ -4561,4 +4561,13 @@ h6.h1 {
 .DipImg{
     height: 350px;
     width: 250px;
+}
+
+.paddingDown{
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.marginTop{
+    margin-Top: 150px;
 }

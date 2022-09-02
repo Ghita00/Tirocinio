@@ -14,8 +14,12 @@
                          {{ render_field(form.cognome) }}
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        {{ render_field(form.datanascita) }}
+                    </div>
+                </div>
 
-              {{ render_field(form.datanascita) }}
                 <div class="row">
                     <div class="col">
                         {{ render_field(form.mail) }}
@@ -27,6 +31,11 @@
 
 
             </dl>
-            {{ form.submit }}
+            <div class="row">
+                <div class="col">
+                    {{ form.submit }}
+                </div>
+            </div>
+
         </form>
 {% endblock %}
