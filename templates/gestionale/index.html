@@ -98,7 +98,11 @@
                                     {{'%0.2f'|format(x.Totale)}}
                                 </td>
                                 <td>
-                                    <span class="badge badge-primary">{{x.Status}}</span>
+                                    {% if x.Status == false %}
+                                        <span class="p-3 mb-2 bg-danger text-white">Da pagare</span>
+                                    {% else %}
+                                        <span class="p-3 mb-2 bg-success text-white">Pagato</span>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     {{x.Mail}}
@@ -140,7 +144,13 @@
                                 <tr>
                                     <td><a href="{{url_for('ordini.ordineSingle', id=x.Id, categoria=0)}}">{{x.Id}}</a></td>
                                     <td><a href="{{url_for('ordini.ordineSingle', id=x.Id, categoria=0)}}">{{x.Mail_Cliente}}</a></td>
-                                    <td><span class="badge badge-success">{{x.Status}}</span></td>
+                                    <td>
+                                        {% if x.Status == false %}
+                                            <span class="p-3 mb-2 bg-danger text-white">Da Fare</span>
+                                        {% else %}
+                                            <span class="p-3 mb-2 bg-success text-white">Fatto</span>
+                                        {% endif %}
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
