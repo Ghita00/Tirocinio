@@ -6,12 +6,12 @@ ordini = Blueprint('ordini', __name__)
 
 @ordini.route('/ordiniGestionale', methods=['GET', 'POST'])
 def ordiniGestionale():
-    list_ricevuti = session.query(FattureVendita.Id, FattureVendita.Mail_Cliente, FattureVendita.Data).\
-                group_by(FattureVendita.Id, FattureVendita.Mail_Cliente, FattureVendita.Data).all()
+    list_ricevuti = session.query(FattureVendita.Id, FattureVendita.Mail_Cliente, FattureVendita.Data, FattureVendita.Status).\
+                group_by(FattureVendita.Id, FattureVendita.Mail_Cliente, FattureVendita.Data, FattureVendita.Status).all()
 
-    list_emessi = session.query(FattureAcquisto.Id, DittaFornitrice.NomeDitta, FattureAcquisto.Data).\
+    list_emessi = session.query(FattureAcquisto.Id, DittaFornitrice.NomeDitta, FattureAcquisto.Data, FattureAcquisto.Status).\
         join(DittaFornitrice, DittaFornitrice.PartitaIVA == FattureAcquisto.Id_Fornitore).\
-        group_by(FattureAcquisto.Id, DittaFornitrice.NomeDitta, FattureAcquisto.Data).all()
+        group_by(FattureAcquisto.Id, DittaFornitrice.NomeDitta, FattureAcquisto.Data, FattureAcquisto.Status).all()
 
     if request.method == "POST":
         lista_slider = []
@@ -35,12 +35,12 @@ def ordiniGestionale():
 
         return render_template("gestionale/ordini.html", list_ricevuti = list_ricevuti[lista_slider[0][0]:lista_slider[0][1]], list_emessi = list_emessi[lista_slider[1][0]:lista_slider[1][1]])
     else:
-        #passare sempre i primi 10 elementi delle liste
+        #passare sempre i primi 5 elementi delle liste
         return render_template("gestionale/ordini.html", list_ricevuti = list_ricevuti[0:5], list_emessi = list_emessi[0:5])
 
 
 @ordini.route('/ordineSingle/<id>/<categoria>', methods=['GET', 'POST'])
-#categoria 0. Ricevuto, 1. Emesso
+#categoria 0. Emesso, 1. Ricevuto
 def ordineSingle(id, categoria):
     if request.method == 'POST':
         data = request.form['dataProd']

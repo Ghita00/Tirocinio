@@ -30,15 +30,16 @@
         {% for dip in Dipendenti%}
             <div class="col-4">
                 <div class="card" style="width: 20rem;">
-                <img src="{{url_for('static', filename=dip.img)}}" class="card-img-top DipImg" alt="...">
+                <img src="{{url_for('static', filename=dip.img)}}" class="card-img-top DipImg" alt="..."> </br>
                     <div class="card-body">
-                        <h5 class="card-title">{{dip.Nome}} {{dip.Cognome}}</h5>
+                        <h5 class="card-title">{{dip.Nome}} {{dip.Cognome}}</h5> </br>
                         <li>
-                            <ul>Data di nascita: {{dip.DataNascita}}</ul>
-                            <ul>Mail: {{dip.Mail}}</ul>
-                            <ul>Telefono: +39 {{dip.Telefono}}</ul>
-                            <ul>Data di assunzione: {{dip.DataAssunzione}}</ul>
+                            <p class="card-text">Data di nascita: {{dip.DataNascita}}</p>
+                            <p class="card-text">Mail: {{dip.Mail}}</p>
+                            <p class="card-text">Telefono: +39 {{dip.Telefono}}</p>
+                            <p class="card-text">Data di assunzione: {{dip.DataAssunzione}}</p>
                         </li>
+                        </br>
                             <a href="{{url_for('personale.tabellaTurni', id=dip.Mail)}}" class="btn btn-outline-success  ">Visualizza turni</a>
                             <a href="{{url_for('personale.dropDipendente', id=dip.Mail)}}" class="btn btn-outline-danger">Licenzia</a>
                     </div>

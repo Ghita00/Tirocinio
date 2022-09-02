@@ -16,7 +16,7 @@
             <div class="stat-widget-two card-body">
                 <div class="stat-content">
                     <div class="stat-text">Profitto netto<br> mensile</div>
-                    <div class="stat-digit"><b><i class="fa fa-usd"></i>{{incassoTotale}}</b></div>
+                    <div class="stat-digit"><b><i class="fa fa-usd"></i>{{'%0.2f'|format(incassoTotale)}}</b></div>
                 </div>
             </div>
         </div>
@@ -138,8 +138,8 @@
                         <tbody>
                             {% for x in list_ricevuti %}
                                 <tr>
-                                    <td><a href="{{url_for('ordini.ordineSingle', id=x.Id, categoria=0)}}">{{x.Id}}</a></td>
-                                    <td><a href="{{url_for('ordini.ordineSingle', id=x.Id, categoria=0)}}">{{x.Mail_Cliente}}</a></td>
+                                    <td><a href="{{url_for('ordini.ordineSingle', id=x.Id, categoria=1)}}">{{x.Id}}</a></td>
+                                    <td><a href="{{url_for('ordini.ordineSingle', id=x.Id, categoria=1)}}">{{x.Mail_Cliente}}</a></td>
                                     <td><span class="badge badge-success">{{x.Status}}</span></td>
                                 </tr>
                             {% endfor %}
@@ -253,6 +253,8 @@ const myChart = new Chart(ctx, {
         }]
     },
     options: {
+        responsive : true,
+        maintainAspectRatio: false,
         scales: {
             y: {
                 beginAtZero: true

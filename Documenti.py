@@ -233,6 +233,8 @@ def addDoc():
             sottotipo = None
             prodotti = []
             volte = int(request.form['Quantita'])
+            clienti = Clienti.query.all()
+            fornitore = DittaFornitrice.query.all()
             if tipo == 'Fatturavendita':
                 sottotipo = request.form['TipoFattura']
                 if sottotipo == 'Merce':
@@ -252,7 +254,7 @@ def addDoc():
             if tipo == 'Fatturaacquisto':
                 prodotti = Merce.query.all()
 
-            return render_template("gestionale/formDocumento.html", volte=volte, tipo = tipo, sottotipo = sottotipo, Prod = prodotti)
+            return render_template("gestionale/formDocumento.html", volte=volte, tipo = tipo, sottotipo = sottotipo, Prod = prodotti, Clienti = clienti, Fornitori = fornitore)
 
         if request.form['nascosto'] == '2':
             tipo = request.form['tipo']
@@ -372,12 +374,13 @@ def addDoc():
                 db.session.commit()
 
             if tipo == 'Fatturaacquisto':
-                if FattureAcquisto.query.filter(FattureAcquisto.Id_Fornitore == request.form['PartitaIVA']).filter(FattureAcquisto.NumDocumento == request.form['NumDocumento']).first() is None:
-                    new_fat = FattureAcquisto(Id_Fornitore=request.form['PartitaIVA'], NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
+                ditta = DittaFornitrice.query.filter(DittaFornitrice.Mail == request.form['Mail']).first()
+                if FattureAcquisto.query.filter(FattureAcquisto.Id_Fornitore == ditta.PartitaIVA).filter(FattureAcquisto.NumDocumento == request.form['NumDocumento']).first() is None:
+                    new_fat = FattureAcquisto(Id_Fornitore=ditta.PartitaIVA, NumDocumento=request.form['NumDocumento'], Data=request.form['Data'])
                     db.session.add(new_fat)
                     db.session.commit()
 
-                    fat = session.query(FattureAcquisto.Id).filter(FattureAcquisto.Id_Fornitore == request.form['PartitaIVA']).filter(FattureAcquisto.NumDocumento == request.form['NumDocumento']).first()
+                    fat = session.query(FattureAcquisto.Id).filter(FattureAcquisto.Id_Fornitore == ditta.PartitaIVA).filter(FattureAcquisto.NumDocumento == request.form['NumDocumento']).first()
                     fat = fat[0]
 
                     for i in range(int(request.form['volte'])):

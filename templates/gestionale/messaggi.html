@@ -13,23 +13,24 @@
     <table class="table">
   <thead>
     <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Mittente</th>
-      <th scope="col">Oggetto</th>
-      <th scope="col">Contenuto</th>
+      <th scope="col" class="text-center">Id</th>
+      <th scope="col" class="text-center">Mittente</th>
+      <th scope="col" class="text-center">Oggetto</th>
+      <th scope="col" class="text-center">Contenuto</th>
     </tr>
   </thead>
   <tbody>
     {% for mex in messaggi%}
     <tr>
-      <th scope="row">{{mex.Id}}</th>
-      <td>{{mex.Mail_Cliente}}</td>
-      <td>{{mex.Oggetto}}</td>
-      <td>{{mex.Testo}}</td>
+      <th scope="row" class="text-center">{{mex.Id}}</th>
+      <td class="text-center">{{mex.Mail_Cliente}}</td>
+      <td class="text-center">{{mex.Oggetto}}</td>
+      <td class="text-center">{{mex.Testo}}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+<br>
     <div class="row">
         <div class="col-4"></div>
         <div class="col-4">
