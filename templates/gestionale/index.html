@@ -15,7 +15,7 @@
         <div class="card">
             <div class="stat-widget-two card-body">
                 <div class="stat-content">
-                    <div class="stat-text">Profitto lordo mensile</div>
+                    <div class="stat-text">Profitto netto<br> mensile</div>
                     <div class="stat-digit"><b><i class="fa fa-usd"></i>{{incassoTotale}}</b></div>
                 </div>
             </div>
@@ -59,14 +59,14 @@
 {% block charts %}
 <br>
 <div class="row">
-    <div class="col">
+    <div class="col chartBox paddingDown">
         <canvas id="myChart" width="400" height="400"></canvas>
     </div>
 </div>
 {%endblock%}
 
 {%block prev_expencive%}
-<div class="row">
+<div class="row marginTop">
     <div class="col-lg-12">
 
         <div class="card">
