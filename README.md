@@ -1,3 +1,14 @@
+<div>
+  
+  ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+  ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+  ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+  ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+  ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+  ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
+  
+</div>
+
 # Tirocinio
 ## Progetto di tirocinio: Gestionale pasticceria
 Nella nostra proposta di tirocinio e tesi vorremmo presentare il progetto per la realizzazione di un sistema dedicato ad una specifica pasticceria.
@@ -50,15 +61,6 @@ Qui troviamo le diverse componenti che vanno a formare la vetrina che la pasticc
 
 ![uml_webapp](https://github.com/Ghita00/Tirocinio/blob/master/Image_ReadMe/UML_WebApp.jpg "uml_webapp")
 
-### Applicazione
-##### Descrizione applicazione
-Abbiamo pensato a questa componente aggiuntiva del sistema per garantire una più comoda gestione del personale e dei costi associati ad esso. 
-Quest’applicazione è interamente dedicata ai dipendenti per:
-- Consultazione orari e turni di lavoro
-- Sistema Qr Code per la gestione delle presenze 
-
-![uml_app](https://github.com/Ghita00/Tirocinio/blob/master/Image_ReadMe/UML_App.jpg "uml_app")
-
 #### Architettura e tecnologie del sistema
 L'architettura finale del sistema presenta un DataBase centrale con il quale andranno ad interagire (in lettura e in scrittura) sia la WebApp (sito + gestionale) che l’applicazione.
 Le tecnologie da noi pensate sono:
@@ -70,12 +72,3 @@ Le tecnologie da noi pensate sono:
 - Kotlin per l’applicazione
 
 ![Architettura](https://github.com/Ghita00/Tirocinio/blob/master/Image_ReadMe/architettura.png "Architettura")
-
-<!--
-  TODO
-  - Aggiungere DB
-  - ...
--->
-
-
-
